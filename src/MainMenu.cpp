@@ -14,8 +14,8 @@ StartPanel::StartPanel(wxWindow* parent)
 	// Title: static text
 	wxStaticText* mmTitleText = new wxStaticText(this, wxID_ANY, "Foil Analyzer");
 	mmTopSizer->Add(mmTitleText, wxSizerFlags().Align(wxALIGN_CENTRE_HORIZONTAL).Border(wxALL, 50));
-	wxFont myFont(20, wxFontFamily::wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
-	mmTitleText->SetFont(myFont);
+	wxFont titleFont(20, wxFontFamily::wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
+	mmTitleText->SetFont(titleFont);
 	mmTitleText->SetForegroundColour(wxColour(*wxWHITE));
 
 	// Viewer, Analyzer, and Exit buttons in horizontal box sizer

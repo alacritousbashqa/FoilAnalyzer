@@ -15,6 +15,7 @@ private:
 	void onExitButton(wxCommandEvent& event);
 };
 
+// Button IDs for event connection
 enum {
 	EXIT_ID = 3
 };
