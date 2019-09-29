@@ -1,11 +1,11 @@
 #include "AirfoilViewer.h"
 
-ViewerPanel::ViewerPanel(wxWindow* parent) {
-
+ViewerPanel::ViewerPanel(wxWindow* parent)
+	: wxPanel(parent){
 }
 
 AirfoilViewer::AirfoilViewer(wxWindow* parent) {
-
+	initializeAirfoilViewer(parent);
 }
 
 bool AirfoilViewer::initializeAirfoilViewer(wxWindow* parent) {
