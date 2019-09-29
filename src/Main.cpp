@@ -7,8 +7,9 @@
 #include <wx/wx.h>
 #endif
 
-#include <wx/graphics.h>
 #include <wx/sizer.h>
+
+#include "MainMenu.h"
 
 class FoilApp : public wxApp {
 public:
@@ -23,8 +24,8 @@ public:
 wxIMPLEMENT_APP(FoilApp);
 bool FoilApp::OnInit() {
 
-	TopFrame* topFrame = new TopFrame("FoilAnalyzer", wxPoint(0,0), wxSize(800,600));
-
+	TopFrame* topFrame = new TopFrame("FoilAnalysis", wxPoint(0,0), wxSize(1200,700));
+	MainMenu* mMenu = new MainMenu(topFrame);
 
 	topFrame->Show(true);
 	return true;
