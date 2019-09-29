@@ -11,6 +11,12 @@
 class StartPanel : public wxPanel{
 public:
 	StartPanel(wxWindow* parent);
+private:
+	void OnExitButton(wxCommandEvent& event);
+};
+
+enum {
+	EXIT_ID = 3
 };
 
 /* Constructs the layout of the main menu panel upon app initialization.

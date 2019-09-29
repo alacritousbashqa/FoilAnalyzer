@@ -17,7 +17,6 @@ StartPanel::StartPanel(wxWindow* parent)
 	sText->SetFont(myFont);
 	sText->SetForegroundColour(wxColour(*wxWHITE));
 
-
 	// Viewer, Analyzer, and Exit buttons in horizontal box sizer
 	wxBoxSizer *button_box = new wxBoxSizer(wxHORIZONTAL);
 	button_box->Add(
@@ -27,7 +26,7 @@ StartPanel::StartPanel(wxWindow* parent)
 		new wxButton(this, wxID_ANY, "Airfoil Analyzer"),
 		wxSizerFlags().Border(wxALL, 7));
 	button_box->Add(
-		new wxButton(this, wxID_ANY, "Exit"),
+		new wxButton(this, EXIT_ID, "Exit"),
 		wxSizerFlags().Border(wxALL, 7));
 
 	topsizer->Add(button_box, wxSizerFlags().Center());
@@ -41,6 +40,13 @@ StartPanel::StartPanel(wxWindow* parent)
 
 	SetBackgroundColour(wxColour(*wxBLACK)); // Black background
 
+	Connect(EXIT_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::OnExitButton));
+
+}
+
+
+void StartPanel::OnExitButton(wxCommandEvent& event) {
+	GetParent()->Close(true);
 }
 
 MainMenu::MainMenu(wxFrame* topFrame) {
