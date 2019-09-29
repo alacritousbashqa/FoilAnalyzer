@@ -12,7 +12,7 @@ class StartPanel : public wxPanel{
 public:
 	StartPanel(wxWindow* parent);
 private:
-	void OnExitButton(wxCommandEvent& event);
+	void onExitButton(wxCommandEvent& event);
 };
 
 enum {
@@ -22,8 +22,8 @@ enum {
 /* Constructs the layout of the main menu panel upon app initialization.
 It also stores a reference to the main menu panel.*/
 class MainMenu {
-	StartPanel* mainmenuPanel;
+	StartPanel* mainMenuPanel;
 public:
 	MainMenu(wxFrame* topFrame);
-	bool InitializeMainMenu(wxFrame* topFrame);
+	bool initializeMainMenu(wxFrame* topFrame);
 };
