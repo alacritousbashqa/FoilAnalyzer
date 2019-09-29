@@ -31,14 +31,18 @@ StartPanel::StartPanel(wxWindow* parent)
 
 	topsizer->Add(button_box, wxSizerFlags().Center());
 
-	// Bottom padding
+	// Padding between center buttons and bottom controls
 	topsizer->AddStretchSpacer();
+
+	// About button on bottom right
+	topsizer->Add(
+		new wxButton(this, wxID_ANY, "About"),
+		wxSizerFlags().Border(wxALL, 15).Right());
 
 	this->SetSizer(topsizer);
 
-	topsizer->SetSizeHints(this);
-
-	SetBackgroundColour(wxColour(*wxBLACK)); // Black background
+	// Black background
+	SetBackgroundColour(wxColour(*wxBLACK));
 
 	Connect(EXIT_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::OnExitButton));
 
