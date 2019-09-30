@@ -27,9 +27,12 @@ public:
 class TopFrame : public wxFrame {
 public:
 	TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
+
+	// Program class variables
 	MainMenu* mMenu;
 	AirfoilViewer* aViewer;
 	wxBoxSizer* topSizer;
+
 	void initializeTopFrame();
 	void switchPanels(int panelID);
 };
@@ -37,7 +40,7 @@ public:
 wxIMPLEMENT_APP(FoilApp);
 bool FoilApp::OnInit() {
 
-	// Create the top frame and start with the main menu
+	// Create the top frame
 	TopFrame* topFrame = new TopFrame("FoilAnalysis", wxPoint(0,0), wxSize(1200,700));
 	topFrame->initializeTopFrame();
 
@@ -66,6 +69,7 @@ TopFrame::TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size
 	SetMenuBar(menuBar);
 }
 
+// Creates the top sizer, main menu, and initializes the program classes
 void TopFrame::initializeTopFrame() {
 	// Topmost sizer for the program that defines the layout of the top frame
 	topSizer = new wxBoxSizer(wxVERTICAL);
@@ -79,6 +83,7 @@ void TopFrame::initializeTopFrame() {
 	topSizer->Add(mMenu->getTopPanel(), 1, wxGROW);
 }
 
+// Hides the other panels and shows the panel of the specified ID
 void TopFrame::switchPanels(int panelID) {
 	switch (panelID) {
 	case VIEWER_ID:
@@ -89,6 +94,13 @@ void TopFrame::switchPanels(int panelID) {
 	}
 }
 
+//===========================================================================================
+//
+//		PANEL SWITCHING BIND FUNCTIONS
+//
+//===========================================================================================
+
+// When the 'Airfoil Viewer' button is pressed in the main menu, show the viewer program
 void StartPanel::onViewerButton(wxCommandEvent& event) {
 	dynamic_cast<TopFrame*>(GetParent())->switchPanels(VIEWER_ID);
 }
