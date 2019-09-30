@@ -23,7 +23,18 @@ AirfoilViewer::AirfoilViewer(wxWindow* parent) {
 bool AirfoilViewer::initializeAirfoilViewer(wxWindow* parent) {
 	viewerPanel = new ViewerPanel(parent);
 
-	if (viewerPanel)
+	if (viewerPanel) {
+		show(false);
 		return true;
+	}
 	return false;
+}
+
+void AirfoilViewer::show(bool show) {
+	if (viewerPanel) {
+		viewerPanel->Show(show);
+		viewerPanel->Enable(show);
+	}
+	else
+		return; // Add error reporting here
 }

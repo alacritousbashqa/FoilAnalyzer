@@ -15,4 +15,6 @@ class AirfoilViewer {
 public:
 	AirfoilViewer(wxWindow* parent);
 	bool initializeAirfoilViewer(wxWindow* parent);
+	// Shows and enables the viewer top level panel
+	void show(bool show = true);
 };

@@ -65,5 +65,11 @@ MainMenu::MainMenu(wxFrame* topFrame) {
 bool MainMenu::initializeMainMenu(wxFrame* topFrame) {
 	mainMenuPanel = new StartPanel(topFrame);
 
-	return true;
+void MainMenu::show(bool show) {
+	if (mainMenuPanel) {
+		mainMenuPanel->Show(show);
+		mainMenuPanel->Enable(show);
+	}
+	else
+		return; // Add error reporting here
 }
