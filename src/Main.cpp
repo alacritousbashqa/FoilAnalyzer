@@ -90,9 +90,15 @@ void TopFrame::initializeTopFrame() {
 // Hides the other panels and shows the panel of the specified ID
 void TopFrame::switchPanels(int panelID) {
 	switch (panelID) {
+	case MAIN_MENU_ID:
+		aViewer->show(false);
+		mMenu->show();
+		currentProgram = mMenu;
+		break;
 	case VIEWER_ID:
 		mMenu->show(false);
 		aViewer->show();
+		currentProgram = aViewer;
 		break;
 	}
 }
