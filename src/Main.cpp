@@ -79,8 +79,9 @@ void TopFrame::initializeTopFrame() {
 	mMenu = new MainMenu(this);
 	aViewer = new AirfoilViewer(this);
 
-	// Add the Main Menu
+	// Add the program panels; only the Main Menu is visible by default
 	topSizer->Add(mMenu->getTopPanel(), 1, wxGROW);
+	topSizer->Add(aViewer->getTopPanel(), 1, wxGROW);
 }
 
 // Hides the other panels and shows the panel of the specified ID
@@ -88,7 +89,6 @@ void TopFrame::switchPanels(int panelID) {
 	switch (panelID) {
 	case VIEWER_ID:
 		mMenu->show(false);
-		topSizer->Prepend(aViewer->getTopPanel(), 1, wxGROW);
 		aViewer->show();
 		break;
 	}
