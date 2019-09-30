@@ -26,6 +26,7 @@ class MainMenu {
 	StartPanel* mainMenuPanel;
 public:
 	MainMenu(wxFrame* topFrame);
+	StartPanel* getTopPanel();
 	bool initializeMainMenu(wxFrame* topFrame);
 	// Shows and enables the main menu top level panel
 	void show(bool show = true);

@@ -61,6 +61,10 @@ MainMenu::MainMenu(wxFrame* topFrame) {
 	initializeMainMenu(topFrame);
 }
 
+StartPanel* MainMenu::getTopPanel() {
+	return mainMenuPanel;
+}
+
 // Creates the main menu panel and sets up its widgets
 bool MainMenu::initializeMainMenu(wxFrame* topFrame) {
 	mainMenuPanel = new StartPanel(topFrame);

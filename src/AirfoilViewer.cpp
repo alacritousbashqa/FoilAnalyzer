@@ -20,6 +20,10 @@ AirfoilViewer::AirfoilViewer(wxWindow* parent) {
 	initializeAirfoilViewer(parent);
 }
 
+ViewerPanel* AirfoilViewer::getTopPanel() {
+	return viewerPanel;
+}
+
 bool AirfoilViewer::initializeAirfoilViewer(wxWindow* parent) {
 	viewerPanel = new ViewerPanel(parent);
 
