@@ -58,16 +58,16 @@ void StartPanel::onExitButton(wxCommandEvent& event) {
 }
 
 // Wrapper holding information on main menu panel and associated widgets
-MainMenu::MainMenu(wxFrame* topFrame) {
-	initializeMainMenu(topFrame);
+MainMenu::MainMenu(wxWindow* topFrame) {
+	initializeProgram(topFrame);
 }
 
-StartPanel* MainMenu::getTopPanel() {
+wxPanel* MainMenu::getTopPanel() {
 	return mainMenuPanel;
 }
 
 // Creates the main menu panel and sets up its widgets
-bool MainMenu::initializeMainMenu(wxFrame* topFrame) {
+bool MainMenu::initializeProgram(wxWindow* topFrame) {
 	mainMenuPanel = new StartPanel(topFrame);
 	if(mainMenuPanel)
 		return true;

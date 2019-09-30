@@ -17,14 +17,14 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 }
 
 AirfoilViewer::AirfoilViewer(wxWindow* parent) {
-	initializeAirfoilViewer(parent);
+	initializeProgram(parent);
 }
 
-ViewerPanel* AirfoilViewer::getTopPanel() {
+wxPanel* AirfoilViewer::getTopPanel() {
 	return viewerPanel;
 }
 
-bool AirfoilViewer::initializeAirfoilViewer(wxWindow* parent) {
+bool AirfoilViewer::initializeProgram(wxWindow* parent) {
 	viewerPanel = new ViewerPanel(parent);
 
 	if (viewerPanel) {

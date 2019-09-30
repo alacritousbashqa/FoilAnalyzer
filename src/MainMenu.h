@@ -5,6 +5,8 @@
 #include <wx/wx.h>
 #endif
 
+#include "faProgram.h"
+
 #define TITLE "Foil Analyzer"
 
 /* Upper level panel that holds the layout for the main menu.*/
@@ -24,12 +26,12 @@ enum {
 
 /* Constructs the layout of the main menu panel upon app initialization.
 It also stores a reference to the main menu panel.*/
-class MainMenu {
+class MainMenu : public faProgram {
 	StartPanel* mainMenuPanel;
 public:
-	MainMenu(wxFrame* topFrame);
-	StartPanel* getTopPanel();
-	bool initializeMainMenu(wxFrame* topFrame);
+	MainMenu(wxWindow* topFrame);
+	wxPanel* getTopPanel();
+	bool initializeProgram(wxWindow* topFrame);
 	// Shows and enables the main menu top level panel
 	void show(bool show = true);
 };

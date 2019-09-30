@@ -5,17 +5,19 @@
 #include <wx/wx.h>
 #endif
 
+#include "faProgram.h"
+
 class ViewerPanel : public wxPanel {
 public:
 	ViewerPanel(wxWindow* parent);
 };
 
-class AirfoilViewer {
+class AirfoilViewer : public faProgram {
 	ViewerPanel* viewerPanel;
 public:
 	AirfoilViewer(wxWindow* parent);
-	ViewerPanel* getTopPanel();
-	bool initializeAirfoilViewer(wxWindow* parent);
+	wxPanel* getTopPanel();
+	bool initializeProgram(wxWindow* parent);
 	// Shows and enables the viewer top level panel
 	void show(bool show = true);
 };
