@@ -9,6 +9,7 @@
 #include <wx/sizer.h>
 
 #include "MainMenu.h"
+#include "AirfoilViewer.h"
 
 class FoilApp : public wxApp {
 public:
@@ -27,6 +28,7 @@ bool FoilApp::OnInit() {
 	// Create the top frame and start with the main menu
 	TopFrame* topFrame = new TopFrame("FoilAnalysis", wxPoint(0,0), wxSize(1200,700));
 	MainMenu* mMenu = new MainMenu(topFrame);
+	AirfoilViewer* aViewer = new AirfoilViewer(topFrame);
 
 	topFrame->Show(true);
 	return true;
