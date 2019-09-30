@@ -13,11 +13,13 @@ public:
 	StartPanel(wxWindow* parent);
 private:
 	void onExitButton(wxCommandEvent& event);
+	void onViewerButton(wxCommandEvent& event); // Defined in Main.cpp
 };
 
 // Button IDs for event connection
 enum {
-	EXIT_ID = 3
+	EXIT_ID = 3,
+	VIEWER_BUTTON_ID = 4
 };
 
 /* Constructs the layout of the main menu panel upon app initialization.

@@ -47,4 +47,7 @@ TopFrame::TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size
 	menuBar->Append(menuFile, "&File");
 	menuBar->Append(menuHelp, "&Help");
 	SetMenuBar(menuBar);
+
+void StartPanel::onViewerButton(wxCommandEvent& event) {
+	dynamic_cast<TopFrame*>(GetParent())->switchPanels(2);
 }
