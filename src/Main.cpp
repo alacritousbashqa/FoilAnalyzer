@@ -32,6 +32,7 @@ public:
 	MainMenu* mMenu;
 	AirfoilViewer* aViewer;
 	wxBoxSizer* topSizer;
+	faProgram* currentProgram;
 
 	void initializeTopFrame();
 	void switchPanels(int panelID);
@@ -82,6 +83,8 @@ void TopFrame::initializeTopFrame() {
 	// Add the program panels; only the Main Menu is visible by default
 	topSizer->Add(mMenu->getTopPanel(), 1, wxGROW);
 	topSizer->Add(aViewer->getTopPanel(), 1, wxGROW);
+
+	currentProgram = mMenu;
 }
 
 // Hides the other panels and shows the panel of the specified ID
