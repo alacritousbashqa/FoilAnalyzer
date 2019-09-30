@@ -24,6 +24,7 @@ public:
 	AirfoilViewer* aViewer;
 	wxBoxSizer* topSizer;
 	void initializeTopFrame();
+	void switchPanels(int panelID);
 };
 
 wxIMPLEMENT_APP(FoilApp);
@@ -69,6 +70,16 @@ void TopFrame::initializeTopFrame() {
 
 	// Add the Main Menu
 	topSizer->Add(mMenu->getTopPanel(), 1, wxGROW);
+}
+
+void TopFrame::switchPanels(int panelID) {
+	switch (panelID) {
+	case 2:
+		mMenu->show(false);
+		topSizer->Prepend(aViewer->getTopPanel(), 1, wxGROW);
+		aViewer->show();
+		break;
+	}
 }
 
 void StartPanel::onViewerButton(wxCommandEvent& event) {
