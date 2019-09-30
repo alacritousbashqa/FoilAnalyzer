@@ -20,6 +20,10 @@ public:
 class TopFrame : public wxFrame {
 public:
 	TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
+	MainMenu* mMenu;
+	AirfoilViewer* aViewer;
+	wxBoxSizer* topSizer;
+	void initializeTopFrame();
 };
 
 wxIMPLEMENT_APP(FoilApp);
@@ -27,12 +31,17 @@ bool FoilApp::OnInit() {
 
 	// Create the top frame and start with the main menu
 	TopFrame* topFrame = new TopFrame("FoilAnalysis", wxPoint(0,0), wxSize(1200,700));
-	MainMenu* mMenu = new MainMenu(topFrame);
-	AirfoilViewer* aViewer = new AirfoilViewer(topFrame);
+	topFrame->initializeTopFrame();
 
 	topFrame->Show(true);
 	return true;
 }
+
+//===========================================================================================
+//
+//		FRAME FUNCTIONS
+//
+//===========================================================================================
 
 TopFrame::TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size)
 	: wxFrame(NULL, wxID_ANY, title, pos, size) {
@@ -47,6 +56,20 @@ TopFrame::TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size
 	menuBar->Append(menuFile, "&File");
 	menuBar->Append(menuHelp, "&Help");
 	SetMenuBar(menuBar);
+}
+
+void TopFrame::initializeTopFrame() {
+	// Topmost sizer for the program that defines the layout of the top frame
+	topSizer = new wxBoxSizer(wxVERTICAL);
+	SetSizer(topSizer);
+
+	// Program Classes
+	mMenu = new MainMenu(this);
+	aViewer = new AirfoilViewer(this);
+
+	// Add the Main Menu
+	topSizer->Add(mMenu->getTopPanel(), 1, wxGROW);
+}
 
 void StartPanel::onViewerButton(wxCommandEvent& event) {
 	dynamic_cast<TopFrame*>(GetParent())->switchPanels(2);
