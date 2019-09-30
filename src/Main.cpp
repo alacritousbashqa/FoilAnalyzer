@@ -11,6 +11,13 @@
 #include "MainMenu.h"
 #include "AirfoilViewer.h"
 
+// Holds IDs for each program panel to help in panel switching
+enum ProgPanelIDs {
+	MAIN_MENU_ID = 1,
+	VIEWER_ID = 2,
+	ANALYZER_ID = 3
+};
+
 class FoilApp : public wxApp {
 public:
 	virtual bool OnInit();
@@ -74,7 +81,7 @@ void TopFrame::initializeTopFrame() {
 
 void TopFrame::switchPanels(int panelID) {
 	switch (panelID) {
-	case 2:
+	case VIEWER_ID:
 		mMenu->show(false);
 		topSizer->Prepend(aViewer->getTopPanel(), 1, wxGROW);
 		aViewer->show();
@@ -83,5 +90,5 @@ void TopFrame::switchPanels(int panelID) {
 }
 
 void StartPanel::onViewerButton(wxCommandEvent& event) {
-	dynamic_cast<TopFrame*>(GetParent())->switchPanels(2);
+	dynamic_cast<TopFrame*>(GetParent())->switchPanels(VIEWER_ID);
 }
