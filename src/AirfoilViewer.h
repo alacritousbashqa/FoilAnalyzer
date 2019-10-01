@@ -8,7 +8,9 @@
 #include "faProgram.h"
 
 class ViewerPanel : public wxPanel {
+	wxBoxSizer * avTopSizer;
 public:
+	wxBoxSizer * getTopSizer();
 	ViewerPanel(wxWindow* parent);
 };
 
