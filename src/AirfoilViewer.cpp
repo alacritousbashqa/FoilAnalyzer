@@ -19,6 +19,9 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 
 	this->SetSizer(avTopSizer);
 
+	// Black Background
+	SetBackgroundColour(wxColour(*wxBLACK));
+
 	// ------ Bind button events to functions ------
 	// Main Menu Button
 	Connect(BACK_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onViewerBackButton));
