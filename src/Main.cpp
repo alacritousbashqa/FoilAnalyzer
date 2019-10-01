@@ -113,3 +113,8 @@ void TopFrame::switchPanels(int panelID) {
 void StartPanel::onViewerButton(wxCommandEvent& event) {
 	dynamic_cast<TopFrame*>(GetParent())->switchPanels(VIEWER_ID);
 }
+
+// When the 'Main Menu' button is pressed in the airfoil viewer, show the main menu
+void ViewerPanel::onViewerBackButton(wxCommandEvent& event) {
+	dynamic_cast<TopFrame*>(GetParent())->switchPanels(MAIN_MENU_ID);
+}
