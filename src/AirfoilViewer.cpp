@@ -12,8 +12,17 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	wxListBox* airfoilListBox = new wxListBox(this, -1);
 	avTopSizer->Add(airfoilListBox, 0, wxEXPAND);
 
+	wxBoxSizer* buttonBox = new wxBoxSizer(wxHORIZONTAL);
+	buttonBox->Add(new wxButton(this, BACK_ID, "Main Menu"), wxSizerFlags().Left());
+
+	avTopSizer->Add(buttonBox);
+
 	this->SetSizer(avTopSizer);
 
+	// ------ Bind button events to functions ------
+	// Main Menu Button
+	Connect(BACK_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onViewerBackButton));
+}
 
 wxBoxSizer* ViewerPanel::getTopSizer() {
 	return avTopSizer;

@@ -12,6 +12,13 @@ class ViewerPanel : public wxPanel {
 public:
 	wxBoxSizer * getTopSizer();
 	ViewerPanel(wxWindow* parent);
+private:
+	void onViewerBackButton(wxCommandEvent& event); // Defined in Main.cpp
+};
+
+// Button IDs for event connection
+enum {
+	BACK_ID = 2
 };
 
 class AirfoilViewer : public faProgram {
