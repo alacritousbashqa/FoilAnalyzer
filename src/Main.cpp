@@ -93,11 +93,13 @@ void TopFrame::switchPanels(int panelID) {
 	case MAIN_MENU_ID:
 		aViewer->show(false);
 		mMenu->show();
+		topSizer->Layout();
 		currentProgram = mMenu;
 		break;
 	case VIEWER_ID:
 		mMenu->show(false);
 		aViewer->show();
+		topSizer->Layout();
 		currentProgram = aViewer;
 		break;
 	}
