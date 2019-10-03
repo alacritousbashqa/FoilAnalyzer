@@ -1,7 +1,7 @@
 #include "AirfoilViewer.h"
 
 ViewerPanel::ViewerPanel(wxWindow* parent)
-	: wxPanel(parent){
+	: wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE){
 
 	// Sizer that controls the overall layout of the airfoil viewer
 	avTopSizer = new wxBoxSizer(wxVERTICAL);
