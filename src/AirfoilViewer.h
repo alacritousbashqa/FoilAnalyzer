@@ -12,8 +12,10 @@ class ViewerPanel : public wxPanel {
 public:
 	wxBoxSizer * getTopSizer();
 	ViewerPanel(wxWindow* parent);
+	void onPaintEvent(wxPaintEvent& event);
 private:
 	void onViewerBackButton(wxCommandEvent& event); // Defined in Main.cpp
+	void drawAxes(wxPaintDC& dc);
 };
 
 // Button IDs for event connection

@@ -25,10 +25,19 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	// ------ Bind button events to functions ------
 	// Main Menu Button
 	Connect(BACK_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onViewerBackButton));
+	Connect(GetId(), wxEVT_PAINT, wxPaintEventHandler(ViewerPanel::onPaintEvent));
 }
 
 wxBoxSizer* ViewerPanel::getTopSizer() {
 	return avTopSizer;
+}
+
+void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
+	wxPaintDC pdc(this);
+	drawAxes(pdc);
+}
+
+void ViewerPanel::drawAxes(wxPaintDC& dc) {
 }
 
 AirfoilViewer::AirfoilViewer(wxWindow* parent) {
