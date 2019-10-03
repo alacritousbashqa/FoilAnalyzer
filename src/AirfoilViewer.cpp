@@ -38,6 +38,11 @@ void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 }
 
 void ViewerPanel::drawAxes(wxPaintDC& dc) {
+	int w = avTopSizer->GetSize().GetWidth();
+	int h = avDrawArea->GetRect().GetHeight();
+	dc.SetPen(wxPen(*wxWHITE, 2));
+	dc.DrawLine(60,50,60,h-50);
+	dc.DrawLine(20,h/2,w-20,h/2);
 }
 
 AirfoilViewer::AirfoilViewer(wxWindow* parent) {
