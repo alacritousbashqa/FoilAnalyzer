@@ -9,6 +9,7 @@
 
 class ViewerPanel : public wxPanel {
 	wxBoxSizer * avTopSizer;
+	wxSizerItem* avDrawArea;
 public:
 	wxBoxSizer * getTopSizer();
 	ViewerPanel(wxWindow* parent);

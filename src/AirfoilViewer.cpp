@@ -7,7 +7,7 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	avTopSizer = new wxBoxSizer(wxVERTICAL);
 
 	// Drawing area for the airfoil plot
-	wxSizerItem* avDrawArea = avTopSizer->Add(new wxPanel(this,-1), wxGROW);
+	avDrawArea = avTopSizer->Add(new wxPanel(this,7), wxEXPAND);
 	// List to hold loaded airfoils
 	wxListBox* airfoilListBox = new wxListBox(this, -1);
 	avTopSizer->Add(airfoilListBox, 0, wxEXPAND);
