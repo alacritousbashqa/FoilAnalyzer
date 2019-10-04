@@ -45,9 +45,16 @@ void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 void ViewerPanel::drawAxes(wxPaintDC& dc) {
 	int w = avTopSizer->GetSize().GetWidth();
 	int h = avDrawArea->GetRect().GetHeight();
+	wxPoint top(60, 50);
+	wxPoint bottom(60, h - 50);
+	wxPoint left(20, h / 2);
+	wxPoint right(w - 20, h / 2);
+	wxPoint origin(60, h / 2);
 	dc.SetPen(wxPen(*wxWHITE, 2));
-	dc.DrawLine(60,50,60,h-50);
-	dc.DrawLine(20,h/2,w-20,h/2);
+	dc.DrawLine(top,bottom);
+	dc.DrawLine(left,right);
+	drawTicks(dc, origin, top, bottom, axesVERT, 15);
+	drawTicks(dc, origin, left, right, axesHORIZ, 23);
 }
 
 void ViewerPanel::drawTicks(wxDC& dc, wxPoint& origin, wxPoint& beg, wxPoint& end, int dir, int n){
