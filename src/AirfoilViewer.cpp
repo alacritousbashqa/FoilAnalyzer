@@ -32,6 +32,11 @@ wxBoxSizer* ViewerPanel::getTopSizer() {
 	return avTopSizer;
 }
 
+enum {
+	axesHORIZ = 0,
+	axesVERT = 1
+};
+
 void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxPaintDC pdc(this);
 	drawAxes(pdc);
