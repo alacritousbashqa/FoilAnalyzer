@@ -19,6 +19,9 @@ Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4]) {
 	int xBound[2] = { boundary.GetLeft(), boundary.GetRight() };
 	int yBound[2] = { boundary.GetTop(), boundary.GetBottom() };
 
+	// Create axes
+	horizAxis = new Axis(axisDirection::HORIZONTAL, xBound, origin, vOrigin, xLim, 0.1);
+	vertAxis = new Axis(axisDirection::VERTICAL, yBound, origin, vOrigin, yLim, 0.1);
 }
 
 void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
