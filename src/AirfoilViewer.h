@@ -6,10 +6,13 @@
 #endif
 
 #include "faProgram.h"
+#include "Plot.h"
 
 class ViewerPanel : public wxPanel {
 	wxBoxSizer * avTopSizer;
 	wxSizerItem* avDrawArea;
+
+	Plot* airfoilPlot;
 public:
 	wxBoxSizer * getTopSizer();
 	ViewerPanel(wxWindow* parent);
