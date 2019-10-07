@@ -7,12 +7,12 @@ Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2]) {
 }
 
 Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4]) {
-	Plot::boundary = boundary;
+	this->boundary = boundary;
 	// Borders
-	Plot::border[0] = border[0];
-	Plot::border[1] = border[1];
-	Plot::border[2] = border[2];
-	Plot::border[3] = border[3];
+	this->border[0] = border[0];
+	this->border[1] = border[1];
+	this->border[2] = border[2];
+	this->border[3] = border[3];
 
 	calculateOrigin(xLim, yLim);
 
