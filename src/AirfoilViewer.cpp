@@ -22,6 +22,11 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	// Black Background
 	SetBackgroundColour(wxColour(*wxBLACK));
 
+	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), parent->GetSize().GetWidth(), 500);
+	double xLim[2] = { -0.1,1.1 };
+	double yLim[2] = { -0.1,0.1 };
+	airfoilPlot = new Plot(plotRect, xLim, yLim);
+
 	// ------ Bind button events to functions ------
 	// Main Menu Button
 	Connect(BACK_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onViewerBackButton));
@@ -39,7 +44,7 @@ enum {
 
 void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxPaintDC pdc(this);
-	drawAxes(pdc);
+	airfoilPlot->draw(pdc);
 }
 
 void ViewerPanel::drawAxes(wxPaintDC& dc) {
