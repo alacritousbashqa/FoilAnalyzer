@@ -23,7 +23,7 @@ class Axis {
 
 	void calculateVLocs();
 public:
-	Axis(axisDirection dir, int boundary[2], wxPoint& origin, int vOrigin[2]);
-	Axis(axisDirection dir, int boundary[2], wxPoint& origin, int vOrigin[2], double limits[2], double step);
+	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2]);
+	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2], double limits[2], double step);
 	void draw(wxDC& dc);
 };
