@@ -9,7 +9,7 @@
 #include "Plot.h"
 
 class ViewerPanel : public wxPanel {
-	wxBoxSizer * avTopSizer;
+	wxBoxSizer* avTopSizer;
 	wxSizerItem* avDrawArea;
 
 	Plot* airfoilPlot;
