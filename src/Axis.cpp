@@ -1,10 +1,9 @@
 #include "Axis.h"
 
-	double lims[2] = { -1.0,1.0 };
-	Axis::Axis(dir, boundary, origin, vOrigin, lims, 0.1);
 double DEFAULT_LIMITS[2] = { -1.0,-1.0 };
 
 Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2])
+	: Axis(dir, boundary, origin, vOrigin, DEFAULT_LIMITS, 0.1){
 }
 
 Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2], double limits[2], double step) {
