@@ -2,7 +2,8 @@
 
 int DEFAULT_BORDER[4] = { 0,0,0,0 };
 
-Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2]) : Plot(boundary, xLim, yLim, DEFAULT_BORDER){
+Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2]) 
+	: Plot(boundary, xLim, yLim, DEFAULT_BORDER){
 }
 
 Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4]) {
