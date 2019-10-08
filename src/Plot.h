@@ -8,7 +8,7 @@ class Plot {
 	Axis* vertAxis;
 	std::string title;
 	wxPoint origin;
-	int vOrigin[2]{};
+	double vOrigin[2]{};
 	wxRect boundary;
 
 	void calculateOrigin(double xLim[2], double yLim[2]);
