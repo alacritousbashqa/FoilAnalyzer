@@ -64,6 +64,14 @@ Axis* Plot::getVAxis() {
 }
 
 void Plot::draw(wxDC& dc) {
-	horizAxis->draw(dc);
-	vertAxis->draw(dc);
+	if (!horizAxis) {
+		wxLogError("horizAxis is a null pointer!");
+	}
+	else
+		horizAxis->draw(dc);
+	if (!vertAxis) {
+		wxLogError("vertAxis is a null pointer!");
+	}
+	else
+		vertAxis->draw(dc);
 }
