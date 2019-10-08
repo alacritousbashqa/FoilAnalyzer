@@ -50,6 +50,10 @@ StartPanel::StartPanel(wxWindow* parent)
 	Connect(EXIT_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onExitButton));
 	Connect(VIEWER_BUTTON_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onViewerButton));
 
+
+
+	wxLog* log = new wxLogWindow(NULL, "Log");
+	wxLog::SetActiveTarget(log);
 }
 
 // Closes application
