@@ -55,6 +55,14 @@ void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
 	}
 }
 
+Axis* Plot::getHAxis() {
+	return horizAxis;
+}
+
+Axis* Plot::getVAxis() {
+	return vertAxis;
+}
+
 void Plot::draw(wxDC& dc) {
 	horizAxis->draw(dc);
 	vertAxis->draw(dc);
