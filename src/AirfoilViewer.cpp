@@ -128,6 +128,8 @@ void AirfoilViewer::show(bool show) {
 		viewerPanel->Show(show);
 		viewerPanel->Enable(show);
 	}
-	else
-		return; // Add error reporting here
+	else {
+		wxLogError("Cannot show airfoil viewer! Associated top-level panel does not exist!");
+		return;
+	}
 }

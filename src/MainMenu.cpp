@@ -83,6 +83,8 @@ void MainMenu::show(bool show) {
 		mainMenuPanel->Show(show);
 		mainMenuPanel->Enable(show);
 	}
-	else
-		return; // Add error reporting here
+	else {
+		wxLogError("Cannot show main menu! Associated top-level panel does not exist!");
+		return;
+	}
 }
