@@ -17,6 +17,7 @@ Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2
 	this->limits[1] = limits[1];
 	this->step = step;
 
+	calculateVLocs();
 }
 void Axis::calculateVLocs() {
 }
