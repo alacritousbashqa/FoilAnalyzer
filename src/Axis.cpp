@@ -2,6 +2,8 @@
 
 	double lims[2] = { -1.0,1.0 };
 	Axis::Axis(dir, boundary, origin, vOrigin, lims, 0.1);
+double DEFAULT_LIMITS[2] = { -1.0,-1.0 };
+
 Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2])
 }
 
