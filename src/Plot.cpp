@@ -27,11 +27,11 @@ Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4]) {
 void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
 	// X component
 	if (xLim[0] >= 0) {
-		origin.x = boundary.GetLeft();
+		origin.x = boundary.GetLeft() + 1;
 		vOrigin[0] = xLim[0];
 	}
 	else if (xLim[1] <= 0) {
-		origin.x = boundary.GetRight();
+		origin.x = boundary.GetRight() - 1;
 		vOrigin[0] = xLim[1];
 	}
 	else {
@@ -41,11 +41,11 @@ void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
 	}
 	// Y component
 	if (yLim[0] >= 0) {
-		origin.y = boundary.GetBottom();
+		origin.y = boundary.GetBottom() - 1;
 		vOrigin[1] = yLim[0];
 	}
 	else if (yLim[1] <= 0) {
-		origin.y = boundary.GetTop();
+		origin.y = boundary.GetTop() + 1;
 		vOrigin[1] = yLim[1];
 	}
 	else {
