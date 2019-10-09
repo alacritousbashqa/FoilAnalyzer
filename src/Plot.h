@@ -15,6 +15,7 @@ class Plot {
 public:
 	Plot(wxRect& boundary, double xLim[2], double yLim[2]);
 	Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4]);
+	void updateBoundaries(wxRect& rect);
 	void draw(wxDC& dc);
 	Axis* getHAxis();
 	Axis *getVAxis();

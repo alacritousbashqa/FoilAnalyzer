@@ -63,6 +63,17 @@ Axis* Plot::getVAxis() {
 	return vertAxis;
 }
 
+void Plot::updateBoundaries(wxRect& rect) {
+	boundary = rect;
+	int xBound[2] = { boundary.GetLeft(), boundary.GetRight() };
+	int yBound[2] = { boundary.GetTop(), boundary.GetBottom() };
+	double xLim[2] = { horizAxis->getLowerLimit(), horizAxis->getUpperLimit() };
+	double yLim[2] = { vertAxis->getLowerLimit(), vertAxis->getUpperLimit() };
+	calculateOrigin(xLim, yLim);
+	horizAxis->updateAxis(xBound,origin,vOrigin);
+	vertAxis->updateAxis(yBound, origin, vOrigin);
+}
+
 void Plot::draw(wxDC& dc) {
 	if (!horizAxis) {
 		wxLogError("horizAxis is a null pointer!");
