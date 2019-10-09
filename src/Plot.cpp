@@ -35,7 +35,7 @@ void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
 		vOrigin[0] = xLim[1];
 	}
 	else {
-		double ratio = abs((double)xLim[0]) / ((double)xLim[1] - (double)xLim[0]);
+		double ratio = abs(xLim[0] / (xLim[1] - xLim[0]));
 		origin.x = (int)(ratio * boundary.GetWidth() + boundary.GetX());
 		vOrigin[0] = 0.0;
 	}
@@ -49,7 +49,7 @@ void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
 		vOrigin[1] = yLim[1];
 	}
 	else {
-		double ratio = abs((double)yLim[1]) / ((double)yLim[1] - (double)yLim[0]);
+		double ratio = abs(yLim[1] / (yLim[1] - yLim[0]));
 		origin.y = (int)(ratio * boundary.GetHeight() + boundary.GetY());
 		vOrigin[1] = 0;
 	}
