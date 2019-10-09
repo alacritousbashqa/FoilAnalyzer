@@ -17,7 +17,7 @@ class Axis {
 	axisDirection dir;
 	std::string label;
 	wxPoint origin;
-	int vOrigin[2]{};
+	double vOrigin[2]{};
 
 	std::map<double, int> valueLocs;
 
