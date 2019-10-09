@@ -113,4 +113,9 @@ void Axis::setVOrigin(double vOrigin[2]) {
 	this->vOrigin[1] = vOrigin[1];
 }
 
+void Axis::updateAxis(int boundary[2], wxPoint origin, double vOrigin[2]) {
+	setBoundary(boundary);
+	setOrigin(origin);
+	setVOrigin(vOrigin);
+	calculateVLocs();
 }

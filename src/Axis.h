@@ -30,5 +30,6 @@ public:
 	void setBoundary(int boundary[2]);
 	void setOrigin(wxPoint origin);
 	void setVOrigin(double vOrigin[2]);
+	void updateAxis(int boundary[2], wxPoint origin, double vOrigin[2]);
 	void draw(wxDC& dc);
 };
