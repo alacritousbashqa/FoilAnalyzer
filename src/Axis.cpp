@@ -19,8 +19,42 @@ Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2
 
 	calculateVLocs();
 }
+
 void Axis::calculateVLocs() {
+	if (dir == HORIZONTAL) {
+		int m_p = (limits[1] - vOrigin[0]) / step;
+		int m_n = (vOrigin[0] - limits[0]) / step;
+		int np = (boundary[1] - origin.x) / m_p;
+
+		valueLocs[limits[0]] = boundary[0];
+		valueLocs[limits[1]] = boundary[1];
+		valueLocs[vOrigin[0]] = origin.x;
+
+		for (int i = 1; i <= m_p; i++) {
+			valueLocs[vOrigin[0] + i * step] = origin.x + i * np;
+		}
+		for (int i = -1; i >= -m_n; i--) {
+			valueLocs[vOrigin[0] + i * step] = origin.x + i * np;
+		}
+	}
+	else {
+		int m_p = (limits[1] - vOrigin[1]) / step;
+		int m_n = (vOrigin[1] - limits[0]) / step;
+		int np = (boundary[0] - origin.y) / m_p;
+
+		valueLocs[limits[0]] = boundary[1];
+		valueLocs[limits[1]] = boundary[0];
+		valueLocs[vOrigin[1]] = origin.y;
+
+		for (int i = 1; i <= m_p; i++) {
+			valueLocs[vOrigin[1] + i * step] = origin.y + i * np;
+		}
+		for (int i = -1; i >= -m_n; i--) {
+			valueLocs[vOrigin[1] + i * step] = origin.y + i * np;
+		}
+	}
 }
+
 void Axis::draw(wxDC& dc) {
 	dc.SetPen(wxPen(*wxRED, 1));
 	dc.SetTextForeground(*wxRED);
