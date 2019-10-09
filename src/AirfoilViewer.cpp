@@ -44,6 +44,8 @@ enum {
 
 void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxPaintDC pdc(this);
+	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), this->GetParent()->GetSize().GetWidth(), avTopSizer->GetChildren().front()->GetRect().GetHeight());
+	airfoilPlot->updateBoundaries(plotRect);
 	airfoilPlot->draw(pdc);
 }
 
