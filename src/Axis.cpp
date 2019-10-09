@@ -89,3 +89,12 @@ void Axis::draw(wxDC& dc) {
 	}
 	
 }
+
+double Axis::getLowerLimit() {
+	return limits[0];
+}
+
+double Axis::getUpperLimit() {
+	return limits[1];
+}
+}
