@@ -64,10 +64,13 @@ void Axis::draw(wxDC& dc) {
 		dc.DrawLine(boundary[0], origin.y, boundary[1], origin.y); // Draw axis line
 		for (; it != valueLocs.end(); ++it) { // Draw axis ticks
 			dc.DrawLine(it->second, origin.y + 5, it->second, origin.y - 5);
-			dc.DrawText(std::to_string(it->first).substr(0,4), it->second, origin.y + 7);
 			if (it->first == 0.0)
 				dc.DrawText(std::to_string(it->first).substr(0, 1), it->second + 7, origin.y + 7);
 			else {
+				if (it->first < 0)
+					dc.DrawText(std::to_string(it->first).substr(0, 5), it->second, origin.y + 7);
+				else
+					dc.DrawText(std::to_string(it->first).substr(0, 4), it->second, origin.y + 7);
 			}
 		}
 	}
@@ -77,6 +80,10 @@ void Axis::draw(wxDC& dc) {
 			dc.DrawLine(origin.x + 5, it->second, origin.x - 5, it->second);
 			if (it->first == 0.0);
 			else {
+				if (it->first < 0)
+					dc.DrawText(std::to_string(it->first).substr(0, 5), origin.x + 7, it->second);
+				else
+					dc.DrawText(std::to_string(it->first).substr(0, 4), origin.x + 7, it->second);
 			}
 		}
 	}
