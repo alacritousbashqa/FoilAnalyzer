@@ -65,12 +65,19 @@ void Axis::draw(wxDC& dc) {
 		for (; it != valueLocs.end(); ++it) { // Draw axis ticks
 			dc.DrawLine(it->second, origin.y + 5, it->second, origin.y - 5);
 			dc.DrawText(std::to_string(it->first).substr(0,4), it->second, origin.y + 7);
+			if (it->first == 0.0)
+				dc.DrawText(std::to_string(it->first).substr(0, 1), it->second + 7, origin.y + 7);
+			else {
+			}
 		}
 	}
 	else {
 		dc.DrawLine(origin.x, boundary[0], origin.x, boundary[1]);
 		for (; it != valueLocs.end(); ++it) {
 			dc.DrawLine(origin.x + 5, it->second, origin.x - 5, it->second);
+			if (it->first == 0.0);
+			else {
+			}
 		}
 	}
 	
