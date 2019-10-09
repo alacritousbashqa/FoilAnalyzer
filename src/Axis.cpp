@@ -55,6 +55,11 @@ void Axis::calculateVLocs() {
 	}
 }
 
+void Axis::setBoundary(int boundary[2]) {
+	this->boundary[0] = boundary[0];
+	this->boundary[1] = boundary[1];
+}
+
 void Axis::draw(wxDC& dc) {
 	dc.SetPen(wxPen(*wxRED, 1));
 	dc.SetTextForeground(*wxRED);
@@ -97,4 +102,15 @@ double Axis::getLowerLimit() {
 double Axis::getUpperLimit() {
 	return limits[1];
 }
+
+void Axis::setOrigin(wxPoint origin) {
+	this->origin.x = origin.x;
+	this->origin.y = origin.y;
+}
+
+void Axis::setVOrigin(double vOrigin[2]) {
+	this->vOrigin[0] = vOrigin[0];
+	this->vOrigin[1] = vOrigin[1];
+}
+
 }
