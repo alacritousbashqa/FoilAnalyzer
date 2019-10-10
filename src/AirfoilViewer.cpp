@@ -25,7 +25,8 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), parent->GetSize().GetWidth(), 500);
 	double xLim[2] = { -0.1,1.1 };
 	double yLim[2] = { -0.1,0.1 };
-	airfoilPlot = new Plot(plotRect, xLim, yLim);
+	int bords[4] = { 50,50,50,50 };
+	airfoilPlot = new Plot(plotRect, xLim, yLim, bords);
 
 	// ------ Bind button events to functions ------
 	// Main Menu Button
