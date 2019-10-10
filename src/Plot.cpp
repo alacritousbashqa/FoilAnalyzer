@@ -8,6 +8,8 @@ Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2])
 
 Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4]) {
 	this->boundary = boundary;
+	this->boundary.SetLeftTop(boundary.GetTopLeft() + wxPoint(border[3], border[0]));
+	this->boundary.SetBottomRight(boundary.GetBottomRight() - 2 * wxPoint(border[1], border[2]));
 	// Borders
 	this->border[0] = border[0];
 	this->border[1] = border[1];
@@ -65,6 +67,8 @@ Axis* Plot::getVAxis() {
 
 void Plot::updateBoundaries(wxRect& rect) {
 	boundary = rect;
+	boundary.SetLeftTop(boundary.GetTopLeft() + wxPoint(border[3], border[0]));
+	boundary.SetBottomRight(boundary.GetBottomRight() - 2 * wxPoint(border[1], border[2]));
 	int xBound[2] = { boundary.GetLeft(), boundary.GetRight() };
 	int yBound[2] = { boundary.GetTop(), boundary.GetBottom() };
 	double xLim[2] = { horizAxis->getLowerLimit(), horizAxis->getUpperLimit() };
