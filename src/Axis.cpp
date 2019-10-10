@@ -21,6 +21,7 @@ Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2
 }
 
 void Axis::calculateVLocs() {
+	valueLocs.clear();
 	if (dir == HORIZONTAL) {
 		int m_p = (limits[1] - vOrigin[0]) / step;
 		int m_n = (vOrigin[0] - limits[0]) / step;
