@@ -22,7 +22,7 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	// Black Background
 	SetBackgroundColour(wxColour(*wxBLACK));
 
-	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), parent->GetSize().GetWidth(), 500);
+	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), parent->GetSize().GetWidth()-20, 500);
 	double xLim[2] = { -0.1,1.1 };
 	double yLim[2] = { -0.1,0.1 };
 	int bords[4] = { 50,50,50,50 };
