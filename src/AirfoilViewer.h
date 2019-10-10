@@ -19,9 +19,9 @@ public:
 	void onPaintEvent(wxPaintEvent& event);
 private:
 	void onViewerBackButton(wxCommandEvent& event); // Defined in Main.cpp
-	void drawTicks(wxDC& dc, wxPoint& origin, wxPoint& beg, wxPoint& end, int dir, int n);
-	void drawTick(wxDC& dc, wxPoint pos, int dir);
-	void drawAxes(wxPaintDC& dc);
+	//void drawTicks(wxDC& dc, wxPoint& origin, wxPoint& beg, wxPoint& end, int dir, int n);
+	//void drawTick(wxDC& dc, wxPoint pos, int dir);
+	//void drawAxes(wxPaintDC& dc);
 };
 
 // Button IDs for event connection
