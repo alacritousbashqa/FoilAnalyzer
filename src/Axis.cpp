@@ -120,6 +120,10 @@ double Axis::getUpperLimit() {
 	return limits[1];
 }
 
+std::map<double, int> Axis::getVLocs() {
+	return valueLocs;
+}
+
 void Axis::setOrigin(wxPoint origin) {
 	this->origin.x = origin.x;
 	this->origin.y = origin.y;
