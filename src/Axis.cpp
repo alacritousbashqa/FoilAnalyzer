@@ -24,7 +24,15 @@ void Axis::calculateVLocs() {
 	if (dir == HORIZONTAL) {
 		int m_p = (limits[1] - vOrigin[0]) / step;
 		int m_n = (vOrigin[0] - limits[0]) / step;
-		int np = (boundary[1] - origin.x) / m_p;
+		int np = 0;
+		if (m_p)
+			np = (boundary[1] - origin.x) / m_p;
+		else if (m_n)
+			np = (origin.x - boundary[0]) / m_n;
+		else {
+			wxLogError("Number of ticks is zero! Perhaps the axis limits are not right?");
+			return;
+		}
 
 		valueLocs[limits[0]] = boundary[0];
 		valueLocs[limits[1]] = boundary[1];
@@ -40,7 +48,15 @@ void Axis::calculateVLocs() {
 	else {
 		int m_p = (limits[1] - vOrigin[1]) / step;
 		int m_n = (vOrigin[1] - limits[0]) / step;
-		int np = (boundary[0] - origin.y) / m_p;
+		int np = 0;
+		if(m_p)
+			np = (boundary[0] - origin.y) / m_p;
+		else if (m_n)
+			np = (origin.y - boundary[1]) / m_n;
+		else {
+			wxLogError("Number of ticks is zero! Perhaps the axis limits are not right?");
+			return;
+		}
 
 		valueLocs[limits[0]] = boundary[1];
 		valueLocs[limits[1]] = boundary[0];
