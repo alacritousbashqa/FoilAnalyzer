@@ -4,6 +4,12 @@
 
 arma::mat AirfoilGenerator::generate4Digit(std::string code, int n) {
 
+	// If the code was not 4 digits...
+	if (code.length() != 4) {
+		wxLogError("Entered NACA code invalid! Code should be 4 digits!");
+		return arma::mat(1,2,arma::fill::zeros);
+	}
+
 	// Defaults in case something goes wrong
 	double m = .02, p = .4, t = .12;
 
