@@ -133,6 +133,7 @@ bool AirfoilViewer::initializeProgram(wxWindow* parent) {
 		show(false);
 		return true;
 	}
+	wxLogError("Top level panel could not be constructed!");
 	return false;
 }
 
