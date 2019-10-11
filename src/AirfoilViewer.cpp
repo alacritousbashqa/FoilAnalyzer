@@ -1,4 +1,5 @@
 #include "AirfoilViewer.h"
+#include "AirfoilDefiner.h"
 
 ViewerPanel::ViewerPanel(wxWindow* parent)
 	: wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE){
@@ -65,10 +66,11 @@ void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 }
 
 void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
-	wxTextEntryDialog defineDialog(this,"Type a NACA 4 digit code");
-	defineDialog.ShowModal();
-	nacaTemp = defineDialog.GetValue();
-	defineDialog.Destroy();
+	AirfoilDefiner defineDialog("NACA Airfoil Definer");
+	std::string temp = defineDialog.getText();
+	if (temp != "" && (temp.length()==4 || temp.length()==5) && std::all_of(temp.begin(), temp.end(), ::isdigit))
+		nacaTemp = temp;
+	
 	this->Refresh();
 }
 
