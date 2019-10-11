@@ -50,7 +50,7 @@ void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), this->GetParent()->GetSize().GetWidth()-20, avTopSizer->GetChildren().front()->GetRect().GetHeight());
 	airfoilPlot->updateBoundaries(plotRect);
 	airfoilPlot->draw(pdc);
-	airfoilPlot->drawPoints(pdc, foilGen->generate4Digit("24125",50));
+	airfoilPlot->drawPoints(pdc, foilGen->generate4Digit("2412",50));
 }
 
 //void ViewerPanel::drawAxes(wxPaintDC& dc) {
