@@ -90,3 +90,56 @@ void Plot::draw(wxDC& dc) {
 	else
 		vertAxis->draw(dc);
 }
+
+void Plot::drawPoints(wxDC& dc, arma::mat points) {
+	if (points.n_rows <= 1) {
+		wxLogError("Cannot plot points! There are too few of them (e.g. <= 1)!");
+		return;
+	}
+
+	arma::umat pixels = pointsToPixels(points);
+	dc.SetPen(wxPen(*wxWHITE, 1));
+	for (int i = 0; i < pixels.n_rows-2; i++) {
+		dc.DrawLine(pixels(i, 0), pixels(i, 1), pixels(i + 1, 0), pixels(i + 1, 1));
+	}
+}
+
+// Assuming x and y in cols 0 and 1, respectively
+arma::umat Plot::pointsToPixels(arma::mat points) {
+	arma::umat pixels(size(points), arma::fill::zeros);
+	std::map<double, int> hMap = horizAxis->getVLocs();
+	std::map<double, int> vMap = vertAxis->getVLocs();
+
+	std::map<double, int>::iterator it;
+	for (int i = 0; i < points.n_rows - 1; i++) {
+		it = hMap.begin();
+		for (; it != hMap.end(); ++it) {
+			if (it->first <= points(i, 0)) {
+				double xx1 = it->first;
+				int x1 = it->second;
+				it++;
+				double xx2 = it->first;
+				int x2 = it->second;
+
+				pixels(i, 0) = ((points(i, 0) - xx1) / (xx2 - xx1))*(x2 - x1) + x1;
+				break;
+			}
+		}
+
+		it = vMap.begin();
+		for (; it != vMap.end(); ++it) {
+			if (it->first <= points(i, 1)) {
+				double yy1 = it->first;
+				int y1 = it->second;
+				it++;
+				double yy2 = it->first;
+				int y2 = it->second;
+
+				pixels(i, 1) = ((points(i, 1) - yy1) / (yy2 - yy1))*(y2 - y1) + y1;
+				break;
+			}
+		}
+	}
+
+	return pixels;
+}
