@@ -13,6 +13,7 @@ class ViewerPanel : public wxPanel {
 	wxBoxSizer* avTopSizer;
 	wxSizerItem* avDrawArea;
 
+	std::string nacaTemp;
 	AirfoilGenerator* foilGen;
 
 	Plot* airfoilPlot;
