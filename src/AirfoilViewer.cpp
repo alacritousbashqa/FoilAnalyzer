@@ -12,6 +12,7 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	wxListBox* airfoilListBox = new wxListBox(this, -1);
 	avTopSizer->Add(airfoilListBox, 0, wxEXPAND);
 
+	// Box that holds "back to main menu" button at bottom of screen
 	wxBoxSizer* buttonBox = new wxBoxSizer(wxHORIZONTAL);
 	buttonBox->Add(new wxButton(this, BACK_ID, "Main Menu"), wxSizerFlags().Left());
 
@@ -22,17 +23,20 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	// Black Background
 	SetBackgroundColour(wxColour(*wxBLACK));
 
+	// Airfoil Plot which holds the axes data and draws airfoils onto them
 	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), parent->GetSize().GetWidth()-20, 500);
 	double xLim[2] = { -0.1,1.1 };
 	double yLim[2] = { -0.18,0.18 };
 	int bords[4] = { 50,50,50,50 };
 	airfoilPlot = new Plot(plotRect, xLim, yLim, bords);
 
+	// Generates the points for an airfoil to be plotted on the airfoilPlot
 	foilGen = new AirfoilGenerator();
 
 	// ------ Bind button events to functions ------
 	// Main Menu Button
 	Connect(BACK_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onViewerBackButton));
+	// Event Paint
 	Connect(GetId(), wxEVT_PAINT, wxPaintEventHandler(ViewerPanel::onPaintEvent));
 }
 
@@ -47,6 +51,8 @@ enum {
 
 void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxPaintDC pdc(this);
+
+	// Update the plot on resize and redraw axes and plots
 	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), this->GetParent()->GetSize().GetWidth()-20, avTopSizer->GetChildren().front()->GetRect().GetHeight());
 	airfoilPlot->updateBoundaries(plotRect);
 	airfoilPlot->draw(pdc);
@@ -120,6 +126,7 @@ wxPanel* AirfoilViewer::getTopPanel() {
 }
 
 bool AirfoilViewer::initializeProgram(wxWindow* parent) {
+	// Construct the top panel for the airfoil viewer
 	viewerPanel = new ViewerPanel(parent);
 
 	if (viewerPanel) {
