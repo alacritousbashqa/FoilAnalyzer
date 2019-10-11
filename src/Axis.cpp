@@ -103,9 +103,9 @@ void Axis::draw(wxDC& dc) {
 			if (it->first == 0.0);
 			else {
 				if (it->first < 0)
-					dc.DrawText(std::to_string(it->first).substr(0, 5), origin.x + 7, it->second);
+					dc.DrawText(std::to_string(it->first).substr(0, 5), origin.x - 32, it->second);
 				else
-					dc.DrawText(std::to_string(it->first).substr(0, 4), origin.x + 7, it->second);
+					dc.DrawText(std::to_string(it->first).substr(0, 4), origin.x - 27, it->second);
 			}
 		}
 	}
