@@ -28,6 +28,8 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	int bords[4] = { 50,50,50,50 };
 	airfoilPlot = new Plot(plotRect, xLim, yLim, bords);
 
+	foilGen = new AirfoilGenerator();
+
 	// ------ Bind button events to functions ------
 	// Main Menu Button
 	Connect(BACK_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onViewerBackButton));

@@ -5,12 +5,15 @@
 #include <wx/wx.h>
 #endif
 
+#include "AirfoilGenerator.h"
 #include "faProgram.h"
 #include "Plot.h"
 
 class ViewerPanel : public wxPanel {
 	wxBoxSizer* avTopSizer;
 	wxSizerItem* avDrawArea;
+
+	AirfoilGenerator* foilGen;
 
 	Plot* airfoilPlot;
 public:
