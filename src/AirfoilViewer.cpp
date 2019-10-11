@@ -24,7 +24,7 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 
 	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), parent->GetSize().GetWidth()-20, 500);
 	double xLim[2] = { -0.1,1.1 };
-	double yLim[2] = { -0.1,0.1 };
+	double yLim[2] = { -0.18,0.18 };
 	int bords[4] = { 50,50,50,50 };
 	airfoilPlot = new Plot(plotRect, xLim, yLim, bords);
 
