@@ -33,6 +33,7 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 
 	// Generates the points for an airfoil to be plotted on the airfoilPlot
 	nacaTemp = "2412";
+	numTemp = 50;
 	foilGen = new AirfoilGenerator();
 
 	// ------ Bind events to functions ------
