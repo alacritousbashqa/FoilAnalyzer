@@ -15,6 +15,7 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	// Box that holds "back to main menu" button at bottom of screen
 	wxBoxSizer* buttonBox = new wxBoxSizer(wxHORIZONTAL);
 	buttonBox->Add(new wxButton(this, BACK_ID, "Main Menu"), wxSizerFlags().Left());
+	buttonBox->Add(new wxButton(this, DEFINE_AF_ID, "Define Airfoil"), wxSizerFlags().Left());
 
 	avTopSizer->Add(buttonBox);
 
@@ -34,9 +35,11 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	nacaTemp = "2412";
 	foilGen = new AirfoilGenerator();
 
-	// ------ Bind button events to functions ------
+	// ------ Bind events to functions ------
 	// Main Menu Button
 	Connect(BACK_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onViewerBackButton));
+	// Define airfoil button
+	Connect(DEFINE_AF_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onDefineAirfoil));
 	// Event Paint
 	Connect(GetId(), wxEVT_PAINT, wxPaintEventHandler(ViewerPanel::onPaintEvent));
 }
@@ -58,6 +61,14 @@ void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 	airfoilPlot->updateBoundaries(plotRect);
 	airfoilPlot->draw(pdc);
 	airfoilPlot->drawPoints(pdc, foilGen->generate4Digit(nacaTemp,50));
+}
+
+void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
+	wxTextEntryDialog defineDialog(this,"Type a NACA 4 digit code");
+	defineDialog.ShowModal();
+	nacaTemp = defineDialog.GetValue();
+	defineDialog.Destroy();
+	this->Refresh();
 }
 
 //void ViewerPanel::drawAxes(wxPaintDC& dc) {
