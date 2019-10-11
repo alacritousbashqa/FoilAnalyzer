@@ -99,7 +99,7 @@ void Plot::drawPoints(wxDC& dc, arma::mat points) {
 
 	arma::umat pixels = pointsToPixels(points);
 	dc.SetPen(wxPen(*wxWHITE, 1));
-	for (int i = 0; i < pixels.n_rows-2; i++) {
+	for (int i = 0; i < pixels.n_rows-1; i++) {
 		dc.DrawLine(pixels(i, 0), pixels(i, 1), pixels(i + 1, 0), pixels(i + 1, 1));
 	}
 }
@@ -111,7 +111,7 @@ arma::umat Plot::pointsToPixels(arma::mat points) {
 	std::map<double, int> vMap = vertAxis->getVLocs();
 
 	std::map<double, int>::iterator it;
-	for (int i = 0; i < points.n_rows - 1; i++) {
+	for (int i = 0; i < points.n_rows; i++) {
 		it = hMap.begin();
 		for (; it != hMap.end(); ++it) {
 			if (it->first <= points(i, 0)) {
