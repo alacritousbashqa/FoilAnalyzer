@@ -22,7 +22,7 @@ arma::mat AirfoilGenerator::generate4Digit(std::string code, int n) {
 		case 1:
 			p = std::stod(code.substr(1, 1)) / 10.0;
 			break;
-		case 3:
+		case 2:
 			t = std::stod(code.substr(2, 2)) / 100.0;
 			break;
 		}
