@@ -18,7 +18,7 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	buttonBox->Add(new wxButton(this, BACK_ID, "Main Menu"), wxSizerFlags().Left());
 	buttonBox->Add(new wxButton(this, DEFINE_AF_ID, "Define Airfoil"), wxSizerFlags().Left());
 
-	avTopSizer->Add(buttonBox);
+	avTopSizer->Add(buttonBox, 0, wxLEFT | wxBOTTOM, 10);
 
 	this->SetSizer(avTopSizer);
 
