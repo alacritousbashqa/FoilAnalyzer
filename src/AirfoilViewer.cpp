@@ -33,8 +33,6 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	airfoilPlot = new Plot(plotRect, xLim, yLim, bords);
 
 	// Generates the points for an airfoil to be plotted on the airfoilPlot
-	nacaTemp = "2412";
-	numTemp = 50;
 	foilGen = new AirfoilGenerator();
 
 	// ------ Bind events to functions ------
@@ -62,7 +60,6 @@ void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), this->GetParent()->GetSize().GetWidth()-20, avTopSizer->GetChildren().front()->GetRect().GetHeight());
 	airfoilPlot->updateBoundaries(plotRect);
 	airfoilPlot->draw(pdc);
-	airfoilPlot->drawPoints(pdc, foilGen->generate4Digit(nacaTemp,50));
 }
 
 void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
