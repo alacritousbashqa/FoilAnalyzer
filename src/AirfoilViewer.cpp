@@ -65,8 +65,18 @@ void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	AirfoilDefiner defineDialog("NACA Airfoil Definer");
 	std::string temp = defineDialog.getText();
-	if (temp != "" && (temp.length()==4 || temp.length()==5) && std::all_of(temp.begin(), temp.end(), ::isdigit))
-		nacaTemp = temp;
+	if (temp != "" && (temp.length() == 4 || temp.length() == 5) && std::all_of(temp.begin(), temp.end(), ::isdigit)) {
+		AirfoilStruct afs;
+		afs.code = temp;
+		afs.nPanels = 50;
+		afs.points = foilGen->generate4Digit(temp, 50);
+		loadedAirfoils.emplace_back(afs);
+		
+		afListBox->InsertItem(0, "");
+		afListBox->SetItem(0, 0, "");
+		afListBox->SetItem(0, 1, temp);
+		//new wxStaticText(airfoilListBox, -1, temp);
+	}
 	
 	this->Refresh();
 }
