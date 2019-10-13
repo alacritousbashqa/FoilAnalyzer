@@ -75,9 +75,9 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 		afs.points = foilGen->generate4Digit(temp, 50);
 		loadedAirfoils.emplace_back(afs);
 		
-		afListBox->InsertItem(0, "");
-		afListBox->SetItem(0, 0, "");
-		afListBox->SetItem(0, 1, temp);
+		//afListBox->InsertItem(0, "");
+		//afListBox->SetItem(0, 0, "");
+		//afListBox->SetItem(0, 1, temp);
 		//new wxStaticText(airfoilListBox, -1, temp);
 	}
 	
