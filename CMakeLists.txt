@@ -8,17 +8,15 @@ set(CLANG_MINIMUM_VERSION "3.4")
 
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/build)
 
+find_package(wxWidgets REQUIRED COMPONENTS core base)
+include(${wxWidgets_USE_FILE})
 
 if(UNIX)
-   find_package(wxWidgets REQUIRED COMPONENTS core base)
-   include(${wxWidgets_USE_FILE})
    INCLUDE_DIRECTORIES(
       ${PROJECT_SOURCE_DIR}/build/include
    )
 
 elseif(WIN32)
-    find_package(wxWidgets REQUIRED COMPONENTS core base PATH /win32_cmake/FindwxWidgets.cmake)
-   include(${wxWidgets_USE_FILE})
    INCLUDE_DIRECTORIES(
       ${PROJECT_SOURCE_DIR}/build/include/win64
    )
