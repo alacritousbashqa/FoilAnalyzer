@@ -7,6 +7,7 @@
 
 #include "AirfoilGenerator.h"
 #include "faProgram.h"
+#include "FoilParameters.h"
 #include "Plot.h"
 
 class ViewerPanel : public wxPanel {

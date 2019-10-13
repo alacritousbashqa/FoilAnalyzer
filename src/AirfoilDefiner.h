@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+#include <wx/wx.h>
 #include <wx/wxprec.h>
 
 class AirfoilDefiner : public wxDialog {

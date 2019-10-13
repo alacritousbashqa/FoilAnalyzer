@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <wx/wxprec.h>
+#include <wx/wx.h>
 
 enum axisDirection {
 	HORIZONTAL,
