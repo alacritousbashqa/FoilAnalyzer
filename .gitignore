@@ -47,3 +47,4 @@ UpgradeLog.htm
 x64/Debug/*
 test.cpp
 
+build/*
