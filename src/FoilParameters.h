@@ -5,6 +5,7 @@
 #include <vector>
 
 struct AirfoilStruct {
+	std::string name;
 	std::string code;
 	int nPanels;
 	arma::mat points;
