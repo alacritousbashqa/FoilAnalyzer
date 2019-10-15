@@ -5,6 +5,9 @@
 #include <wx/wx.h>
 #endif
 
+#include <wx/listctrl.h>
+
+#include "FoilParameters.h"
 #include "AirfoilGenerator.h"
 #include "faProgram.h"
 #include "Plot.h"
