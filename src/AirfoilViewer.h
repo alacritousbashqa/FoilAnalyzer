@@ -16,6 +16,7 @@ class ViewerPanel : public wxPanel {
 	wxBoxSizer* avTopSizer;
 	wxSizerItem* avDrawArea;
 
+	wxListView* afListBox;
 	AirfoilGenerator* foilGen;
 
 	Plot* airfoilPlot;

@@ -11,9 +11,14 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 
 	// Drawing area for the airfoil plot
 	avDrawArea = avTopSizer->Add(new wxPanel(this,7), wxEXPAND);
+
 	// List to hold loaded airfoils
-	wxListBox* airfoilListBox = new wxListBox(this, -1);
-	avTopSizer->Add(airfoilListBox, 0, wxEXPAND);
+	//afListBox = new wxListView(this, -1, wxDefaultPosition, wxDefaultSize);
+	//afListBox->AppendColumn("Show?");
+	//afListBox->AppendColumn("Name");
+	wxBoxSizer* listHBox = new wxBoxSizer(wxHORIZONTAL);
+	//listHBox->Add(afListBox, 1, wxEXPAND);
+	//avTopSizer->Add(listHBox, 1, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
 
 	// Box that holds "back to main menu" button at bottom of screen
 	wxBoxSizer* buttonBox = new wxBoxSizer(wxHORIZONTAL);
@@ -77,9 +82,9 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 		afs.points = foilGen->generate4Digit(temp, 50);
 		loadedAirfoils.emplace_back(afs);
 		
-		afListBox->InsertItem(0, "");
-		afListBox->SetItem(0, 0, "");
-		afListBox->SetItem(0, 1, temp);
+		//afListBox->InsertItem(0, "");
+		//afListBox->SetItem(0, 0, "");
+		//afListBox->SetItem(0, 1, temp);
 		//new wxStaticText(airfoilListBox, -1, temp);
 	}
 	
