@@ -54,7 +54,7 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	// Define airfoil button
 	Connect(DEFINE_AF_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onDefineAirfoil));
 	// Airfoil list checkbox
-	Connect(-1, wxEVT_CHECKBOX, wxCommandEventHandler(ViewerPanel::onShowChecked));
+	Connect(CHECKBOXES_ID, wxEVT_CHECKBOX, wxCommandEventHandler(ViewerPanel::onShowChecked));
 	// Event Paint
 	Connect(GetId(), wxEVT_PAINT, wxPaintEventHandler(ViewerPanel::onPaintEvent));
 }
@@ -95,7 +95,7 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 
 		AirfoilListStruct als;
 		als.airfoil = afs;
-		als.checkBox = new wxCheckBox(flexGridPanel, -1, "Show?");
+		als.checkBox = new wxCheckBox(flexGridPanel, CHECKBOXES_ID, "Show?");
 		als.checkBox->SetValue(true);
 		als.colorPicker = new wxColourPickerCtrl(flexGridPanel, -1);
 		als.colorPicker->SetColour(wxColour(*wxWHITE));

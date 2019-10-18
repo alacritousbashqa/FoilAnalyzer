@@ -48,7 +48,8 @@ private:
 // Button IDs for event connection
 enum {
 	BACK_ID = 2,
-	DEFINE_AF_ID = 3
+	DEFINE_AF_ID = 3,
+	CHECKBOXES_ID = 4
 };
 
 class AirfoilViewer : public faProgram {
