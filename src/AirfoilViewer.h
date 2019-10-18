@@ -30,6 +30,8 @@ class ViewerPanel : public wxPanel {
 	AirfoilGenerator* foilGen;
 
 	Plot* airfoilPlot;
+
+	std::vector<AirfoilListStruct> afListMembers;
 public:
 	wxBoxSizer * getTopSizer();
 	ViewerPanel(wxWindow* parent);
