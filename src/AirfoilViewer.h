@@ -23,6 +23,9 @@ class ViewerPanel : public wxPanel {
 	wxBoxSizer* avTopSizer;
 	wxSizerItem* avDrawArea;
 
+	wxFlexGridSizer* fgs;
+	wxPanel* flexGridPanel;
+
 	wxListView* afListBox;
 	AirfoilGenerator* foilGen;
 

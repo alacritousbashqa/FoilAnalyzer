@@ -18,6 +18,14 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	//listHBox->Add(afListBox, 1, wxEXPAND);
 	//avTopSizer->Add(listHBox, 1, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
 
+	fgs = new wxFlexGridSizer(4,5,30);
+	flexGridPanel = new wxPanel(this, -1, wxDefaultPosition, wxSize(-1,100));
+	flexGridPanel->SetBackgroundColour(wxColour(*wxWHITE));
+	fgs->AddGrowableCol(3, 1);
+	listHBox->Add(flexGridPanel, 1, wxEXPAND);
+	flexGridPanel->SetSizer(fgs);
+	avTopSizer->Add(listHBox, 1, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
+
 	// Box that holds "back to main menu" button at bottom of screen
 	wxBoxSizer* buttonBox = new wxBoxSizer(wxHORIZONTAL);
 	buttonBox->Add(new wxButton(this, BACK_ID, "Main Menu"), wxSizerFlags().Left());
