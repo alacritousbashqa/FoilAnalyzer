@@ -75,8 +75,10 @@ void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), this->GetParent()->GetSize().GetWidth()-20, avTopSizer->GetChildren().front()->GetRect().GetHeight());
 	airfoilPlot->updateBoundaries(plotRect);
 	airfoilPlot->draw(pdc);
-	for (AirfoilStruct afs : loadedAirfoils) {
-		airfoilPlot->drawPoints(pdc, afs.points);
+	for (AirfoilListStruct als : afListMembers) {
+		if (als.checkBox->GetValue()) {
+			airfoilPlot->drawPoints(pdc, als.airfoil->points);
+		}
 	}
 }
 
