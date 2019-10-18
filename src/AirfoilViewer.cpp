@@ -97,6 +97,10 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	this->Refresh();
 }
 
+void ViewerPanel::onShowChecked(wxCommandEvent& event) {
+	this->Refresh();
+}
+
 //void ViewerPanel::drawAxes(wxPaintDC& dc) {
 //	int w = avTopSizer->GetSize().GetWidth();
 //	int h = avDrawArea->GetRect().GetHeight();
