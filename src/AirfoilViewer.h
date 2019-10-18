@@ -6,6 +6,7 @@
 #endif
 
 #include <wx/listctrl.h>
+#include <wx/clrpicker.h>
 
 #include "FoilParameters.h"
 #include "AirfoilGenerator.h"

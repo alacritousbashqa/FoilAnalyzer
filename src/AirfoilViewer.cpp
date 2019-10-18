@@ -1,8 +1,6 @@
 #include "AirfoilViewer.h"
 #include "AirfoilDefiner.h"
 
-#include <wx/clrpicker.h>
-
 ViewerPanel::ViewerPanel(wxWindow* parent)
 	: wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE){
 
