@@ -11,4 +11,4 @@ struct AirfoilStruct {
 	arma::mat points;
 };
 
-static std::vector<AirfoilStruct> loadedAirfoils;
+static std::vector<AirfoilStruct*> loadedAirfoils;
