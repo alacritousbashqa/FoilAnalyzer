@@ -49,7 +49,8 @@ private:
 enum {
 	BACK_ID = 2,
 	DEFINE_AF_ID = 3,
-	CHECKBOXES_ID = 4
+	CHECKBOXES_ID = 4,
+	COLORPICKER_ID = 5
 };
 
 class AirfoilViewer : public faProgram {
