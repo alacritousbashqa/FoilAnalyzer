@@ -13,6 +13,12 @@
 #include "faProgram.h"
 #include "Plot.h"
 
+struct AirfoilListStruct {
+	AirfoilStruct* airfoil;
+	wxCheckBox* checkBox;
+	wxColourPickerCtrl* colorPicker;
+};
+
 class ViewerPanel : public wxPanel {
 	wxBoxSizer* avTopSizer;
 	wxSizerItem* avDrawArea;
