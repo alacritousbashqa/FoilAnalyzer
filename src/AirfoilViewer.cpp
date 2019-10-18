@@ -106,6 +106,7 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 		fgs->Add(new wxStaticText(flexGridPanel, -1, afs->name), 1, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL);
 		fgs->Add(als.colorPicker, 1, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
 		fgs->Add(new wxPanel(flexGridPanel, -1));
+		fgs->Layout();
 
 		//afListBox->InsertItem(0, "");
 		//afListBox->SetItem(0, 0, "");
