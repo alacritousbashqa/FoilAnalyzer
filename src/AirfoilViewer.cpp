@@ -79,6 +79,7 @@ void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 	airfoilPlot->draw(pdc);
 	for (AirfoilListStruct als : afListMembers) {
 		if (als.checkBox->GetValue()) {
+			pdc.SetPen(wxPen(als.colorPicker->GetColour(), 1));
 			airfoilPlot->drawPoints(pdc, als.airfoil->points);
 		}
 	}
