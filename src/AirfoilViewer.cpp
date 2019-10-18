@@ -86,12 +86,27 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	AirfoilDefiner defineDialog("NACA Airfoil Definer");
 	std::string temp = defineDialog.getText();
 	if (temp != "" && (temp.length() == 4 || temp.length() == 5) && std::all_of(temp.begin(), temp.end(), ::isdigit)) {
-		AirfoilStruct afs;
-		afs.code = temp;
-		afs.nPanels = 50;
-		afs.points = foilGen->generate4Digit(temp, 50);
+		AirfoilStruct* afs = new AirfoilStruct();
+		afs->code = temp;
+		afs->name = "NACA " + temp;
+		afs->nPanels = 50;
+		afs->points = foilGen->generate4Digit(temp, 50);
 		loadedAirfoils.emplace_back(afs);
+
+		AirfoilListStruct als;
+		als.airfoil = afs;
+		als.checkBox = new wxCheckBox(flexGridPanel, -1, "Show?");
+		als.checkBox->SetValue(true);
+		als.colorPicker = new wxColourPickerCtrl(flexGridPanel, -1);
+		als.colorPicker->SetColour(wxColour(*wxWHITE));
+
+		afListMembers.push_back(als);
 		
+		fgs->Add(als.checkBox, 1, wxEXPAND | wxLEFT, 10);
+		fgs->Add(new wxStaticText(flexGridPanel, -1, afs->name), 1, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL);
+		fgs->Add(als.colorPicker, 1, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
+		fgs->Add(new wxPanel(flexGridPanel, -1));
+
 		//afListBox->InsertItem(0, "");
 		//afListBox->SetItem(0, 0, "");
 		//afListBox->SetItem(0, 1, temp);
