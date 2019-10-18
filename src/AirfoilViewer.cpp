@@ -121,6 +121,10 @@ void ViewerPanel::onShowChecked(wxCommandEvent& event) {
 	this->Refresh();
 }
 
+void ViewerPanel::onColorPicked(wxColourPickerEvent& event) {
+	this->Refresh();
+}
+
 //void ViewerPanel::drawAxes(wxPaintDC& dc) {
 //	int w = avTopSizer->GetSize().GetWidth();
 //	int h = avDrawArea->GetRect().GetHeight();
