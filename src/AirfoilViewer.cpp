@@ -53,6 +53,8 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	Connect(BACK_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onViewerBackButton));
 	// Define airfoil button
 	Connect(DEFINE_AF_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onDefineAirfoil));
+	// Airfoil list checkbox
+	Connect(-1, wxEVT_CHECKBOX, wxCommandEventHandler(ViewerPanel::onShowChecked));
 	// Event Paint
 	Connect(GetId(), wxEVT_PAINT, wxPaintEventHandler(ViewerPanel::onPaintEvent));
 }
