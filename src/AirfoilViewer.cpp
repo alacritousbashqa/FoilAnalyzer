@@ -99,7 +99,7 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 		als.airfoil = afs;
 		als.checkBox = new wxCheckBox(flexGridPanel, CHECKBOXES_ID, "Show?");
 		als.checkBox->SetValue(true);
-		als.colorPicker = new wxColourPickerCtrl(flexGridPanel, -1);
+		als.colorPicker = new wxColourPickerCtrl(flexGridPanel, COLORPICKER_ID);
 		als.colorPicker->SetColour(wxColour(*wxWHITE));
 
 		afListMembers.push_back(als);
