@@ -84,7 +84,8 @@ void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	AirfoilDefiner defineDialog("NACA Airfoil Definer");
 	std::string temp = defineDialog.getText();
-	if (temp != "" && (temp.length() == 4 || temp.length() == 5) && std::all_of(temp.begin(), temp.end(), ::isdigit)) {
+	// If it is four digits long...
+	if (temp != "" && (temp.length() == 4 /*|| temp.length() == 5*/) && std::all_of(temp.begin(), temp.end(), ::isdigit)) {
 		AirfoilStruct* afs = new AirfoilStruct();
 		afs->code = temp;
 		afs->name = "NACA " + temp;
