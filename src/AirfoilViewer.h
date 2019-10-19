@@ -13,6 +13,7 @@
 #include "faProgram.h"
 #include "Plot.h"
 
+// Airfoil List Struct: holds reference to an airfoil struct and its associated checkbox and color picker for use in the list
 struct AirfoilListStruct {
 	AirfoilStruct* airfoil;
 	wxCheckBox* checkBox;
@@ -23,13 +24,16 @@ class ViewerPanel : public wxPanel {
 	wxBoxSizer* avTopSizer;
 	wxSizerItem* avDrawArea;
 
+	// Scrolled list panel and sizer
 	wxScrolledWindow* scrolledWindow;
 	wxBoxSizer* scrolledBoxSizer;
 
+	// Performs the math to generate the points of an airfoil from a NACA code
 	AirfoilGenerator* foilGen;
 
 	Plot* airfoilPlot;
 
+	// Master list of airfoil lst structs
 	std::vector<AirfoilListStruct> afListMembers;
 public:
 	wxBoxSizer * getTopSizer();
