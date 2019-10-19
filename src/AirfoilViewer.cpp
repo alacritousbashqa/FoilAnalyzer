@@ -114,6 +114,10 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 		scrolledWindow->FitInside();
 		scrolledBoxSizer->Layout();
 	}
+	// Don't do anything if the code was invalid
+	else {
+		wxLogError("An invalid NACA code was entered! Only a 4 digit series is currently supprted!");
+	}
 	
 	this->Refresh();
 }
