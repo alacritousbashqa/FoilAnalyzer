@@ -11,19 +11,15 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	avDrawArea = avTopSizer->Add(new wxPanel(this,7), wxEXPAND);
 
 	// List to hold loaded airfoils
-	//afListBox = new wxListView(this, -1, wxDefaultPosition, wxDefaultSize);
-	//afListBox->AppendColumn("Show?");
-	//afListBox->AppendColumn("Name");
 	wxBoxSizer* listHBox = new wxBoxSizer(wxHORIZONTAL);
-	//listHBox->Add(afListBox, 1, wxEXPAND);
-	//avTopSizer->Add(listHBox, 1, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
 
-	fgs = new wxFlexGridSizer(4,5,30);
-	flexGridPanel = new wxPanel(this, -1, wxDefaultPosition, wxSize(-1,100));
-	flexGridPanel->SetBackgroundColour(wxColour(*wxWHITE));
-	fgs->AddGrowableCol(3, 1);
-	listHBox->Add(flexGridPanel, 1, wxEXPAND);
-	flexGridPanel->SetSizer(fgs);
+	scrolledBoxSizer = new wxBoxSizer(wxVERTICAL);
+
+	scrolledWindow = new wxScrolledWindow(this, -1, wxDefaultPosition, wxSize(-1,100), wxVSCROLL | wxALWAYS_SHOW_SB);
+	scrolledWindow->SetBackgroundColour(wxColour(*wxWHITE));
+	scrolledWindow->SetScrollRate(5, 5);
+	listHBox->Add(scrolledWindow, 1, wxEXPAND);
+	scrolledWindow->SetSizer(scrolledBoxSizer);
 	avTopSizer->Add(listHBox, 1, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
 
 	// Box that holds "back to main menu" button at bottom of screen
@@ -96,25 +92,26 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 		afs->points = foilGen->generate4Digit(temp, 50);
 		loadedAirfoils.emplace_back(afs);
 
+		wxBoxSizer* hBox = new wxBoxSizer(wxHORIZONTAL);
+
 		AirfoilListStruct als;
 		als.airfoil = afs;
-		als.checkBox = new wxCheckBox(flexGridPanel, CHECKBOXES_ID, "Show?");
+		als.checkBox = new wxCheckBox(scrolledWindow, CHECKBOXES_ID, "Show?");
 		als.checkBox->SetValue(true);
-		als.colorPicker = new wxColourPickerCtrl(flexGridPanel, COLORPICKER_ID);
+		als.colorPicker = new wxColourPickerCtrl(scrolledWindow, COLORPICKER_ID);
 		als.colorPicker->SetColour(wxColour(*wxWHITE));
 
 		afListMembers.push_back(als);
 		
-		fgs->Add(als.checkBox, 1, wxEXPAND | wxLEFT, 10);
-		fgs->Add(new wxStaticText(flexGridPanel, -1, afs->name), 1, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL);
-		fgs->Add(als.colorPicker, 1, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
-		fgs->Add(new wxPanel(flexGridPanel, -1));
-		fgs->Layout();
+		hBox->Add(als.checkBox, 1, wxEXPAND | wxLEFT, 10);
+		hBox->Add(new wxStaticText(scrolledWindow, -1, afs->name), 1, wxALIGN_CENTER_VERTICAL);
+		hBox->Add(als.colorPicker, 1, wxALIGN_CENTER_VERTICAL, 10);
+		hBox->Add(new wxPanel(scrolledWindow, -1));
+		hBox->Layout();
 
-		//afListBox->InsertItem(0, "");
-		//afListBox->SetItem(0, 0, "");
-		//afListBox->SetItem(0, 1, temp);
-		//new wxStaticText(airfoilListBox, -1, temp);
+		scrolledBoxSizer->Add(hBox);
+		scrolledWindow->FitInside();
+		scrolledBoxSizer->Layout();
 	}
 	
 	this->Refresh();
