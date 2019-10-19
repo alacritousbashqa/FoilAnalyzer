@@ -26,7 +26,6 @@ class ViewerPanel : public wxPanel {
 	wxScrolledWindow* scrolledWindow;
 	wxBoxSizer* scrolledBoxSizer;
 
-	wxListView* afListBox;
 	AirfoilGenerator* foilGen;
 
 	Plot* airfoilPlot;
