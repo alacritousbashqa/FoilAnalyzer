@@ -89,6 +89,7 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	AirfoilDefiner defineDialog("NACA Airfoil Definer");
 	// Get code from dialog on dialog close
 	std::string temp = defineDialog.getText();
+	int type = defineDialog.getType();
 	// If it is four digits long...
 	if (temp != "" && (temp.length() == 4 /*|| temp.length() == 5*/) && std::all_of(temp.begin(), temp.end(), ::isdigit)) {
 		// Create a new airfoil struct
