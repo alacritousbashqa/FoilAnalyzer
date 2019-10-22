@@ -3,6 +3,8 @@
 AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	: wxDialog(NULL, -1, title, wxDefaultPosition, wxSize(200, 230)) {
 
+	type = -1;
+
 	wxPanel *panel = new wxPanel(this, -1);
 
 	wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
@@ -49,10 +51,12 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 			EndModal(modalCode);
 		}
 		else {
+			type = -1;
 			wxLogError("An invalid length was entered! Please use 4 or 5 digit series only!");
 		}
 	}
 	else {
+		type = -1;
 		wxLogError("Invalid code! Code should be only numbers and be 4 or 5 digits long!");
 	}
 }
