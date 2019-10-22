@@ -90,42 +90,44 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	// Get code from dialog on dialog close
 	std::string temp = defineDialog.getText();
 	int type = defineDialog.getType();
-	// If it is four digits long...
-	if (temp != "" && (temp.length() == 4 /*|| temp.length() == 5*/) && std::all_of(temp.begin(), temp.end(), ::isdigit)) {
-		// Create a new airfoil struct
-		AirfoilStruct* afs = new AirfoilStruct();
-		afs->code = temp;
-		afs->name = "NACA " + temp;
-		afs->nPanels = 50;
+
+	if (type == -1) {
+		return;
+	}
+
+	// Create a new airfoil struct
+	AirfoilStruct* afs = new AirfoilStruct();
+	afs->code = temp;
+	afs->name = "NACA " + temp;
+	afs->nPanels = 50;
+	if (type == 4) {
 		afs->points = foilGen->generate4Digit(temp, 50);
-		loadedAirfoils.emplace_back(afs); // Add to global master list
-
-		// Create a new list struct
-		wxBoxSizer* hBox = new wxBoxSizer(wxHORIZONTAL);
-		AirfoilListStruct als;
-		als.airfoil = afs;
-		als.checkBox = new wxCheckBox(scrolledWindow, CHECKBOXES_ID, "Show?");
-		als.checkBox->SetValue(true);
-		als.colorPicker = new wxColourPickerCtrl(scrolledWindow, COLORPICKER_ID);
-		als.colorPicker->SetColour(wxColour(*wxWHITE));
-		afListMembers.push_back(als); // Add to class master list
-		
-		// Add the new airfoil widgets to a box sizer (adds a new row)
-		hBox->Add(als.checkBox, 1, wxEXPAND | wxLEFT, 10);
-		hBox->Add(new wxStaticText(scrolledWindow, -1, afs->name), 1, wxALIGN_CENTER_VERTICAL);
-		hBox->Add(als.colorPicker, 1, wxALIGN_CENTER_VERTICAL, 10);
-		hBox->Add(new wxPanel(scrolledWindow, -1));
-		hBox->Layout();
-
-		// Add the new airfoil row to the scroll box and tell the scroll box to update its size
-		scrolledBoxSizer->Add(hBox);
-		scrolledWindow->FitInside();
-		scrolledBoxSizer->Layout();
 	}
-	// Don't do anything if the code was invalid
 	else {
-		wxLogError("An invalid NACA code was entered! Only a 4 digit series is currently supprted!");
+		afs->points = foilGen->generate5Digit(temp, 50);
 	}
+	loadedAirfoils.emplace_back(afs); // Add to global master list
+	// Create a new list struct
+	wxBoxSizer* hBox = new wxBoxSizer(wxHORIZONTAL);
+	AirfoilListStruct als;
+	als.airfoil = afs;
+	als.checkBox = new wxCheckBox(scrolledWindow, CHECKBOXES_ID, "Show?");
+	als.checkBox->SetValue(true);
+	als.colorPicker = new wxColourPickerCtrl(scrolledWindow, COLORPICKER_ID);
+	als.colorPicker->SetColour(wxColour(*wxWHITE));
+	afListMembers.push_back(als); // Add to class master list
+		
+	// Add the new airfoil widgets to a box sizer (adds a new row)
+	hBox->Add(als.checkBox, 1, wxEXPAND | wxLEFT, 10);
+	hBox->Add(new wxStaticText(scrolledWindow, -1, afs->name), 1, wxALIGN_CENTER_VERTICAL);
+	hBox->Add(als.colorPicker, 1, wxALIGN_CENTER_VERTICAL, 10);
+	hBox->Add(new wxPanel(scrolledWindow, -1));
+	hBox->Layout();
+
+	// Add the new airfoil row to the scroll box and tell the scroll box to update its size
+	scrolledBoxSizer->Add(hBox);
+	scrolledWindow->FitInside();
+	scrolledBoxSizer->Layout();
 	
 	// Tell the viewer panel to redraw the new airfoil
 	this->Refresh();
