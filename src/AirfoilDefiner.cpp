@@ -10,12 +10,8 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 
 	wxStaticBox *st = new wxStaticBox(panel, -1, wxT("NACA Type"),
 		wxPoint(5, 5), wxSize(170, 125));
-	rb4 = new wxRadioButton(panel, -1,
-		wxT("NACA 4 Digit"), wxPoint(15, 30), wxDefaultSize, wxRB_GROUP);
-
-	rb5 = new wxRadioButton(panel, -1,
-		wxT("NACA 5 Digit"), wxPoint(15, 55));
-	rb5->Disable();
+	wxStaticText stext(panel, -1, wxT("Enter a NACA 4 or 5 digit code:"),
+		wxPoint(15, 30), wxSize(150, 40));
 	tc = new wxTextCtrl(panel, -1, wxT(""),
 		wxPoint(15, 95), wxSize(150,24));
 
