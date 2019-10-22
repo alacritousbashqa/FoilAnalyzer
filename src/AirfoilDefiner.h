@@ -4,6 +4,7 @@
 
 class AirfoilDefiner : public wxDialog {
 	std::string text;
+	int type;
 	int modalCode;
 
 	wxRadioButton* rb4;
@@ -15,4 +16,5 @@ class AirfoilDefiner : public wxDialog {
 public:
 	AirfoilDefiner(const wxString& title);
 	std::string getText();
+	int getType();
 };

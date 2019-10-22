@@ -53,3 +53,7 @@ void AirfoilDefiner::onCancel(wxCommandEvent& event) {
 std::string AirfoilDefiner::getText() {
 	return text;
 }
+
+int AirfoilDefiner::getType() {
+	return type;
+}
