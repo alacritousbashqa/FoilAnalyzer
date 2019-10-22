@@ -39,7 +39,22 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 
 void AirfoilDefiner::onOK(wxCommandEvent& event) {
 	text = tc->GetLineText(0);
-	EndModal(modalCode);
+	if (text != "" && std::all_of(text.begin(), text.end(), ::isdigit)) {
+		if (text.length() == 4) {
+			type = 4;
+			EndModal(modalCode);
+		}
+		else if (text.length() == 5) {
+			type = 5;
+			EndModal(modalCode);
+		}
+		else {
+			wxLogError("An invalid length was entered! Please use 4 or 5 digit series only!");
+		}
+	}
+	else {
+		wxLogError("Invalid code! Code should be only numbers and be 4 or 5 digits long!");
+	}
 }
 
 void AirfoilDefiner::onCancel(wxCommandEvent& event) {
