@@ -89,8 +89,10 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	AirfoilDefiner defineDialog("NACA Airfoil Definer");
 	// Get code from dialog on dialog close
 	std::string temp = defineDialog.getText();
+	// Get NACA code type (4 or 5 digit) on dialog close
 	int type = defineDialog.getType();
 
+	// If the dialog returns -1, it was closed without a valid code, so break
 	if (type == -1) {
 		return;
 	}
@@ -100,6 +102,7 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	afs->code = temp;
 	afs->name = "NACA " + temp;
 	afs->nPanels = 50;
+	// Generate the correct points based on the entered code type
 	if (type == 4) {
 		afs->points = foilGen->generate4Digit(temp, 50);
 	}
