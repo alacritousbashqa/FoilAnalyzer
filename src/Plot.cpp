@@ -89,6 +89,10 @@ void Plot::draw(wxDC& dc) {
 	}
 	else
 		vertAxis->draw(dc);
+
+	dc.SetPen(wxPen(*wxWHITE,1));
+	dc.SetBrush(*wxTRANSPARENT_BRUSH);
+	dc.DrawRectangle(boundary);
 }
 
 void Plot::drawPoints(wxDC& dc, arma::mat points) {
