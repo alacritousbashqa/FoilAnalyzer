@@ -37,7 +37,7 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	// Airfoil Plot which holds the axes data and draws airfoils onto them
 	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), parent->GetSize().GetWidth()-20, 500);
 	double xLim[2] = { -0.1,1.1 };
-	double yLim[2] = { -0.18,0.18 };
+	double yLim[2] = { -0.20,0.20 };
 	int bords[4] = { 50,50,50,50 };
 	airfoilPlot = new Plot(plotRect, xLim, yLim, bords);
 
