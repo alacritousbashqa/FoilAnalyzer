@@ -86,27 +86,39 @@ void Axis::draw(wxDC& dc) {
 		dc.DrawLine(boundary[0], origin.y, boundary[1], origin.y); // Draw axis line
 		for (; it != valueLocs.end(); ++it) { // Draw axis ticks
 			dc.DrawLine(it->second, origin.y + 5, it->second, origin.y - 5);
-			if (it->first == 0.0)
-				dc.DrawText(std::to_string(it->first).substr(0, 1), it->second + 7, origin.y + 7);
-			else {
-				if (it->first < 0)
-					dc.DrawText(std::to_string(it->first).substr(0, 5), it->second, origin.y + 7);
-				else
-					dc.DrawText(std::to_string(it->first).substr(0, 4), it->second, origin.y + 7);
+			int x_adj = 0;
+			int y_adj = 6;
+			int label_length = 5;
+			if (std::next(it, 1) == valueLocs.end())
+				x_adj = -15;
+			if (it->first == 0.0){
+				x_adj = 7;
+				label_length = 1;
 			}
+			if (it->first > 0)
+				label_length = 4;
+
+			dc.DrawText(std::to_string(it->first).substr(0, label_length), it->second + x_adj, origin.y + y_adj);
 		}
 	}
 	else {
 		dc.DrawLine(origin.x, boundary[0], origin.x, boundary[1]);
 		for (; it != valueLocs.end(); ++it) {
 			dc.DrawLine(origin.x + 5, it->second, origin.x - 5, it->second);
-			if (it->first == 0.0);
-			else {
-				if (it->first < 0)
-					dc.DrawText(std::to_string(it->first).substr(0, 5), origin.x - 32, it->second);
-				else
-					dc.DrawText(std::to_string(it->first).substr(0, 4), origin.x - 27, it->second);
+			int x_adj = -32;
+			int y_adj = 0;
+			int label_length = 5;
+			if (it->first == 0.0) { // Don't draw the label because it is already drawn for the horizontal axis
+				continue;
 			}
+			if (it == valueLocs.begin())
+				y_adj = -13;
+			if (it->first > 0) {
+				x_adj = -27;
+				label_length = 4;
+			}
+
+			dc.DrawText(std::to_string(it->first).substr(0, label_length), origin.x + x_adj, it->second + y_adj);
 		}
 	}
 	
