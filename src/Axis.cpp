@@ -82,25 +82,27 @@ void Axis::draw(wxDC& dc) {
 	dc.SetTextForeground(*wxRED);
 	std::map<double, int>::iterator it = valueLocs.begin();
 
+	// Horizontal Axis
 	if (dir == HORIZONTAL) {
 		dc.DrawLine(boundary[0], origin.y, boundary[1], origin.y); // Draw axis line
 		for (; it != valueLocs.end(); ++it) { // Draw axis ticks
-			dc.DrawLine(it->second, origin.y + 5, it->second, origin.y - 5);
-			int x_adj = 0;
-			int y_adj = 6;
-			int label_length = 5;
-			if (std::next(it, 1) == valueLocs.end())
+			dc.DrawLine(it->second, origin.y + 5, it->second, origin.y - 5); // Draw the tick
+			int x_adj = 0; // Label x offset
+			int y_adj = 6; // Label y offset
+			int label_length = 5; // Precision of label
+			if (std::next(it, 1) == valueLocs.end()) // If this is the rightmost label, adjust to be within bounds
 				x_adj = -15;
-			if (it->first == 0.0){
+			if (it->first == 0.0){ // If this is at 0, move from vertical axis and only show one digit
 				x_adj = 7;
 				label_length = 1;
 			}
-			if (it->first > 0)
+			if (it->first > 0) // If the number is positive, show only 2 decimal digits
 				label_length = 4;
 
 			dc.DrawText(std::to_string(it->first).substr(0, label_length), it->second + x_adj, origin.y + y_adj);
 		}
 	}
+	// Vertical Axis
 	else {
 		dc.DrawLine(origin.x, boundary[0], origin.x, boundary[1]);
 		for (; it != valueLocs.end(); ++it) {
