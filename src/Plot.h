@@ -28,6 +28,8 @@ public:
 	void draw(wxDC& dc);
 	// Draws the given points (values) onto the plot. The points are converted to pixel locations first.
 	void drawPoints(wxDC& dc, arma::mat points);
+	// Draws the given points (pixels) onto the plot
+	void drawPoints(wxDC& dc, arma::umat points);
 
 	// GETTERS
 	// Returns a pointer to the horizontal axis

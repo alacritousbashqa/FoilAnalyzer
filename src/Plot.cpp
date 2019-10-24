@@ -117,6 +117,18 @@ void Plot::drawPoints(wxDC& dc, arma::mat points) {
 	}
 }
 
+void Plot::drawPoints(wxDC& dc, arma::umat points) {
+	if (points.n_rows <= 1) {
+		wxLogError("Cannot plot points! There are too few of them (e.g. <= 1)!");
+		return;
+	}
+
+	// Draw given points
+	for (int i = 0; i < points.n_rows - 1; i++) {
+		dc.DrawLine(points(i, 0), points(i, 1), points(i + 1, 0), points(i + 1, 1));
+	}
+}
+
 arma::umat Plot::pointsToPixels(arma::mat points) {
 	// Assuming x and y in cols 0 and 1, respectively
 
