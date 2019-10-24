@@ -20,7 +20,6 @@ Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2
 	calculateVLocs();
 }
 
-// Calculates and stores the axis values to their pixel locations
 void Axis::calculateVLocs() {
 	valueLocs.clear(); // Clears the current list, might change later to just update it if the step size and limits did not change
 	// If this is a horizontal axis...
@@ -81,13 +80,11 @@ void Axis::calculateVLocs() {
 	}
 }
 
-// Sets the axis boundary (in pixels) to the new value
 void Axis::setBoundary(int boundary[2]) {
 	this->boundary[0] = boundary[0];
 	this->boundary[1] = boundary[1];
 }
 
-// Draws the axis line, the ticks, and the labels for the axis
 void Axis::draw(wxDC& dc) {
 	dc.SetPen(wxPen(*wxRED, 1));
 	dc.SetTextForeground(*wxRED);
@@ -137,33 +134,28 @@ void Axis::draw(wxDC& dc) {
 	
 }
 
-// Returns the smallest value plotted on the axis
+
 double Axis::getLowerLimit() {
 	return limits[0];
 }
-// Returns the largest value plotted on the axis
 double Axis::getUpperLimit() {
 	return limits[1];
 }
 
-// Get a map of the axis value-locations: value->pixel
 std::map<double, int> Axis::getVLocs() {
 	return valueLocs;
 }
 
-// Set the origin pixel position
 void Axis::setOrigin(wxPoint origin) {
 	this->origin.x = origin.x;
 	this->origin.y = origin.y;
 }
 
-// Set the origin value
 void Axis::setVOrigin(double vOrigin[2]) {
 	this->vOrigin[0] = vOrigin[0];
 	this->vOrigin[1] = vOrigin[1];
 }
 
-// Updates the boundary, origin pixel location, and origin value, then recalculates the value-locations
 void Axis::updateAxis(int boundary[2], wxPoint origin, double vOrigin[2]) {
 	setBoundary(boundary);
 	setOrigin(origin);

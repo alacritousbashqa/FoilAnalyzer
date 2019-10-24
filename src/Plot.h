@@ -19,8 +19,17 @@ class Plot {
 	void calculateOrigin(double xLim[2], double yLim[2]);
 public:
 	// CONSTRUCTORS
+
 	Plot(wxRect& boundary, double xLim[2], double yLim[2]);
 	Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4]);
+	//-------------------------------------------------------------------------------------------------------------
+	// GETTERS
+
+	// Returns a pointer to the horizontal axis
+	Axis* getHAxis();
+	// Returns a pointer to the vertical axis
+	Axis* getVAxis();
+	//-------------------------------------------------------------------------------------------------------------
 
 	// Updates the boundaries with the new one defined by a wxRect
 	void updateBoundaries(wxRect& rect);
@@ -30,10 +39,5 @@ public:
 	void drawPoints(wxDC& dc, arma::mat points);
 	// Draws the given points (pixels) onto the plot
 	void drawPoints(wxDC& dc, arma::umat points);
-
-	// GETTERS
-	// Returns a pointer to the horizontal axis
-	Axis* getHAxis();
-	// Returns a pointer to the vertical axis
-	Axis* getVAxis();
+	//-------------------------------------------------------------------------------------------------------------
 };

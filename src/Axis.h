@@ -21,21 +21,35 @@ class Axis {
 
 	std::map<double, int> valueLocs;	// Maps values to their pixel locations, e.g. tick locations
 
-	void calculateVLocs();				// Calculates and populates value-locations map
+	// Calculates and stores the axis values to their pixel locations
+	void calculateVLocs();
 public:
-	// Constructors
+	// CONSTRUCTORS
+
 	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2]);
 	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2], double limits[2], double step);
-	// Getters
-	double getLowerLimit();
-	double getUpperLimit();
-	std::map<double, int> getVLocs();
-	// Setters
-	void setBoundary(int boundary[2]);
-	void setOrigin(wxPoint origin);
-	void setVOrigin(double vOrigin[2]);
+	//-------------------------------------------------------------------------------------------------------------
+	// GETTERS
 
+	// Returns the smallest value plotted on the axis
+	double getLowerLimit();
+	// Returns the largest value plotted on the axis
+	double getUpperLimit();
+	// Get a map of the axis value-locations: value->pixel
+	std::map<double, int> getVLocs();
+	//-------------------------------------------------------------------------------------------------------------
+	// SETTERS
+
+	// Sets the axis boundary (in pixels) to the new value
+	void setBoundary(int boundary[2]);
+	// Set the origin pixel position
+	void setOrigin(wxPoint origin);
+	// Set the origin value
+	void setVOrigin(double vOrigin[2]);
+	//-------------------------------------------------------------------------------------------------------------
+
+	// Updates the boundary, origin pixel location, and origin value, then recalculates the value-locations
 	void updateAxis(int boundary[2], wxPoint origin, double vOrigin[2]);
-	// Draw
+	// Draws the axis line, the ticks, and the labels for the axis
 	void draw(wxDC& dc);
 };
