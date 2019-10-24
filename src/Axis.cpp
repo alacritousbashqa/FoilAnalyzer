@@ -20,12 +20,15 @@ Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2
 	calculateVLocs();
 }
 
+// Calculates and stores the axis values to their pixel locations
 void Axis::calculateVLocs() {
-	valueLocs.clear();
+	valueLocs.clear(); // Clears the current list, might change later to just update it if the step size and limits did not change
+	// If this is a horizontal axis...
 	if (dir == HORIZONTAL) {
-		int m_p = (limits[1] - vOrigin[0]) / step;
-		int m_n = (vOrigin[0] - limits[0]) / step;
-		int np = 0;
+		int m_p = (limits[1] - vOrigin[0]) / step;	// Number of ticks for values greater than 0
+		int m_n = (vOrigin[0] - limits[0]) / step;	// Number of ticks for values less than 0
+		int np = 0;									// Pixel step size
+		// Use either m_p or m_n depending on which is not 0. If both are 0, display an error and return.
 		if (m_p)
 			np = (boundary[1] - origin.x) / m_p;
 		else if (m_n)
@@ -35,10 +38,12 @@ void Axis::calculateVLocs() {
 			return;
 		}
 
+		// Set the values at the limits to the pixel locations at the boundaries. Set the origin location.
 		valueLocs[limits[0]] = boundary[0];
 		valueLocs[limits[1]] = boundary[1];
 		valueLocs[vOrigin[0]] = origin.x;
 
+		// Finally, calculate the other tick value-locations with respect to the origin for consistent spacing on each side of the origin
 		for (int i = 1; i <= m_p; i++) {
 			valueLocs[vOrigin[0] + i * step] = origin.x + i * np;
 		}
@@ -46,10 +51,12 @@ void Axis::calculateVLocs() {
 			valueLocs[vOrigin[0] + i * step] = origin.x + i * np;
 		}
 	}
+	// If this is a vertical axis...
 	else {
-		int m_p = (limits[1] - vOrigin[1]) / step;
-		int m_n = (vOrigin[1] - limits[0]) / step;
-		int np = 0;
+		int m_p = (limits[1] - vOrigin[1]) / step;	// Number of ticks for values greater than 0
+		int m_n = (vOrigin[1] - limits[0]) / step;	// Number of ticks for values less than 0
+		int np = 0;									// Pixel step size
+		// Use either m_p or m_n depending on which is not 0. If both are 0, display an error and return.
 		if(m_p)
 			np = (boundary[0] - origin.y) / m_p;
 		else if (m_n)
@@ -59,10 +66,12 @@ void Axis::calculateVLocs() {
 			return;
 		}
 
+		// Set the values at the limits to the pixel locations at the boundaries. Set the origin location.
 		valueLocs[limits[0]] = boundary[1];
 		valueLocs[limits[1]] = boundary[0];
 		valueLocs[vOrigin[1]] = origin.y;
 
+		// Finally, calculate the other tick value-locations with respect to the origin for consistent spacing on each side of the origin
 		for (int i = 1; i <= m_p; i++) {
 			valueLocs[vOrigin[1] + i * step] = origin.y + i * np;
 		}
@@ -72,11 +81,13 @@ void Axis::calculateVLocs() {
 	}
 }
 
+// Sets the axis boundary (in pixels) to the new value
 void Axis::setBoundary(int boundary[2]) {
 	this->boundary[0] = boundary[0];
 	this->boundary[1] = boundary[1];
 }
 
+// Draws the axis line, the ticks, and the labels for the axis
 void Axis::draw(wxDC& dc) {
 	dc.SetPen(wxPen(*wxRED, 1));
 	dc.SetTextForeground(*wxRED);
@@ -87,16 +98,16 @@ void Axis::draw(wxDC& dc) {
 		dc.DrawLine(boundary[0], origin.y, boundary[1], origin.y); // Draw axis line
 		for (; it != valueLocs.end(); ++it) { // Draw axis ticks
 			dc.DrawLine(it->second, origin.y + 5, it->second, origin.y - 5); // Draw the tick
-			int x_adj = 0; // Label x offset
-			int y_adj = 6; // Label y offset
-			int label_length = 5; // Precision of label
+			int x_adj = 0;			// Label x offset
+			int y_adj = 6;			// Label y offset
+			int label_length = 5;	// Precision of label
 			if (std::next(it, 1) == valueLocs.end()) // If this is the rightmost label, adjust to be within bounds
 				x_adj = -15;
-			if (it->first == 0.0){ // If this is at 0, move from vertical axis and only show one digit
+			if (it->first == 0.0){	// If this is at 0, move from vertical axis and only show one digit
 				x_adj = 7;
 				label_length = 1;
 			}
-			if (it->first > 0) // If the number is positive, show only 2 decimal digits
+			if (it->first > 0)		// If the number is positive, show only 2 decimal digits
 				label_length = 4;
 
 			dc.DrawText(std::to_string(it->first).substr(0, label_length), it->second + x_adj, origin.y + y_adj);
@@ -107,15 +118,15 @@ void Axis::draw(wxDC& dc) {
 		dc.DrawLine(origin.x, boundary[0], origin.x, boundary[1]);
 		for (; it != valueLocs.end(); ++it) {
 			dc.DrawLine(origin.x + 5, it->second, origin.x - 5, it->second);
-			int x_adj = -32;
-			int y_adj = 0;
-			int label_length = 5;
-			if (it->first == 0.0) { // Don't draw the label because it is already drawn for the horizontal axis
+			int x_adj = -32;				// Label x offset
+			int y_adj = 0;					// Label y offset
+			int label_length = 5;			// Precision of label
+			if (it->first == 0.0) {			// Don't draw the label because it is already drawn for the horizontal axis
 				continue;
 			}
-			if (it == valueLocs.begin())
+			if (it == valueLocs.begin())	// If this is the bottom label, adjust to be within bounds
 				y_adj = -13;
-			if (it->first > 0) {
+			if (it->first > 0) {			// If the number is positive, show only 2 decimal digits
 				x_adj = -27;
 				label_length = 4;
 			}
@@ -126,28 +137,33 @@ void Axis::draw(wxDC& dc) {
 	
 }
 
+// Returns the smallest value plotted on the axis
 double Axis::getLowerLimit() {
 	return limits[0];
 }
-
+// Returns the largest value plotted on the axis
 double Axis::getUpperLimit() {
 	return limits[1];
 }
 
+// Get a map of the axis value-locations: value->pixel
 std::map<double, int> Axis::getVLocs() {
 	return valueLocs;
 }
 
+// Set the origin pixel position
 void Axis::setOrigin(wxPoint origin) {
 	this->origin.x = origin.x;
 	this->origin.y = origin.y;
 }
 
+// Set the origin value
 void Axis::setVOrigin(double vOrigin[2]) {
 	this->vOrigin[0] = vOrigin[0];
 	this->vOrigin[1] = vOrigin[1];
 }
 
+// Updates the boundary, origin pixel location, and origin value, then recalculates the value-locations
 void Axis::updateAxis(int boundary[2], wxPoint origin, double vOrigin[2]) {
 	setBoundary(boundary);
 	setOrigin(origin);
