@@ -5,22 +5,33 @@
 #include "Axis.h"
 
 class Plot {
-	int border[4];
-	Axis* horizAxis;
-	Axis* vertAxis;
-	std::string title;
-	wxPoint origin;
-	double vOrigin[2]{};
-	wxRect boundary;
-	arma::umat pointsToPixels(arma::mat points);
+	int border[4];									// Padding on left, top, right, bottom of plot
+	Axis* horizAxis;								// Horizontal axis pointer
+	Axis* vertAxis;									// Vertical axis pointer
+	std::string title;								// Plot title
+	wxPoint origin;									// Location of origin (pixels)
+	double vOrigin[2]{};							// Origin value (values), i.e. (0.0,0.0)
+	wxRect boundary;								// Bounds of plot in which everything is drawn, e.g. bounds after border is applied
 
+	// Converts the given points to their pixel location equivalents based on the axes steps and limits
+	arma::umat pointsToPixels(arma::mat points);
+	// Calculates the origin location (origin) and origin value (vOrigin) from the axes limits
 	void calculateOrigin(double xLim[2], double yLim[2]);
 public:
+	// CONSTRUCTORS
 	Plot(wxRect& boundary, double xLim[2], double yLim[2]);
 	Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4]);
+
+	// Updates the boundaries with the new one defined by a wxRect
 	void updateBoundaries(wxRect& rect);
+	// Tells the axes to draw and draws the plot border
 	void draw(wxDC& dc);
+	// Draws the given points (values) onto the plot. The points are converted to pixel locations first.
 	void drawPoints(wxDC& dc, arma::mat points);
+
+	// GETTERS
+	// Returns a pointer to the horizontal axis
 	Axis* getHAxis();
-	Axis *getVAxis();
+	// Returns a pointer to the vertical axis
+	Axis* getVAxis();
 };
