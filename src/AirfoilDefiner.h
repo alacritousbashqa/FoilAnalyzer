@@ -1,3 +1,8 @@
+// AirfoilDefiner.h
+// Author: Mark Bashqawi
+
+// Dialog widget which asks the user to input a NACA code for airfoil generation.
+
 #pragma once
 
 #include <wx/wxprec.h>

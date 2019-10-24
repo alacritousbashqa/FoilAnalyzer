@@ -1,3 +1,9 @@
+// Plot.h
+// Author: Mark Bashqawi
+
+// Plot holds all data required to show a plot and convert between numerical values to pixel locations. It holds 
+// the axis objects and dictates how and when things are drawn, such as the axis ticks and airfoil plots.
+
 #pragma once
 
 #include <armadillo>

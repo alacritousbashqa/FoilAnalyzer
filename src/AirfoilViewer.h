@@ -1,3 +1,10 @@
+// AirfoilViewer.h
+// Author: Mark Bashqawi
+
+// This holds all widgets and data related to the Airfoil Viewer program which allows the user to define an
+// airfoil based on a NACA code and draw it to a normalized plot. Multiple airfoils can be loaded and each
+// can be toggled to show on the plot and can have their color changed.
+
 #pragma once
 
 #include <wx/wxprec.h>

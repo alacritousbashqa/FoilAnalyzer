@@ -1,3 +1,9 @@
+// Axis.h
+// Author: Mark Bashqawi
+
+// Axis holds all data related to value<->pixel conversion, tick distribution, and how the axes are drawn with
+// labels.
+
 #pragma once
 
 #include <map>

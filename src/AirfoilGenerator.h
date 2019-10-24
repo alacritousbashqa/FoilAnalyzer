@@ -1,3 +1,8 @@
+// AirfoilGenerator.h
+// Author: Mark Bashqawi
+
+// Handles generation of airfoils points based on a NACA code and number of panels.
+
 #pragma once
 
 #include <armadillo>
