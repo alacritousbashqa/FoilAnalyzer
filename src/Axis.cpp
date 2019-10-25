@@ -166,3 +166,11 @@ void Axis::updateAxis(int boundary[2], wxPoint origin, double vOrigin[2]) {
 	setVOrigin(vOrigin);
 	calculateVLocs();
 }
+
+std::string Axis::getLabel() {
+	return label;
+}
+
+void Axis::setLabel(std::string l) {
+	label = l;
+}

@@ -43,6 +43,7 @@ public:
 	double getUpperLimit();
 	// Get a map of the axis value-locations: value->pixel
 	std::map<double, int> getVLocs();
+	std::string getLabel();
 	//-------------------------------------------------------------------------------------------------------------
 	// SETTERS
 
@@ -52,6 +53,7 @@ public:
 	void setOrigin(wxPoint origin);
 	// Set the origin value
 	void setVOrigin(double vOrigin[2]);
+	void setLabel(std::string l);
 	//-------------------------------------------------------------------------------------------------------------
 
 	// Updates the boundary, origin pixel location, and origin value, then recalculates the value-locations
