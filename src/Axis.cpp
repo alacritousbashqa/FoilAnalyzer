@@ -16,6 +16,10 @@ Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2
 	this->limits[0] = limits[0];
 	this->limits[1] = limits[1];
 	this->step = step;
+	if (dir == HORIZONTAL)
+		this->label = "x";
+	else
+		this->label = "y";
 
 	calculateVLocs();
 }
