@@ -18,6 +18,10 @@ class Plot {
 	wxPoint origin;									// Location of origin (pixels)
 	double vOrigin[2]{};							// Origin value (values), i.e. (0.0,0.0)
 	wxRect boundary;								// Bounds of plot in which everything is drawn, e.g. bounds after border is applied
+	wxRect drawArea;
+	bool showLabelX;
+	bool showLabelY;
+	bool showTitle;
 
 	// Converts the given points to their pixel location equivalents based on the axes steps and limits
 	arma::umat pointsToPixels(arma::mat points);
