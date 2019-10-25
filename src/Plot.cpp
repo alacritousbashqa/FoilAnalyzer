@@ -218,3 +218,23 @@ arma::umat Plot::pointsToPixels(arma::mat points) {
 
 	return pixels;
 }
+
+std::string Plot::getTitle() {
+	return title;
+}
+std::string Plot::getHLabel() {
+	return horizAxis->getLabel();
+}
+std::string Plot::getVLabel() {
+	return vertAxis->getLabel();
+}
+
+void Plot::setTitle(std::string t) {
+	title = t;
+}
+void Plot::setHLabel(std::string hl) {
+	horizAxis->setLabel(hl);
+}
+void Plot::setVLabel(std::string vl) {
+	vertAxis->setLabel(vl);
+}

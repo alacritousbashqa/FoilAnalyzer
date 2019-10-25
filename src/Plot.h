@@ -39,6 +39,15 @@ public:
 	Axis* getHAxis();
 	// Returns a pointer to the vertical axis
 	Axis* getVAxis();
+	std::string getTitle();
+	std::string getHLabel();
+	std::string getVLabel();
+	//-------------------------------------------------------------------------------------------------------------
+	// SETTERS
+
+	void setTitle(std::string t);
+	void setHLabel(std::string hl);
+	void setVLabel(std::string vl);
 	//-------------------------------------------------------------------------------------------------------------
 
 	// Updates the boundaries with the new one defined by a wxRect
