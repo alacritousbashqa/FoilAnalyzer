@@ -52,30 +52,30 @@ Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool
 void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
 	// X component
 	if (xLim[0] >= 0) {							// If (0,0) is off-screen left, put origin on left limit
-		origin.x = boundary.GetLeft() + 1;
+		origin.x = drawArea.GetLeft() + 1;
 		vOrigin[0] = xLim[0];
 	}
 	else if (xLim[1] <= 0) {					// If (0,0) is off-screen right, put origin on right limit
-		origin.x = boundary.GetRight() - 1;
+		origin.x = drawArea.GetRight() - 1;
 		vOrigin[0] = xLim[1];
 	}
 	else {										// Else, find (0,0) with interpolation
 		double ratio = abs(xLim[0] / (xLim[1] - xLim[0]));
-		origin.x = (int)(ratio * boundary.GetWidth() + boundary.GetX());
+		origin.x = (int)(ratio * drawArea.GetWidth() + drawArea.GetX());
 		vOrigin[0] = 0.0;
 	}
 	// Y component
 	if (yLim[0] >= 0) {							// If (0,0) is off-screen below, put origin on bottom limit
-		origin.y = boundary.GetBottom() - 1;
+		origin.y = drawArea.GetBottom() - 1;
 		vOrigin[1] = yLim[0];
 	}
 	else if (yLim[1] <= 0) {					// If (0,0) is off-screen above, put origin on top limit
-		origin.y = boundary.GetTop() + 1;
+		origin.y = drawArea.GetTop() + 1;
 		vOrigin[1] = yLim[1];
 	}
 	else {										// Else, find (0,0) with interpolation
 		double ratio = abs(yLim[1] / (yLim[1] - yLim[0]));
-		origin.y = (int)(ratio * boundary.GetHeight() + boundary.GetY());
+		origin.y = (int)(ratio * drawArea.GetHeight() + drawArea.GetY());
 		vOrigin[1] = 0;
 	}
 }
