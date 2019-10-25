@@ -147,9 +147,9 @@ void Plot::draw(wxDC& dc) {
 	if (showTitle)
 		dc.DrawText(title, wxPoint(drawArea.GetWidth() / 2 + drawArea.GetLeft(), boundary.GetTop() + 5));
 	if (showLabelX)
-		dc.DrawText(horizAxis->getLabel(), wxPoint(drawArea.GetWidth() / 2 + drawArea.GetLeft(), boundary.GetBottom() - 20));
+		dc.DrawText(horizAxis->getLabel(), wxPoint(drawArea.GetRight() - 30, origin.y - 26));
 	if (showLabelY)
-		dc.DrawText(vertAxis->getLabel(), wxPoint(boundary.GetLeft() + 7, drawArea.GetHeight() / 2 + drawArea.GetTop() - 6));
+		dc.DrawText(vertAxis->getLabel(), wxPoint(origin.x + 13, drawArea.GetTop() - 9));
 
 }
 
