@@ -1,3 +1,9 @@
+// MainMenu.h
+// Author: Mark Bashqawi
+
+// The MainMenu contains the widgets that make up the main menu and the functions associated with any main menu 
+// events (i.e. buttons).
+
 #pragma once
 
 #include <wx/wxprec.h>

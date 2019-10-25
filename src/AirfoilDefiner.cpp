@@ -3,6 +3,8 @@
 AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	: wxDialog(NULL, -1, title, wxDefaultPosition, wxSize(200, 230)) {
 
+	type = -1;
+
 	wxPanel *panel = new wxPanel(this, -1);
 
 	wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
@@ -10,12 +12,8 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 
 	wxStaticBox *st = new wxStaticBox(panel, -1, wxT("NACA Type"),
 		wxPoint(5, 5), wxSize(170, 125));
-	rb4 = new wxRadioButton(panel, -1,
-		wxT("NACA 4 Digit"), wxPoint(15, 30), wxDefaultSize, wxRB_GROUP);
-
-	rb5 = new wxRadioButton(panel, -1,
-		wxT("NACA 5 Digit"), wxPoint(15, 55));
-	rb5->Disable();
+	wxStaticText stext(panel, -1, wxT("Enter a NACA 4 or 5 digit code:"),
+		wxPoint(15, 30), wxSize(150, 40));
 	tc = new wxTextCtrl(panel, -1, wxT(""),
 		wxPoint(15, 95), wxSize(150,24));
 
@@ -43,7 +41,24 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 
 void AirfoilDefiner::onOK(wxCommandEvent& event) {
 	text = tc->GetLineText(0);
-	EndModal(modalCode);
+	if (text != "" && std::all_of(text.begin(), text.end(), ::isdigit)) {
+		if (text.length() == 4) {
+			type = 4;
+			EndModal(modalCode);
+		}
+		else if (text.length() == 5) {
+			type = 5;
+			EndModal(modalCode);
+		}
+		else {
+			type = -1;
+			wxLogError("An invalid length was entered! Please use 4 or 5 digit series only!");
+		}
+	}
+	else {
+		type = -1;
+		wxLogError("Invalid code! Code should be only numbers and be 4 or 5 digits long!");
+	}
 }
 
 void AirfoilDefiner::onCancel(wxCommandEvent& event) {
@@ -52,4 +67,8 @@ void AirfoilDefiner::onCancel(wxCommandEvent& event) {
 
 std::string AirfoilDefiner::getText() {
 	return text;
+}
+
+int AirfoilDefiner::getType() {
+	return type;
 }

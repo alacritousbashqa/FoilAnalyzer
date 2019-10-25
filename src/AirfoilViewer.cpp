@@ -9,9 +9,18 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 
 	// Drawing area for the airfoil plot
 	avDrawArea = avTopSizer->Add(new wxPanel(this,7), wxEXPAND);
-	// List to hold loaded airfoils
-	wxListBox* airfoilListBox = new wxListBox(this, -1);
-	avTopSizer->Add(airfoilListBox, 0, wxEXPAND);
+
+	// Sizer that ensures the scroll box fills its given area
+	wxBoxSizer* listHBox = new wxBoxSizer(wxHORIZONTAL);
+
+	// Holds list of loaded airfoil and allows scrolling when there's too many
+	scrolledBoxSizer = new wxBoxSizer(wxVERTICAL);
+	scrolledWindow = new wxScrolledWindow(this, -1, wxDefaultPosition, wxSize(-1,100), wxVSCROLL | wxALWAYS_SHOW_SB);
+	scrolledWindow->SetBackgroundColour(wxColour(*wxWHITE));
+	scrolledWindow->SetScrollRate(5, 5);
+	listHBox->Add(scrolledWindow, 1, wxEXPAND);
+	scrolledWindow->SetSizer(scrolledBoxSizer);
+	avTopSizer->Add(listHBox, 1, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
 
 	// Box that holds "back to main menu" button at bottom of screen
 	wxBoxSizer* buttonBox = new wxBoxSizer(wxHORIZONTAL);
@@ -28,9 +37,12 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	// Airfoil Plot which holds the axes data and draws airfoils onto them
 	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), parent->GetSize().GetWidth()-20, 500);
 	double xLim[2] = { -0.1,1.1 };
-	double yLim[2] = { -0.18,0.18 };
+	double yLim[2] = { -0.20,0.20 };
 	int bords[4] = { 50,50,50,50 };
-	airfoilPlot = new Plot(plotRect, xLim, yLim, bords);
+	airfoilPlot = new Plot(plotRect, xLim, yLim, bords, true, true, true);
+	airfoilPlot->setTitle("Airfoil Viewer Plot");
+	airfoilPlot->setHLabel("x/c");
+	airfoilPlot->setVLabel("y/c");
 
 	// Generates the points for an airfoil to be plotted on the airfoilPlot
 	foilGen = new AirfoilGenerator();
@@ -40,6 +52,10 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	Connect(BACK_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onViewerBackButton));
 	// Define airfoil button
 	Connect(DEFINE_AF_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onDefineAirfoil));
+	// Airfoil list checkbox
+	Connect(CHECKBOXES_ID, wxEVT_CHECKBOX, wxCommandEventHandler(ViewerPanel::onShowChecked));
+	// Airfoil list color picker
+	Connect(COLORPICKER_ID, wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler(ViewerPanel::onColorPicked));
 	// Event Paint
 	Connect(GetId(), wxEVT_PAINT, wxPaintEventHandler(ViewerPanel::onPaintEvent));
 }
@@ -53,6 +69,7 @@ enum {
 	axesVERT = 1
 };
 
+// Called on refresh; paints the axes and any loaded airfoils to be shown
 void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxPaintDC pdc(this);
 
@@ -60,27 +77,74 @@ void ViewerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxRect plotRect(avDrawArea->GetRect().GetLeft(), avDrawArea->GetRect().GetTop(), this->GetParent()->GetSize().GetWidth()-20, avTopSizer->GetChildren().front()->GetRect().GetHeight());
 	airfoilPlot->updateBoundaries(plotRect);
 	airfoilPlot->draw(pdc);
-	for (AirfoilStruct afs : loadedAirfoils) {
-		airfoilPlot->drawPoints(pdc, afs.points);
+	// Draw the loaded airfoils
+	for (AirfoilListStruct als : afListMembers) {
+		if (als.checkBox->GetValue()) {
+			pdc.SetPen(wxPen(als.colorPicker->GetColour(), 1));
+			airfoilPlot->drawPoints(pdc, als.airfoil->points);
+		}
 	}
 }
 
+// When the button to define an airfoil is pressed. Opens up the NACA code dialog.
 void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
+	// Create and open airfoil definer dialog
 	AirfoilDefiner defineDialog("NACA Airfoil Definer");
+	// Get code from dialog on dialog close
 	std::string temp = defineDialog.getText();
-	if (temp != "" && (temp.length() == 4 || temp.length() == 5) && std::all_of(temp.begin(), temp.end(), ::isdigit)) {
-		AirfoilStruct afs;
-		afs.code = temp;
-		afs.nPanels = 50;
-		afs.points = foilGen->generate4Digit(temp, 50);
-		loadedAirfoils.emplace_back(afs);
-		
-		//afListBox->InsertItem(0, "");
-		//afListBox->SetItem(0, 0, "");
-		//afListBox->SetItem(0, 1, temp);
-		//new wxStaticText(airfoilListBox, -1, temp);
+	// Get NACA code type (4 or 5 digit) on dialog close
+	int type = defineDialog.getType();
+
+	// If the dialog returns -1, it was closed without a valid code, so break
+	if (type == -1) {
+		return;
 	}
+
+	// Create a new airfoil struct
+	AirfoilStruct* afs = new AirfoilStruct();
+	afs->code = temp;
+	afs->name = "NACA " + temp;
+	afs->nPanels = 50;
+	// Generate the correct points based on the entered code type
+	if (type == 4) {
+		afs->points = foilGen->generate4Digit(temp, 50);
+	}
+	else {
+		afs->points = foilGen->generate5Digit(temp, 50);
+	}
+	loadedAirfoils.emplace_back(afs); // Add to global master list
+	// Create a new list struct
+	wxBoxSizer* hBox = new wxBoxSizer(wxHORIZONTAL);
+	AirfoilListStruct als;
+	als.airfoil = afs;
+	als.checkBox = new wxCheckBox(scrolledWindow, CHECKBOXES_ID, "Show?");
+	als.checkBox->SetValue(true);
+	als.colorPicker = new wxColourPickerCtrl(scrolledWindow, COLORPICKER_ID);
+	als.colorPicker->SetColour(wxColour(*wxWHITE));
+	afListMembers.push_back(als); // Add to class master list
+		
+	// Add the new airfoil widgets to a box sizer (adds a new row)
+	hBox->Add(als.checkBox, 1, wxEXPAND | wxLEFT, 10);
+	hBox->Add(new wxStaticText(scrolledWindow, -1, afs->name), 1, wxALIGN_CENTER_VERTICAL);
+	hBox->Add(als.colorPicker, 1, wxALIGN_CENTER_VERTICAL, 10);
+	hBox->Add(new wxPanel(scrolledWindow, -1));
+	hBox->Layout();
+
+	// Add the new airfoil row to the scroll box and tell the scroll box to update its size
+	scrolledBoxSizer->Add(hBox);
+	scrolledWindow->FitInside();
+	scrolledBoxSizer->Layout();
 	
+	// Tell the viewer panel to redraw the new airfoil
+	this->Refresh();
+}
+
+// When the checkbox changes state, tell the viewer panel to redraw
+void ViewerPanel::onShowChecked(wxCommandEvent& event) {
+	this->Refresh();
+}
+// When the color picker changes state, tell the viewer panel to redraw
+void ViewerPanel::onColorPicked(wxColourPickerEvent& event) {
 	this->Refresh();
 }
 
