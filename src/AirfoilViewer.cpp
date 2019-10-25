@@ -40,6 +40,9 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	double yLim[2] = { -0.20,0.20 };
 	int bords[4] = { 50,50,50,50 };
 	airfoilPlot = new Plot(plotRect, xLim, yLim, bords, true, true, true);
+	airfoilPlot->setTitle("Airfoil Viewer Plot");
+	airfoilPlot->setHLabel("x/c");
+	airfoilPlot->setVLabel("y/c");
 
 	// Generates the points for an airfoil to be plotted on the airfoilPlot
 	foilGen = new AirfoilGenerator();
