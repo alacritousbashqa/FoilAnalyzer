@@ -30,8 +30,8 @@ class Plot {
 public:
 	// CONSTRUCTORS
 
-	Plot(wxRect& boundary, double xLim[2], double yLim[2]);
-	Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4]);
+	Plot(wxRect& boundary, double xLim[2], double yLim[2], bool showX = false, bool showY = false, bool showTitle = false);
+	Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool showX = false, bool showY = false, bool showTitle = false);
 	//-------------------------------------------------------------------------------------------------------------
 	// GETTERS
 

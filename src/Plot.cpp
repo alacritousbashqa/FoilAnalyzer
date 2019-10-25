@@ -2,14 +2,31 @@
 
 int DEFAULT_BORDER[4] = { 0,0,0,0 };
 
-Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2]) 
+Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], bool showX, bool showY, bool showTitle)
 	: Plot(boundary, xLim, yLim, DEFAULT_BORDER){
 }
 
-Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4]) {
+Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool showX, bool showY, bool showTitle) {
 	this->boundary = boundary;
-	this->boundary.SetLeftTop(boundary.GetTopLeft() + wxPoint(border[3], border[0]));
-	this->boundary.SetBottomRight(boundary.GetBottomRight() - 2 * wxPoint(border[1], border[2]));
+	int extra = 0;
+	if (showTitle) {
+		extra = 24;
+	}
+	this->drawArea.SetTop(boundary.GetTop() + border[1] + extra);
+	extra = 0;
+	if (showX) {
+		extra = 24;
+	}
+	this->drawArea.SetLeft(boundary.GetLeft() + border[0] + extra);
+	extra = 0;
+	if (showY) {
+		extra = 24;
+	}
+	this->drawArea.SetBottom(boundary.GetBottom() - border[3] - extra);
+	this->drawArea.SetRight(boundary.GetRight() - border[2]);
+
+	boundary.SetLeftTop(boundary.GetTopLeft() + wxPoint(border[3], border[0]));
+	boundary.SetBottomRight(boundary.GetBottomRight() - 2 * wxPoint(border[1], border[2]));
 	// Borders
 	this->border[0] = border[0];
 	this->border[1] = border[1];
@@ -26,6 +43,10 @@ Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4]) {
 	// Create axes
 	horizAxis = new Axis(axisDirection::HORIZONTAL, xBound, origin, vOrigin, xLim, 0.1);
 	vertAxis = new Axis(axisDirection::VERTICAL, yBound, origin, vOrigin, yLim, 0.025);
+
+	this->showLabelX = showX;
+	this->showLabelY = showY;
+	this->showTitle = showTitle;
 }
 
 void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
