@@ -39,7 +39,7 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	double xLim[2] = { -0.1,1.1 };
 	double yLim[2] = { -0.20,0.20 };
 	int bords[4] = { 50,50,50,50 };
-	airfoilPlot = new Plot(plotRect, xLim, yLim, bords);
+	airfoilPlot = new Plot(plotRect, xLim, yLim, bords, true, true, true);
 
 	// Generates the points for an airfoil to be plotted on the airfoilPlot
 	foilGen = new AirfoilGenerator();
