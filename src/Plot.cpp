@@ -140,6 +140,7 @@ void Plot::draw(wxDC& dc) {
 	dc.SetPen(wxPen(*wxWHITE,1));
 	dc.SetBrush(*wxTRANSPARENT_BRUSH);
 	dc.DrawRectangle(boundary);
+	dc.DrawRectangle(drawArea);
 }
 
 void Plot::drawPoints(wxDC& dc, arma::mat points) {
