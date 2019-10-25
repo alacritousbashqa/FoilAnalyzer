@@ -91,11 +91,28 @@ Axis* Plot::getVAxis() {
 void Plot::updateBoundaries(wxRect& rect) {
 	boundary = rect;
 	// Adjust draw area with padding
+	int extra = 0;
+	if (showTitle) {
+		extra = 24;
+	}
+	drawArea.SetTop(boundary.GetTop() + border[1] + extra);
+	extra = 0;
+	if (showLabelX) {
+		extra = 24;
+	}
+	drawArea.SetLeft(boundary.GetLeft() + border[0] + extra);
+	extra = 0;
+	if (showLabelY) {
+		extra = 24;
+	}
+	drawArea.SetBottom(boundary.GetBottom() - border[3] - extra);
+	drawArea.SetRight(boundary.GetRight() - border[2]);
+	// Adjust boundaries with padding
 	boundary.SetLeftTop(boundary.GetTopLeft() + wxPoint(border[3], border[0]));
 	boundary.SetBottomRight(boundary.GetBottomRight() - 2 * wxPoint(border[1], border[2]));
 	// Set pixel bounds
-	int xBound[2] = { boundary.GetLeft(), boundary.GetRight() };
-	int yBound[2] = { boundary.GetTop(), boundary.GetBottom() };
+	int xBound[2] = { drawArea.GetLeft(), drawArea.GetRight() };
+	int yBound[2] = { drawArea.GetTop(), drawArea.GetBottom() };
 	// Set value bounds
 	double xLim[2] = { horizAxis->getLowerLimit(), horizAxis->getUpperLimit() };
 	double yLim[2] = { vertAxis->getLowerLimit(), vertAxis->getUpperLimit() };
