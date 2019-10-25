@@ -1,3 +1,8 @@
+// faProgram.h
+// Author: Mark Bashqawi
+
+// Pure virtual class which is the base of all sub-programs: Main Menu, Airfoil Viewer, Airfoil Analyzer, etc.
+
 #pragma once
 
 #include <wx/wxprec.h>
