@@ -47,6 +47,8 @@ Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool
 	this->showLabelX = showX;
 	this->showLabelY = showY;
 	this->showTitle = showTitle;
+
+	this->title = "Plot";
 }
 
 void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
