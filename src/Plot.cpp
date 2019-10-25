@@ -141,8 +141,8 @@ void Plot::draw(wxDC& dc) {
 	// Draw white border
 	dc.SetPen(wxPen(*wxWHITE,1));
 	dc.SetBrush(*wxTRANSPARENT_BRUSH);
-	dc.DrawRectangle(boundary);
-	dc.DrawRectangle(drawArea);
+	//dc.DrawRectangle(boundary);
+	//dc.DrawRectangle(drawArea);
 	dc.SetTextForeground(wxColour(*wxWHITE));
 	if (showTitle)
 		dc.DrawText(title, wxPoint(drawArea.GetWidth() / 2 + drawArea.GetLeft(), boundary.GetTop() + 5));
