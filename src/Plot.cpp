@@ -143,6 +143,14 @@ void Plot::draw(wxDC& dc) {
 	dc.SetBrush(*wxTRANSPARENT_BRUSH);
 	dc.DrawRectangle(boundary);
 	dc.DrawRectangle(drawArea);
+	dc.SetTextForeground(wxColour(*wxWHITE));
+	if (showTitle)
+		dc.DrawText(title, wxPoint(drawArea.GetWidth() / 2 + drawArea.GetLeft(), boundary.GetTop() + 5));
+	if (showLabelX)
+		dc.DrawText(horizAxis->getLabel(), wxPoint(drawArea.GetWidth() / 2 + drawArea.GetLeft(), boundary.GetBottom() - 20));
+	if (showLabelY)
+		dc.DrawText(vertAxis->getLabel(), wxPoint(boundary.GetLeft() + 7, drawArea.GetHeight() / 2 + drawArea.GetTop() - 6));
+
 }
 
 void Plot::drawPoints(wxDC& dc, arma::mat points) {
