@@ -11,16 +11,18 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
 
 	wxStaticBox *st = new wxStaticBox(panel, -1, wxT("NACA Type"),
-		wxPoint(5, 5), wxSize(170, 125));
+		wxPoint(5, 5), wxSize(170, textH * 6 + 20));
 	wxStaticText stext(panel, -1, wxT("Enter a NACA 4 or 5 digit code:"),
-		wxPoint(15, 30), wxSize(150, 40));
+		wxPoint(15, 2 * textH), wxSize(150, 40));
 	tc = new wxTextCtrl(panel, -1, wxT(""),
-		wxPoint(15, 95), wxSize(150,24));
+		wxPoint(15, 5 * textH), wxSize(150,24));
 
 	wxButton *okButton = new wxButton(this, 1, wxT("Ok"),
 		wxDefaultPosition, wxSize(70, 30));
 	wxButton *closeButton = new wxButton(this, 2, wxT("Cancel"),
 		wxDefaultPosition, wxSize(70, 30));
+	
+	this->SetSize(200, 14 * textH);
 
 	hbox->Add(okButton, 1);
 	hbox->Add(closeButton, 1, wxLEFT, 5);

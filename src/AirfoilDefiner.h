@@ -8,6 +8,8 @@
 #include <wx/wxprec.h>
 
 class AirfoilDefiner : public wxDialog {
+	int textH = GetTextExtent("A").GetHeight();
+
 	std::string text;
 	int type;
 	int modalCode;
