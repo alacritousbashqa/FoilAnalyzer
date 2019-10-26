@@ -60,6 +60,21 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	Connect(GetId(), wxEVT_PAINT, wxPaintEventHandler(ViewerPanel::onPaintEvent));
 }
 
+ViewerPanel::~ViewerPanel(){
+	delete airfoilPlot;
+	delete foilGen;
+	for (AirfoilListStruct afs : afListMembers) {
+		delete afs.airfoil;
+		delete afs.checkBox;
+		delete afs.colorPicker;
+	}
+	afListMembers.clear();
+	for (AirfoilStruct *as : loadedAirfoils) {
+		delete as;
+	}
+	loadedAirfoils.clear();
+}
+
 wxBoxSizer* ViewerPanel::getTopSizer() {
 	return avTopSizer;
 }
@@ -208,6 +223,10 @@ void ViewerPanel::onColorPicked(wxColourPickerEvent& event) {
 
 AirfoilViewer::AirfoilViewer(wxWindow* parent) {
 	initializeProgram(parent);
+}
+
+AirfoilViewer::~AirfoilViewer() {
+	delete viewerPanel;
 }
 
 wxPanel* AirfoilViewer::getTopPanel() {
