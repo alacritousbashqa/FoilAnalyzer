@@ -37,6 +37,7 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 
 	Centre();
 	modalCode = ShowModal();
+	tc->SetFocus();
 
 	Destroy();
 }

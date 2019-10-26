@@ -110,6 +110,8 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	// Get NACA code type (4 or 5 digit) on dialog close
 	int type = defineDialog.getType();
 
+	this->SetFocus();
+
 	// If the dialog returns -1, it was closed without a valid code, so break
 	if (type == -1) {
 		return;
