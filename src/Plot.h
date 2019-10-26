@@ -32,6 +32,11 @@ public:
 
 	Plot(wxRect& boundary, double xLim[2], double yLim[2], bool showX = false, bool showY = false, bool showTitle = false);
 	Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool showX = false, bool showY = false, bool showTitle = false);
+
+	// DESTRUCTOR
+
+	~Plot();
+
 	//-------------------------------------------------------------------------------------------------------------
 	// GETTERS
 

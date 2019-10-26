@@ -51,6 +51,11 @@ Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool
 	this->title = "Plot";
 }
 
+Plot::~Plot() {
+	delete horizAxis;
+	delete vertAxis;
+}
+
 void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
 	// X component
 	if (xLim[0] >= 0) {							// If (0,0) is off-screen left, put origin on left limit
