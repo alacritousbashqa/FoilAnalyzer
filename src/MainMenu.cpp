@@ -37,7 +37,7 @@ StartPanel::StartPanel(wxWindow* parent)
 
 	// About button on bottom right
 	mmTopSizer->Add(
-		new wxButton(this, wxID_ANY, "About"),
+		new wxButton(this, ABOUT_ID, "About"),
 		wxSizerFlags().Border(wxALL, 15).Right());
 
 	this->SetSizer(mmTopSizer);
@@ -49,6 +49,7 @@ StartPanel::StartPanel(wxWindow* parent)
 	// Exit Button
 	Connect(EXIT_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onExitButton));
 	Connect(VIEWER_BUTTON_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onViewerButton));
+	Connect(ABOUT_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onAboutButton));
 
 
 
@@ -59,6 +60,12 @@ StartPanel::StartPanel(wxWindow* parent)
 // Closes application
 void StartPanel::onExitButton(wxCommandEvent& event) {
 	GetParent()->Close(true);
+}
+
+void StartPanel::onAboutButton(wxCommandEvent& event) {
+	wxMessageBox(wxT("FoilAnalyzer is a program that can plot NACA 4 and 5 digit airfoils based on a user \
+	inputted code. The goal of this project is to be able to perform potential panel and viscous flow calculations\
+	 on the generated airfoils to produce polars and pressure distributions."), "About", wxOK | wxICON_INFORMATION);
 }
 
 // Wrapper holding information on main menu panel and associated widgets
