@@ -57,11 +57,6 @@ StartPanel::StartPanel(wxWindow* parent)
 	wxLog::SetActiveTarget(log);
 }
 
-// Closes application
-void StartPanel::onExitButton(wxCommandEvent& event) {
-	GetParent()->Close(true);
-}
-
 // Wrapper holding information on main menu panel and associated widgets
 MainMenu::MainMenu(wxWindow* topFrame) {
 	initializeProgram(topFrame);

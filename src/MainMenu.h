@@ -20,14 +20,14 @@ class StartPanel : public wxPanel{
 public:
 	StartPanel(wxWindow* parent);
 	void onAboutButton(wxCommandEvent& event);
-private:
 	void onExitButton(wxCommandEvent& event);
+private:
 	void onViewerButton(wxCommandEvent& event); // Defined in Main.cpp
 };
 
 // Button IDs for event connection
 enum {
-	EXIT_ID = 3,
+	EXIT_ID = wxID_EXIT,
 	VIEWER_BUTTON_ID = 4,
 	ABOUT_ID = wxID_ABOUT
 };
