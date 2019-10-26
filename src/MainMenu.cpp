@@ -23,8 +23,10 @@ StartPanel::StartPanel(wxWindow* parent)
 	mmButtonBox->Add(
 		new wxButton(this, VIEWER_BUTTON_ID, "Airfoil Viewer"),
 		wxSizerFlags().Border(wxALL, 7));
+	wxButton* afAnalyzerB = new wxButton(this, wxID_ANY, "Airfoil Analyzer");
+	afAnalyzerB->Disable();
 	mmButtonBox->Add(
-		new wxButton(this, wxID_ANY, "Airfoil Analyzer"),
+		afAnalyzerB,
 		wxSizerFlags().Border(wxALL, 7));
 	mmButtonBox->Add(
 		new wxButton(this, EXIT_ID, "Exit"),
