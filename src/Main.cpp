@@ -27,6 +27,7 @@ public:
 class TopFrame : public wxFrame {
 public:
 	TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
+	~TopFrame();
 
 	// Program class variables
 	MainMenu* mMenu;
@@ -68,6 +69,11 @@ TopFrame::TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size
 	menuBar->Append(menuFile, "&File");
 	menuBar->Append(menuHelp, "&Help");
 	SetMenuBar(menuBar);
+}
+
+TopFrame::~TopFrame() {
+	delete mMenu;
+	delete aViewer;
 }
 
 // Creates the top sizer, main menu, and initializes the program classes
