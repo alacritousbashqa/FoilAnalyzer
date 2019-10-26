@@ -62,12 +62,6 @@ void StartPanel::onExitButton(wxCommandEvent& event) {
 	GetParent()->Close(true);
 }
 
-void StartPanel::onAboutButton(wxCommandEvent& event) {
-	wxMessageBox(wxT("FoilAnalyzer is a program that can plot NACA 4 and 5 digit airfoils based on a user \
-	inputted code. The goal of this project is to be able to perform potential panel and viscous flow calculations\
-	 on the generated airfoils to produce polars and pressure distributions."), "About", wxOK | wxICON_INFORMATION);
-}
-
 // Wrapper holding information on main menu panel and associated widgets
 MainMenu::MainMenu(wxWindow* topFrame) {
 	initializeProgram(topFrame);
