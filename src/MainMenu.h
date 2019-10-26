@@ -38,6 +38,7 @@ class MainMenu : public faProgram {
 	StartPanel* mainMenuPanel;
 public:
 	MainMenu(wxWindow* topFrame);
+	~MainMenu();
 	wxPanel* getTopPanel();
 	bool initializeProgram(wxWindow* topFrame);
 	// Shows and enables the main menu top level panel

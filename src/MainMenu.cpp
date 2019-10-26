@@ -73,6 +73,10 @@ MainMenu::MainMenu(wxWindow* topFrame) {
 	initializeProgram(topFrame);
 }
 
+MainMenu::~MainMenu() {
+	delete mainMenuPanel;
+}
+
 wxPanel* MainMenu::getTopPanel() {
 	return mainMenuPanel;
 }
