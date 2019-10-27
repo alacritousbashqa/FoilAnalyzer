@@ -234,6 +234,10 @@ std::string Plot::getVLabel() {
 	return vertAxis->getLabel();
 }
 
+int* Plot::getAspectRatio() {
+	return aspectRatio;
+}
+
 void Plot::setTitle(std::string t) {
 	title = t;
 }
@@ -242,4 +246,13 @@ void Plot::setHLabel(std::string hl) {
 }
 void Plot::setVLabel(std::string vl) {
 	vertAxis->setLabel(vl);
+}
+
+void Plot::setAspectRatio(int ar[2]) {
+	aspectRatio[0] = ar[0];
+	aspectRatio[1] = ar[1];
+}
+void Plot::setAspectRatio(int arx, int ary) {
+	aspectRatio[0] = arx;
+	aspectRatio[1] = ary;
 }
