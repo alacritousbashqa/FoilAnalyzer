@@ -58,6 +58,11 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 	else {
 		nPanels = -1;
 	}
+	// If the name is empty, give an error and return
+	if (name == "") {
+		wxLogError("No name was entered! Please enter a name for the generated airfoil.");
+		return;
+	}
 
 	if (code != "" && std::all_of(code.begin(), code.end(), ::isdigit)) {
 		if (nPanels < 10 || nPanels > 5000) {
