@@ -43,6 +43,8 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	airfoilPlot->setTitle("Airfoil Viewer Plot");
 	airfoilPlot->setHLabel("x/c");
 	airfoilPlot->setVLabel("y/c");
+	int ar[] = { 3, 1 };
+	airfoilPlot->setAspectRatio(ar);
 
 	// Generates the points for an airfoil to be plotted on the airfoilPlot
 	foilGen = new AirfoilGenerator();
