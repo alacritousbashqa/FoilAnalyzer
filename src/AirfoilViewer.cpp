@@ -113,6 +113,8 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	int type = defineDialog.getType();
 	// Get the number of panels to generate on dialog close
 	int nPanels = defineDialog.getNPanels();
+	// Get the unique name of the airfoil on dialog close
+	std::string name = defineDialog.getName();
 
 	this->SetFocus();
 
@@ -129,7 +131,7 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	// Create a new airfoil struct
 	AirfoilStruct* afs = new AirfoilStruct();
 	afs->code = temp;
-	afs->name = "NACA " + temp;
+	afs->name = name;
 	afs->nPanels = nPanels;
 	// Generate the correct points based on the entered code type
 	if (type == 4) {
