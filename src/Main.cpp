@@ -114,6 +114,12 @@ void TopFrame::switchPanels(int panelID) {
 	}
 }
 
+//===========================================================================================
+//
+//		START PANEL BUTTON BINDINGS
+//
+//===========================================================================================
+
 void StartPanel::onAboutButton(wxCommandEvent& event) {
 	wxMessageBox(wxT("FoilAnalyzer is a program that can plot NACA 4 and 5 digit airfoils based on a user \
 	inputted code. The goal of this project is to be able to perform potential panel and viscous flow calculations\
