@@ -108,7 +108,7 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	// Create and open airfoil definer dialog
 	AirfoilDefiner defineDialog("NACA Airfoil Definer");
 	// Get code from dialog on dialog close
-	std::string temp = defineDialog.getText();
+	std::string temp = defineDialog.getCode();
 	// Get NACA code type (4 or 5 digit) on dialog close
 	int type = defineDialog.getType();
 	// Get the number of panels to generate on dialog close
