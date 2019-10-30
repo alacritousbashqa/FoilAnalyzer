@@ -61,7 +61,6 @@ TopFrame::TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size
 
 	// Adds basic test menu bar to the frame
 	wxMenu *menuFile = new wxMenu;
-	menuFile->AppendSeparator();
 	menuFile->Append(wxID_EXIT);
 	wxMenu *menuHelp = new wxMenu;
 	menuHelp->Append(wxID_ABOUT);
