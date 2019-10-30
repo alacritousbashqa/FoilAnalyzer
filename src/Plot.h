@@ -56,9 +56,15 @@ public:
 	void setTitle(std::string t);
 	void setHLabel(std::string hl);
 	void setVLabel(std::string vl);
-	// Sets the aspect ratio to ar
+	/* Sets the aspect ratio to ar
+	For no aspect ratio, at least one of the values can be set to an integer <= 0,
+	otherwise all positive integers are valid inputs for an aspect ratio
+	*/
 	void setAspectRatio(int ar[2]);
-	// Sets the aspect ratio to [arx, ary]
+	/* Sets the aspect ratio to [arx, ary]
+	For no aspect ratio, at least one of the values can be set to an integer <= 0,
+	otherwise all positive integers are valid inputs for an aspect ratio
+	 */
 	void setAspectRatio(int arx, int ary);
 	//-------------------------------------------------------------------------------------------------------------
 
