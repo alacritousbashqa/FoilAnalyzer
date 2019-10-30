@@ -34,6 +34,8 @@ public:
 	AirfoilViewer* aViewer;
 	wxBoxSizer* topSizer;
 	faProgram* currentProgram;
+	wxMenuBar *menuBar;
+	wxMenu *menuAfPlot = new wxMenu;
 
 	void initializeTopFrame();
 	void switchPanels(int panelID);
@@ -64,7 +66,7 @@ TopFrame::TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size
 	menuFile->Append(wxID_EXIT);
 	wxMenu *menuHelp = new wxMenu;
 	menuHelp->Append(wxID_ABOUT);
-	wxMenuBar *menuBar = new wxMenuBar;
+	menuBar = new wxMenuBar;
 	menuBar->Append(menuFile, "&File");
 	menuBar->Append(menuHelp, "&Help");
 	SetMenuBar(menuBar);
@@ -103,12 +105,14 @@ void TopFrame::switchPanels(int panelID) {
 		mMenu->show();
 		topSizer->Layout();
 		currentProgram = mMenu;
+		menuBar->Remove(menuBar->FindMenu("Plot"));
 		break;
 	case VIEWER_ID:
 		mMenu->show(false);
 		aViewer->show();
 		topSizer->Layout();
 		currentProgram = aViewer;
+		menuBar->Append(menuAfPlot, "&Plot");
 		break;
 	}
 }
