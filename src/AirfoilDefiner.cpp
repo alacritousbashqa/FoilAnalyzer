@@ -17,10 +17,12 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 		wxPoint(15, 2 * textH), wxSize(150, 32));
 	tc = new wxTextCtrl(panel, CODE_TEXT_CTRL_ID, wxT(""),
 		wxPoint(15, 4.5f * textH), wxSize(150,24));
+	tc->SetMaxLength(15);
 	wxStaticText stext1(panel, -1, wxT("Number of Panels:"),
 		wxPoint(15, 7 * textH), wxSize(150, 20));
 	tc1 = new wxTextCtrl(panel, -1, std::to_string(nPanels).c_str(),
 		wxPoint(15, 8.5f * textH), wxSize(50, 24));
+	tc1->SetMaxLength(4);
 
 	wxStaticBox *st1 = new wxStaticBox(panel, -1, wxT("Name"),
 		wxPoint(5, 11 * textH), wxSize(170, textH * 7));
@@ -28,6 +30,7 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 		wxPoint(15, 13 * textH), wxSize(150, 32));
 	nameTC = new wxTextCtrl(panel, -1, wxT(""),
 		wxPoint(15, 15.5f * textH), wxSize(150, 24));
+	nameTC->SetMaxLength(15);
 
 	wxButton *okButton = new wxButton(this, OK_ID, wxT("Ok"),
 		wxDefaultPosition, wxSize(70, 30));
