@@ -15,8 +15,6 @@ class AirfoilDefiner : public wxDialog {
 	std::string code;		// NACA code (and later other airfoils)
 	int modalCode;
 
-	wxRadioButton* rb4;
-	wxRadioButton* rb5;
 	wxTextCtrl* tc;
 	wxTextCtrl* tc1;
 
