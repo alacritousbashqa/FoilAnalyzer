@@ -4,6 +4,7 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	: wxDialog(NULL, -1, title, wxDefaultPosition, wxSize(200, 230)) {
 
 	type = -1;
+	nPanels = 50;
 
 	wxPanel *panel = new wxPanel(this, -1);
 
@@ -74,6 +75,10 @@ void AirfoilDefiner::onCancel(wxCommandEvent& event) {
 
 std::string AirfoilDefiner::getText() {
 	return text;
+}
+
+int AirfoilDefiner::getNPanels() {
+	return nPanels;
 }
 
 int AirfoilDefiner::getType() {

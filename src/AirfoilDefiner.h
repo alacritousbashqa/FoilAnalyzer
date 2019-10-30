@@ -11,6 +11,7 @@ class AirfoilDefiner : public wxDialog {
 	int textH = GetTextExtent("A").GetHeight();
 
 	std::string text;
+	int nPanels;
 	int type;
 	int modalCode;
 
@@ -24,5 +25,6 @@ class AirfoilDefiner : public wxDialog {
 public:
 	AirfoilDefiner(const wxString& title);
 	std::string getText();
+	int getNPanels();
 	int getType();
 };
