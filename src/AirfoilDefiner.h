@@ -10,14 +10,14 @@
 class AirfoilDefiner : public wxDialog {
 	int textH = GetTextExtent("A").GetHeight();
 
-	int nPanels;
-	int type;
 	std::string code;		// NACA code (and later other airfoils)
 	std::string name;		// Unique identifier for this airfoil
+	int nPanels;			// Number of panels to generate
+	int type;				// 4 or 5 digit NACA series
 	int modalCode;
 
-	wxTextCtrl* tc;
-	wxTextCtrl* tc1;
+	wxTextCtrl* tc;			// Code text control
+	wxTextCtrl* tc1;		// Number of panels text control
 	wxTextCtrl* nameTC;		// Name text control
 
 	void onOK(wxCommandEvent& event);
