@@ -19,15 +19,17 @@
 class StartPanel : public wxPanel{
 public:
 	StartPanel(wxWindow* parent);
-private:
+	void onAboutButton(wxCommandEvent& event);
 	void onExitButton(wxCommandEvent& event);
+private:
 	void onViewerButton(wxCommandEvent& event); // Defined in Main.cpp
 };
 
 // Button IDs for event connection
 enum {
-	EXIT_ID = 3,
-	VIEWER_BUTTON_ID = 4
+	EXIT_ID = wxID_EXIT,
+	VIEWER_BUTTON_ID = 4,
+	ABOUT_ID = wxID_ABOUT
 };
 
 /* Constructs the layout of the main menu panel upon app initialization.
@@ -36,6 +38,7 @@ class MainMenu : public faProgram {
 	StartPanel* mainMenuPanel;
 public:
 	MainMenu(wxWindow* topFrame);
+	~MainMenu();
 	wxPanel* getTopPanel();
 	bool initializeProgram(wxWindow* topFrame);
 	// Shows and enables the main menu top level panel

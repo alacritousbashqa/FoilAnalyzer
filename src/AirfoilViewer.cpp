@@ -43,6 +43,8 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	airfoilPlot->setTitle("Airfoil Viewer Plot");
 	airfoilPlot->setHLabel("x/c");
 	airfoilPlot->setVLabel("y/c");
+	int ar[] = { 3, 1 };
+	airfoilPlot->setAspectRatio(ar);
 
 	// Generates the points for an airfoil to be plotted on the airfoilPlot
 	foilGen = new AirfoilGenerator();
@@ -58,6 +60,21 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	Connect(COLORPICKER_ID, wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler(ViewerPanel::onColorPicked));
 	// Event Paint
 	Connect(GetId(), wxEVT_PAINT, wxPaintEventHandler(ViewerPanel::onPaintEvent));
+}
+
+ViewerPanel::~ViewerPanel(){
+	delete airfoilPlot;
+	delete foilGen;
+	for (AirfoilListStruct afs : afListMembers) {
+		delete afs.airfoil;
+		delete afs.checkBox;
+		delete afs.colorPicker;
+	}
+	afListMembers.clear();
+	for (AirfoilStruct *as : loadedAirfoils) {
+		delete as;
+	}
+	loadedAirfoils.clear();
 }
 
 wxBoxSizer* ViewerPanel::getTopSizer() {
@@ -91,26 +108,37 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	// Create and open airfoil definer dialog
 	AirfoilDefiner defineDialog("NACA Airfoil Definer");
 	// Get code from dialog on dialog close
-	std::string temp = defineDialog.getText();
+	std::string temp = defineDialog.getCode();
 	// Get NACA code type (4 or 5 digit) on dialog close
 	int type = defineDialog.getType();
+	// Get the number of panels to generate on dialog close
+	int nPanels = defineDialog.getNPanels();
+	// Get the unique name of the airfoil on dialog close
+	std::string name = defineDialog.getName();
 
-	// If the dialog returns -1, it was closed without a valid code, so break
+	this->SetFocus();
+
+	// If the dialog returns type = -1, it was closed without a valid code, so break
 	if (type == -1) {
+		return;
+	}
+
+	// If the dialog returns nPanels = -1, it was closed without a valid code, so break
+	if (nPanels == -1) {
 		return;
 	}
 
 	// Create a new airfoil struct
 	AirfoilStruct* afs = new AirfoilStruct();
 	afs->code = temp;
-	afs->name = "NACA " + temp;
-	afs->nPanels = 50;
+	afs->name = name;
+	afs->nPanels = nPanels;
 	// Generate the correct points based on the entered code type
 	if (type == 4) {
-		afs->points = foilGen->generate4Digit(temp, 50);
+		afs->points = foilGen->generate4Digit(temp, nPanels);
 	}
 	else {
-		afs->points = foilGen->generate5Digit(temp, 50);
+		afs->points = foilGen->generate5Digit(temp, nPanels);
 	}
 	loadedAirfoils.emplace_back(afs); // Add to global master list
 	// Create a new list struct
@@ -208,6 +236,10 @@ void ViewerPanel::onColorPicked(wxColourPickerEvent& event) {
 
 AirfoilViewer::AirfoilViewer(wxWindow* parent) {
 	initializeProgram(parent);
+}
+
+AirfoilViewer::~AirfoilViewer() {
+	delete viewerPanel;
 }
 
 wxPanel* AirfoilViewer::getTopPanel() {

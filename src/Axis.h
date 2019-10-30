@@ -35,6 +35,11 @@ public:
 
 	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2]);
 	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2], double limits[2], double step);
+
+	// DESTRUCTORS
+
+	~Axis();
+
 	//-------------------------------------------------------------------------------------------------------------
 	// GETTERS
 

@@ -22,6 +22,7 @@ class Plot {
 	bool showLabelX;
 	bool showLabelY;
 	bool showTitle;
+	int aspectRatio[2];
 
 	// Converts the given points to their pixel location equivalents based on the axes steps and limits
 	arma::umat pointsToPixels(arma::mat points);
@@ -32,6 +33,11 @@ public:
 
 	Plot(wxRect& boundary, double xLim[2], double yLim[2], bool showX = false, bool showY = false, bool showTitle = false);
 	Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool showX = false, bool showY = false, bool showTitle = false);
+
+	// DESTRUCTOR
+
+	~Plot();
+
 	//-------------------------------------------------------------------------------------------------------------
 	// GETTERS
 
@@ -42,12 +48,24 @@ public:
 	std::string getTitle();
 	std::string getHLabel();
 	std::string getVLabel();
+	// Returns a pointer to the apect ratio array
+	int* getAspectRatio();
 	//-------------------------------------------------------------------------------------------------------------
 	// SETTERS
 
 	void setTitle(std::string t);
 	void setHLabel(std::string hl);
 	void setVLabel(std::string vl);
+	/* Sets the aspect ratio to ar
+	For no aspect ratio, at least one of the values can be set to an integer <= 0,
+	otherwise all positive integers are valid inputs for an aspect ratio
+	*/
+	void setAspectRatio(int ar[2]);
+	/* Sets the aspect ratio to [arx, ary]
+	For no aspect ratio, at least one of the values can be set to an integer <= 0,
+	otherwise all positive integers are valid inputs for an aspect ratio
+	 */
+	void setAspectRatio(int arx, int ary);
 	//-------------------------------------------------------------------------------------------------------------
 
 	// Updates the boundaries with the new one defined by a wxRect

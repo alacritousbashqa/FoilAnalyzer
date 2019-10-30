@@ -23,8 +23,10 @@ StartPanel::StartPanel(wxWindow* parent)
 	mmButtonBox->Add(
 		new wxButton(this, VIEWER_BUTTON_ID, "Airfoil Viewer"),
 		wxSizerFlags().Border(wxALL, 7));
+	wxButton* afAnalyzerB = new wxButton(this, wxID_ANY, "Airfoil Analyzer");
+	afAnalyzerB->Disable();
 	mmButtonBox->Add(
-		new wxButton(this, wxID_ANY, "Airfoil Analyzer"),
+		afAnalyzerB,
 		wxSizerFlags().Border(wxALL, 7));
 	mmButtonBox->Add(
 		new wxButton(this, EXIT_ID, "Exit"),
@@ -37,7 +39,7 @@ StartPanel::StartPanel(wxWindow* parent)
 
 	// About button on bottom right
 	mmTopSizer->Add(
-		new wxButton(this, wxID_ANY, "About"),
+		new wxButton(this, ABOUT_ID, "About"),
 		wxSizerFlags().Border(wxALL, 15).Right());
 
 	this->SetSizer(mmTopSizer);
@@ -49,6 +51,7 @@ StartPanel::StartPanel(wxWindow* parent)
 	// Exit Button
 	Connect(EXIT_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onExitButton));
 	Connect(VIEWER_BUTTON_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onViewerButton));
+	Connect(ABOUT_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onAboutButton));
 
 
 
@@ -56,14 +59,13 @@ StartPanel::StartPanel(wxWindow* parent)
 	wxLog::SetActiveTarget(log);
 }
 
-// Closes application
-void StartPanel::onExitButton(wxCommandEvent& event) {
-	GetParent()->Close(true);
-}
-
 // Wrapper holding information on main menu panel and associated widgets
 MainMenu::MainMenu(wxWindow* topFrame) {
 	initializeProgram(topFrame);
+}
+
+MainMenu::~MainMenu() {
+	delete mainMenuPanel;
 }
 
 wxPanel* MainMenu::getTopPanel() {

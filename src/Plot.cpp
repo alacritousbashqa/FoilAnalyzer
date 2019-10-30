@@ -51,6 +51,11 @@ Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool
 	this->title = "Plot";
 }
 
+Plot::~Plot() {
+	delete horizAxis;
+	delete vertAxis;
+}
+
 void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
 	// X component
 	if (xLim[0] >= 0) {							// If (0,0) is off-screen left, put origin on left limit
@@ -92,6 +97,7 @@ Axis* Plot::getVAxis() {
 
 void Plot::updateBoundaries(wxRect& rect) {
 	boundary = rect;
+
 	// Adjust draw area with padding
 	int extra = 0;
 	if (showTitle) {
@@ -109,6 +115,71 @@ void Plot::updateBoundaries(wxRect& rect) {
 	}
 	drawArea.SetBottom(boundary.GetBottom() - border[3] - extra);
 	drawArea.SetRight(boundary.GetRight() - border[2]);
+
+	// If there is an aspect ratio, change drawArea accordingly
+	if (aspectRatio[0] > 0 && aspectRatio[1] > 0) {
+		int smaller = 0;	// The length of the smaller side in pixels
+		int larger = 0;		// The length of the longer side in pixels
+		// If the width of the draw area is <= the height, the smaller side is the width
+		if (drawArea.GetWidth() <= drawArea.GetHeight()) {
+			smaller = drawArea.GetWidth();
+			larger = drawArea.GetHeight();
+		}
+		// Otherwise the smaller side is the height
+		else {
+			larger = drawArea.GetWidth();
+			smaller = drawArea.GetHeight();
+		}
+
+		// Which direction is the small side based on the aspect ratio?
+		// 0: Horizontal, 1: Vertical
+		int smallDir = 0;
+		if (aspectRatio[0] <= aspectRatio[1]) {
+			smallDir = 0;
+		}
+		else {
+			smallDir = 1;
+		}
+
+		// Determine the length of the longer side based on the AR and small side
+		larger = smaller / aspectRatio[smallDir] * aspectRatio[1 - smallDir];
+
+		// If the small direction is vertical...
+		if (smallDir) {
+			int newRight = drawArea.GetLeft() + larger;
+			int newBottom = drawArea.GetTop() + smaller;
+			// If the new right side is greater than the original right side, clamp it to the original right side,
+			// then adjust the smaller side (height) for this change
+			if (newRight > drawArea.GetRight()) {
+				newRight = drawArea.GetRight();
+				larger = newRight - drawArea.GetLeft();
+				smaller = larger * aspectRatio[smallDir] / aspectRatio[1 - smallDir];
+				newBottom = drawArea.GetTop() + smaller;
+
+			}
+			// Set the new right and bottom locations
+			drawArea.SetRight(newRight);
+			drawArea.SetBottom(newBottom);
+		}
+		// If the small direction is horizontal...
+		else {
+			int newRight = drawArea.GetLeft() + smaller;
+			int newBottom = drawArea.GetTop() + larger;
+			// If the new bottom side is greater than the original bottom side, clamp it to the original bottom side,
+			// then adjust the smaller side (width) for this change
+			if (newBottom > drawArea.GetBottom()) {
+				newBottom = drawArea.GetBottom();
+				larger = newBottom - drawArea.GetTop();
+				smaller = larger * aspectRatio[smallDir] / aspectRatio[1 - smallDir];
+				newRight = drawArea.GetLeft() + smaller;
+
+			}
+			// Set the new right and bottom locations
+			drawArea.SetRight(newRight);
+			drawArea.SetBottom(newBottom);
+		}
+	}
+
 	// Adjust boundaries with padding
 	boundary.SetLeftTop(boundary.GetTopLeft() + wxPoint(border[3], border[0]));
 	boundary.SetBottomRight(boundary.GetBottomRight() - 2 * wxPoint(border[1], border[2]));
@@ -229,6 +300,10 @@ std::string Plot::getVLabel() {
 	return vertAxis->getLabel();
 }
 
+int* Plot::getAspectRatio() {
+	return aspectRatio;
+}
+
 void Plot::setTitle(std::string t) {
 	title = t;
 }
@@ -237,4 +312,13 @@ void Plot::setHLabel(std::string hl) {
 }
 void Plot::setVLabel(std::string vl) {
 	vertAxis->setLabel(vl);
+}
+
+void Plot::setAspectRatio(int ar[2]) {
+	aspectRatio[0] = ar[0];
+	aspectRatio[1] = ar[1];
+}
+void Plot::setAspectRatio(int arx, int ary) {
+	aspectRatio[0] = arx;
+	aspectRatio[1] = ary;
 }

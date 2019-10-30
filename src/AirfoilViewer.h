@@ -46,6 +46,7 @@ class ViewerPanel : public wxPanel {
 public:
 	wxBoxSizer * getTopSizer();
 	ViewerPanel(wxWindow* parent);
+	~ViewerPanel();
 	void onPaintEvent(wxPaintEvent& event);
 private:
 	void onViewerBackButton(wxCommandEvent& event); // Defined in Main.cpp
@@ -69,6 +70,7 @@ class AirfoilViewer : public faProgram {
 	ViewerPanel* viewerPanel;
 public:
 	AirfoilViewer(wxWindow* parent);
+	~AirfoilViewer();
 	wxPanel* getTopPanel();
 	bool initializeProgram(wxWindow* parent);
 	// Shows and enables the viewer top level panel

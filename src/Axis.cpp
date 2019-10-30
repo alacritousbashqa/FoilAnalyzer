@@ -24,6 +24,10 @@ Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2
 	calculateVLocs();
 }
 
+Axis::~Axis() {
+	valueLocs.clear();
+}
+
 void Axis::calculateVLocs() {
 	valueLocs.clear(); // Clears the current list, might change later to just update it if the step size and limits did not change
 	// If this is a horizontal axis...

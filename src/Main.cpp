@@ -27,12 +27,15 @@ public:
 class TopFrame : public wxFrame {
 public:
 	TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
+	~TopFrame();
 
 	// Program class variables
 	MainMenu* mMenu;
 	AirfoilViewer* aViewer;
 	wxBoxSizer* topSizer;
 	faProgram* currentProgram;
+	wxMenuBar *menuBar;
+	wxMenu *menuAfPlot = new wxMenu;
 
 	void initializeTopFrame();
 	void switchPanels(int panelID);
@@ -60,14 +63,21 @@ TopFrame::TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size
 
 	// Adds basic test menu bar to the frame
 	wxMenu *menuFile = new wxMenu;
-	menuFile->AppendSeparator();
 	menuFile->Append(wxID_EXIT);
 	wxMenu *menuHelp = new wxMenu;
 	menuHelp->Append(wxID_ABOUT);
-	wxMenuBar *menuBar = new wxMenuBar;
+	menuBar = new wxMenuBar;
 	menuBar->Append(menuFile, "&File");
 	menuBar->Append(menuHelp, "&Help");
 	SetMenuBar(menuBar);
+
+	Connect(wxID_EXIT, wxEVT_MENU, wxCommandEventHandler(StartPanel::onExitButton));
+	Connect(wxID_ABOUT, wxEVT_MENU, wxCommandEventHandler(StartPanel::onAboutButton));
+}
+
+TopFrame::~TopFrame() {
+	delete mMenu;
+	delete aViewer;
 }
 
 // Creates the top sizer, main menu, and initializes the program classes
@@ -95,14 +105,33 @@ void TopFrame::switchPanels(int panelID) {
 		mMenu->show();
 		topSizer->Layout();
 		currentProgram = mMenu;
+		menuBar->Remove(menuBar->FindMenu("Plot"));
 		break;
 	case VIEWER_ID:
 		mMenu->show(false);
 		aViewer->show();
 		topSizer->Layout();
 		currentProgram = aViewer;
+		menuBar->Append(menuAfPlot, "&Plot");
 		break;
 	}
+}
+
+//===========================================================================================
+//
+//		START PANEL BUTTON BINDINGS
+//
+//===========================================================================================
+
+void StartPanel::onAboutButton(wxCommandEvent& event) {
+	wxMessageBox(wxT("FoilAnalyzer is a program that can plot NACA 4 and 5 digit airfoils based on a user \
+	inputted code. The goal of this project is to be able to perform potential panel and viscous flow calculations\
+	 on the generated airfoils to produce polars and pressure distributions."), "About", wxOK | wxICON_INFORMATION);
+}
+
+// Closes application
+void StartPanel::onExitButton(wxCommandEvent& event) {
+	GetParent()->Close(true);
 }
 
 //===========================================================================================
