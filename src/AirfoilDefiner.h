@@ -6,6 +6,7 @@
 #pragma once
 
 #include <wx/wxprec.h>
+#include "FoilParameters.h"
 
 enum {
 	OK_ID = 1,
@@ -25,6 +26,9 @@ class AirfoilDefiner : public wxDialog {
 	wxTextCtrl* tc;			// Code text control
 	wxTextCtrl* tc1;		// Number of panels text control
 	wxTextCtrl* nameTC;		// Name text control
+
+	// Checks if the entered name already exists in the loaded airfoils list. Returns false if it already exists, true otherwise.
+	bool checkNameUniqueness(std::string name);
 
 	/* Called when the code text is changed by either the user or by code. 
 	Sets the name based on the entered code in the form: NACA {code}.
