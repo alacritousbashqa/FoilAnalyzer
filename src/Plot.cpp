@@ -97,6 +97,7 @@ Axis* Plot::getVAxis() {
 
 void Plot::updateBoundaries(wxRect& rect) {
 	boundary = rect;
+
 	// Adjust draw area with padding
 	int extra = 0;
 	if (showTitle) {
@@ -114,6 +115,38 @@ void Plot::updateBoundaries(wxRect& rect) {
 	}
 	drawArea.SetBottom(boundary.GetBottom() - border[3] - extra);
 	drawArea.SetRight(boundary.GetRight() - border[2]);
+
+	// If there is an aspect ratio, change drawArea accordingly
+	if (aspectRatio[0] != 0 && aspectRatio[0] != 0) {
+		int smaller = 0;
+		int larger = 0;
+		if (drawArea.GetWidth() <= drawArea.GetHeight()) {
+			smaller = drawArea.GetWidth();
+			larger = drawArea.GetHeight();
+		}
+		else {
+			larger = drawArea.GetWidth();
+			smaller = drawArea.GetHeight();
+		}
+
+
+		int smallDir = 0;
+		if (aspectRatio[0] <= aspectRatio[1]) {
+			smallDir = 0;
+		}
+		else {
+			smallDir = 1;
+		}
+
+		larger = smaller / aspectRatio[smallDir] * aspectRatio[1 - smallDir];
+		if (smallDir) {
+			drawArea.SetRight(drawArea.GetLeft() + larger);
+		}
+		else {
+			drawArea.SetBottom(drawArea.GetTop() + larger);
+		}
+	}
+
 	// Adjust boundaries with padding
 	boundary.SetLeftTop(boundary.GetTopLeft() + wxPoint(border[3], border[0]));
 	boundary.SetBottomRight(boundary.GetBottomRight() - 2 * wxPoint(border[1], border[2]));
