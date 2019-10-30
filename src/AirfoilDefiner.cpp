@@ -49,7 +49,13 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 
 void AirfoilDefiner::onOK(wxCommandEvent& event) {
 	text = tc->GetLineText(0);
+	nPanels = std::stoi((std::string)tc1->GetLineText(0));
 	if (text != "" && std::all_of(text.begin(), text.end(), ::isdigit)) {
+		if (nPanels < 10 || nPanels > 5000) {
+			nPanels = -1;
+			wxLogError("An invalid number of panels was entered! Number of panels must be between 10 and 5000!");
+			return;
+		}
 		if (text.length() == 4) {
 			type = 4;
 			EndModal(modalCode);
