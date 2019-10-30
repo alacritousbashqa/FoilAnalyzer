@@ -15,7 +15,7 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 		wxPoint(5, 5), wxSize(170, textH * 9 + 20));
 	wxStaticText stext(panel, -1, wxT("Enter a NACA 4 or 5 digit code:"),
 		wxPoint(15, 2 * textH), wxSize(150, 32));
-	tc = new wxTextCtrl(panel, -1, wxT(""),
+	tc = new wxTextCtrl(panel, CODE_TEXT_CTRL_ID, wxT(""),
 		wxPoint(15, 4.5f * textH), wxSize(150,24));
 	wxStaticText stext1(panel, -1, wxT("Number of Panels:"),
 		wxPoint(15, 7 * textH), wxSize(150, 20));
@@ -29,9 +29,9 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	nameTC = new wxTextCtrl(panel, -1, wxT(""),
 		wxPoint(15, 15.5f * textH), wxSize(150, 24));
 
-	wxButton *okButton = new wxButton(this, 1, wxT("Ok"),
+	wxButton *okButton = new wxButton(this, OK_ID, wxT("Ok"),
 		wxDefaultPosition, wxSize(70, 30));
-	wxButton *closeButton = new wxButton(this, 2, wxT("Cancel"),
+	wxButton *closeButton = new wxButton(this, CANCEL_ID, wxT("Cancel"),
 		wxDefaultPosition, wxSize(70, 30));
 	
 	this->SetSize(200, 25 * textH);
@@ -44,8 +44,8 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 
 	SetSizer(vbox);
 
-	Connect(1, wxEVT_BUTTON, wxCommandEventHandler(AirfoilDefiner::onOK));
-	Connect(2, wxEVT_BUTTON, wxCommandEventHandler(AirfoilDefiner::onCancel));
+	Connect(OK_ID, wxEVT_BUTTON, wxCommandEventHandler(AirfoilDefiner::onOK));
+	Connect(CANCEL_ID, wxEVT_BUTTON, wxCommandEventHandler(AirfoilDefiner::onCancel));
 
 	Centre();
 	modalCode = ShowModal();

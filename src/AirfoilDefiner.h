@@ -7,6 +7,12 @@
 
 #include <wx/wxprec.h>
 
+enum {
+	OK_ID = 1,
+	CANCEL_ID = 2,
+	CODE_TEXT_CTRL_ID = 3
+};
+
 class AirfoilDefiner : public wxDialog {
 	int textH = GetTextExtent("A").GetHeight();
 
