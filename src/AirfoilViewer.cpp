@@ -15,7 +15,7 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 
 	// Holds list of loaded airfoil and allows scrolling when there's too many
 	scrolledBoxSizer = new wxBoxSizer(wxVERTICAL);
-	scrolledWindow = new wxScrolledWindow(this, -1, wxDefaultPosition, wxSize(-1,100), wxVSCROLL | wxALWAYS_SHOW_SB);
+	scrolledWindow = new wxScrolledWindow(this, -1, wxDefaultPosition, wxSize(-1,100), wxVSCROLL);
 	scrolledWindow->SetBackgroundColour(wxColour(*wxWHITE));
 	scrolledWindow->SetScrollRate(5, 5);
 	listHBox->Add(scrolledWindow, 1, wxEXPAND);
