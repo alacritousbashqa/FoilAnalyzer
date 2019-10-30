@@ -117,19 +117,22 @@ void Plot::updateBoundaries(wxRect& rect) {
 	drawArea.SetRight(boundary.GetRight() - border[2]);
 
 	// If there is an aspect ratio, change drawArea accordingly
-	if (aspectRatio[0] != 0 && aspectRatio[0] != 0) {
-		int smaller = 0;
-		int larger = 0;
+	if (aspectRatio[0] > 0 && aspectRatio[1] > 0) {
+		int smaller = 0;	// The length of the smaller side in pixels
+		int larger = 0;		// The length of the longer side in pixels
+		// If the width of the draw area is <= the height, the smaller side is the width
 		if (drawArea.GetWidth() <= drawArea.GetHeight()) {
 			smaller = drawArea.GetWidth();
 			larger = drawArea.GetHeight();
 		}
+		// Otherwise the smaller side is the height
 		else {
 			larger = drawArea.GetWidth();
 			smaller = drawArea.GetHeight();
 		}
 
-
+		// Which direction is the small side based on the aspect ratio?
+		// 0: Horizontal, 1: Vertical
 		int smallDir = 0;
 		if (aspectRatio[0] <= aspectRatio[1]) {
 			smallDir = 0;
@@ -138,12 +141,42 @@ void Plot::updateBoundaries(wxRect& rect) {
 			smallDir = 1;
 		}
 
+		// Determine the length of the longer side based on the AR and small side
 		larger = smaller / aspectRatio[smallDir] * aspectRatio[1 - smallDir];
+
+		// If the small direction is vertical...
 		if (smallDir) {
-			drawArea.SetRight(drawArea.GetLeft() + larger);
+			int newRight = drawArea.GetLeft() + larger;
+			int newBottom = drawArea.GetTop() + smaller;
+			// If the new right side is greater than the original right side, clamp it to the original right side,
+			// then adjust the smaller side (height) for this change
+			if (newRight > drawArea.GetRight()) {
+				newRight = drawArea.GetRight();
+				larger = newRight - drawArea.GetLeft();
+				smaller = larger * aspectRatio[smallDir] / aspectRatio[1 - smallDir];
+				newBottom = drawArea.GetTop() + smaller;
+
+			}
+			// Set the new right and bottom locations
+			drawArea.SetRight(newRight);
+			drawArea.SetBottom(newBottom);
 		}
+		// If the small direction is horizontal...
 		else {
-			drawArea.SetBottom(drawArea.GetTop() + larger);
+			int newRight = drawArea.GetLeft() + smaller;
+			int newBottom = drawArea.GetTop() + larger;
+			// If the new bottom side is greater than the original bottom side, clamp it to the original bottom side,
+			// then adjust the smaller side (width) for this change
+			if (newBottom > drawArea.GetBottom()) {
+				newBottom = drawArea.GetBottom();
+				larger = newBottom - drawArea.GetTop();
+				smaller = larger * aspectRatio[smallDir] / aspectRatio[1 - smallDir];
+				newRight = drawArea.GetLeft() + smaller;
+
+			}
+			// Set the new right and bottom locations
+			drawArea.SetRight(newRight);
+			drawArea.SetBottom(newBottom);
 		}
 	}
 
