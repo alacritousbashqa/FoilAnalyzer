@@ -111,11 +111,18 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	std::string temp = defineDialog.getText();
 	// Get NACA code type (4 or 5 digit) on dialog close
 	int type = defineDialog.getType();
+	// Get the number of panels to generate on dialog close
+	int nPanels = defineDialog.getNPanels();
 
 	this->SetFocus();
 
-	// If the dialog returns -1, it was closed without a valid code, so break
+	// If the dialog returns type = -1, it was closed without a valid code, so break
 	if (type == -1) {
+		return;
+	}
+
+	// If the dialog returns nPanels = -1, it was closed without a valid code, so break
+	if (nPanels == -1) {
 		return;
 	}
 
@@ -123,13 +130,13 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	AirfoilStruct* afs = new AirfoilStruct();
 	afs->code = temp;
 	afs->name = "NACA " + temp;
-	afs->nPanels = 50;
+	afs->nPanels = nPanels;
 	// Generate the correct points based on the entered code type
 	if (type == 4) {
-		afs->points = foilGen->generate4Digit(temp, 50);
+		afs->points = foilGen->generate4Digit(temp, nPanels);
 	}
 	else {
-		afs->points = foilGen->generate5Digit(temp, 50);
+		afs->points = foilGen->generate5Digit(temp, nPanels);
 	}
 	loadedAirfoils.emplace_back(afs); // Add to global master list
 	// Create a new list struct
