@@ -106,7 +106,10 @@ void AirfoilDefiner::onCancel(wxCommandEvent& event) {
 }
 
 void AirfoilDefiner::onCodeChange(wxCommandEvent& event) {
-	nameTC->SetValue("NACA " + tc->GetLineText(0));
+	std::string c = tc->GetLineText(0);
+	if (c.length() > 10)
+		c = c.substr(0, 10);
+	nameTC->SetValue("NACA " + c);
 }
 
 std::string AirfoilDefiner::getCode() {
