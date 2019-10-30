@@ -48,12 +48,12 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 }
 
 void AirfoilDefiner::onOK(wxCommandEvent& event) {
-	std::string tmp = (std::string)tc1->GetLineText(0);
 	code = tc->GetLineText(0);
+	std::string tmp = tc1->GetLineText(0);
 	name = nameTC->GetLineText(0);
 
 	if (tmp != "" && std::all_of(tmp.begin(), tmp.end(), ::isdigit)) {
-		nPanels = std::stoi((std::string)tc1->GetLineText(0));
+		nPanels = std::stoi(tmp);
 	}
 	else {
 		nPanels = -1;
