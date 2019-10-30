@@ -1,6 +1,8 @@
 #include "AirfoilViewer.h"
 #include "AirfoilDefiner.h"
 
+std::vector<AirfoilStruct*> loadedAirfoils;
+
 ViewerPanel::ViewerPanel(wxWindow* parent)
 	: wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE){
 
