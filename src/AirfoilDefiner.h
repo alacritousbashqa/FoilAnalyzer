@@ -10,9 +10,9 @@
 class AirfoilDefiner : public wxDialog {
 	int textH = GetTextExtent("A").GetHeight();
 
-	std::string text;
 	int nPanels;
 	int type;
+	std::string code;		// NACA code (and later other airfoils)
 	int modalCode;
 
 	wxRadioButton* rb4;
@@ -24,7 +24,7 @@ class AirfoilDefiner : public wxDialog {
 	void onCancel(wxCommandEvent& event);
 public:
 	AirfoilDefiner(const wxString& title);
-	std::string getText();
+	std::string getCode();
 	int getNPanels();
 	int getType();
 };

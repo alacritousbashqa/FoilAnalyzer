@@ -48,8 +48,8 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 }
 
 void AirfoilDefiner::onOK(wxCommandEvent& event) {
-	text = tc->GetLineText(0);
 	std::string tmp = (std::string)tc1->GetLineText(0);
+	code = tc->GetLineText(0);
 	if (tmp != "" && std::all_of(tmp.begin(), tmp.end(), ::isdigit)) {
 		nPanels = std::stoi((std::string)tc1->GetLineText(0));
 	}
@@ -57,17 +57,17 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 		nPanels = -1;
 	}
 
-	if (text != "" && std::all_of(text.begin(), text.end(), ::isdigit)) {
+	if (code != "" && std::all_of(code.begin(), code.end(), ::isdigit)) {
 		if (nPanels < 10 || nPanels > 5000) {
 			nPanels = -1;
 			wxLogError("An invalid number of panels was entered! Number of panels must be between 10 and 5000!");
 			return;
 		}
-		if (text.length() == 4) {
+		if (code.length() == 4) {
 			type = 4;
 			EndModal(modalCode);
 		}
-		else if (text.length() == 5) {
+		else if (code.length() == 5) {
 			type = 5;
 			EndModal(modalCode);
 		}
@@ -86,8 +86,10 @@ void AirfoilDefiner::onCancel(wxCommandEvent& event) {
 	EndModal(modalCode);
 }
 
-std::string AirfoilDefiner::getText() {
-	return text;
+std::string AirfoilDefiner::getCode() {
+	return code;
+}
+
 }
 
 int AirfoilDefiner::getNPanels() {
