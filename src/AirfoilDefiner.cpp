@@ -22,12 +22,19 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	tc1 = new wxTextCtrl(panel, -1, std::to_string(nPanels).c_str(),
 		wxPoint(15, 8.5f * textH), wxSize(50, 24));
 
+	wxStaticBox *st1 = new wxStaticBox(panel, -1, wxT("Name"),
+		wxPoint(5, 11 * textH), wxSize(170, textH * 7));
+	wxStaticText stext2(panel, -1, wxT("Enter a unique identifier for this airfoil:"),
+		wxPoint(15, 13 * textH), wxSize(150, 32));
+	nameTC = new wxTextCtrl(panel, -1, wxT(""),
+		wxPoint(15, 15.5f * textH), wxSize(150, 24));
+
 	wxButton *okButton = new wxButton(this, 1, wxT("Ok"),
 		wxDefaultPosition, wxSize(70, 30));
 	wxButton *closeButton = new wxButton(this, 2, wxT("Cancel"),
 		wxDefaultPosition, wxSize(70, 30));
 	
-	this->SetSize(200, 17 * textH);
+	this->SetSize(200, 25 * textH);
 
 	hbox->Add(okButton, 1);
 	hbox->Add(closeButton, 1, wxLEFT, 5);
