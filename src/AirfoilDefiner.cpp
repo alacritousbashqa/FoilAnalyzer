@@ -69,7 +69,7 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 
 void AirfoilDefiner::onOK(wxCommandEvent& event) {
 	code = tc->GetLineText(0);
-	std::string tmp = tc1->GetLineText(0);
+	std::string tmp = (std::string)tc1->GetLineText(0);
 	name = nameTC->GetLineText(0);
 
 	// If number of panels text is not empty and is numeric, set nPanels
@@ -140,7 +140,7 @@ void AirfoilDefiner::onCancel(wxCommandEvent& event) {
 
 void AirfoilDefiner::onCodeChange(wxCommandEvent& event) {
 	// Clamp text length to max allowed characters
-	std::string c = tc->GetLineText(0);
+	std::string c = (std::string)tc->GetLineText(0);
 	if (c.length() > 10)
 		c = c.substr(0, 10);
 	// Set name text from code
