@@ -26,6 +26,8 @@ class AirfoilDefiner : public wxDialog {
 	wxTextCtrl* tc1;		// Number of panels text control
 	wxTextCtrl* nameTC;		// Name text control
 
+	void onCodeChange(wxCommandEvent& event);
+
 	void onOK(wxCommandEvent& event);
 	void onCancel(wxCommandEvent& event);
 public:

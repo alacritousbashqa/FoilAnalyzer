@@ -47,6 +47,8 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	Connect(OK_ID, wxEVT_BUTTON, wxCommandEventHandler(AirfoilDefiner::onOK));
 	Connect(CANCEL_ID, wxEVT_BUTTON, wxCommandEventHandler(AirfoilDefiner::onCancel));
 
+	Connect(CODE_TEXT_CTRL_ID, wxEVT_TEXT, wxCommandEventHandler(AirfoilDefiner::onCodeChange));
+
 	Centre();
 	modalCode = ShowModal();
 	tc->SetFocus();
@@ -98,6 +100,10 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 
 void AirfoilDefiner::onCancel(wxCommandEvent& event) {
 	EndModal(modalCode);
+}
+
+void AirfoilDefiner::onCodeChange(wxCommandEvent& event) {
+	nameTC->SetValue("NACA " + tc->GetLineText(0));
 }
 
 std::string AirfoilDefiner::getCode() {
