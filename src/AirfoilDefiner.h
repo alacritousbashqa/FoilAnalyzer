@@ -17,6 +17,7 @@ class AirfoilDefiner : public wxDialog {
 	wxRadioButton* rb4;
 	wxRadioButton* rb5;
 	wxTextCtrl* tc;
+	wxTextCtrl* tc1;
 
 	void onOK(wxCommandEvent& event);
 	void onCancel(wxCommandEvent& event);
