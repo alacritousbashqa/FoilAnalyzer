@@ -9,6 +9,9 @@
 #include <armadillo>
 
 #include "Axis.h"
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
+#endif
 
 class Plot {
 	int border[4];									// Padding on left, top, right, bottom of plot
