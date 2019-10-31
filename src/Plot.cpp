@@ -230,6 +230,8 @@ void Plot::drawPoints(wxDC& dc, arma::mat points) {
 		return;
 	}
 
+	dc.SetClippingRegion(drawArea);
+
 	// Convert points to pixels, then draw
 	arma::umat pixels = pointsToPixels(points);
 	for (int i = 0; i < pixels.n_rows-1; i++) {
