@@ -17,6 +17,7 @@
 
 #include "FoilParameters.h"
 #include "AirfoilGenerator.h"
+#include "AirfoilDefiner.h"
 #include "faProgram.h"
 #include "Plot.h"
 

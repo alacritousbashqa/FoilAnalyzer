@@ -1,5 +1,4 @@
 #include "AirfoilViewer.h"
-#include "AirfoilDefiner.h"
 
 std::vector<AirfoilStruct*> loadedAirfoils;
 
