@@ -117,13 +117,13 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 	}
 }
 
-bool AirfoilDefiner::checkNameUniqueness(std::string name) {
+AirfoilStruct* AirfoilDefiner::checkNameUniqueness(std::string name) {
 	for (AirfoilStruct* afs : loadedAirfoils) {
 		if (afs->name == name) {
-			return false; // Not unique
+			return afs; // Not unique
 		}
 	}
-	return true; // Unique
+	return nullptr; // Unique
 }
 
 void AirfoilDefiner::onCancel(wxCommandEvent& event) {
