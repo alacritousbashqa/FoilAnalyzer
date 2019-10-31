@@ -174,7 +174,7 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	als.airfoil = afs;
 	als.checkBox = new wxCheckBox(scrolledWindow, CHECKBOXES_ID, "Show?");
 	als.checkBox->SetValue(true);
-	als.nameText = new wxStaticText(scrolledWindow, -1, afs->name);
+	als.nameText = new wxStaticText(scrolledWindow, -1, afs->name, wxDefaultPosition, wxDefaultSize);
 	als.codeText = new wxStaticText(scrolledWindow, -1, ("NACA " + afs->code).c_str());
 	als.colorPicker = new wxColourPickerCtrl(scrolledWindow, COLORPICKER_ID);
 	als.colorPicker->SetColour(wxColour(*wxWHITE));
@@ -182,8 +182,8 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 		
 	// Add the new airfoil widgets to a box sizer (adds a new row)
 	hBox->Add(als.checkBox, 1, wxEXPAND | wxLEFT, 10);
-	hBox->Add(als.nameText, 1, wxALIGN_CENTER_VERTICAL);
-	hBox->Add(als.codeText, 1, wxALIGN_CENTER_VERTICAL);
+	hBox->Add(als.nameText, 3, wxALIGN_CENTER_VERTICAL);
+	hBox->Add(als.codeText, 2, wxALIGN_CENTER_VERTICAL);
 	hBox->Add(als.colorPicker, 1, wxALIGN_CENTER_VERTICAL, 10);
 	hBox->Add(new wxPanel(scrolledWindow, -1));
 	hBox->Layout();
