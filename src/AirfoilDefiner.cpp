@@ -154,3 +154,7 @@ int AirfoilDefiner::getNPanels() {
 int AirfoilDefiner::getType() {
 	return type;
 }
+
+bool AirfoilDefiner::getNewItem() {
+	return newListItem;
+}

@@ -23,6 +23,7 @@ class AirfoilDefiner : public wxDialog {
 	std::string name;		// Unique identifier for this airfoil
 	int nPanels;			// Number of panels to generate
 	int type;				// 4 or 5 digit NACA series
+	bool newListItem;
 	int modalCode;
 
 	wxTextCtrl* tc;			// Code text control
@@ -62,5 +63,6 @@ public:
 	-1 is returned when the type is not valid (neither 4 or 5)
 	*/
 	int getType();
+	bool getNewItem();
 	//-------------------------------------------------------------------------------------------------------------
 };
