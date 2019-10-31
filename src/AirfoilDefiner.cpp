@@ -6,6 +6,7 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	// Default values
 	type = -1;
 	nPanels = 50;
+	newListItem = true;
 
 	//Panel that holds the static boxes and text controls
 	wxPanel *panel = new wxPanel(this, -1);
