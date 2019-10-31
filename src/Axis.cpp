@@ -34,12 +34,12 @@ void Axis::calculateVLocs() {
 	if (dir == HORIZONTAL) {
 		int m_p = (limits[1] - vOrigin[0]) / step;	// Number of ticks for values greater than 0
 		int m_n = (vOrigin[0] - limits[0]) / step;	// Number of ticks for values less than 0
-		int np = 0;									// Pixel step size
+		pStep = 0;									// Pixel step size
 		// Use either m_p or m_n depending on which is not 0. If both are 0, display an error and return.
 		if (m_p)
-			np = (boundary[1] - origin.x) / m_p;
+			pStep = (boundary[1] - origin.x) / m_p;
 		else if (m_n)
-			np = (origin.x - boundary[0]) / m_n;
+			pStep = (origin.x - boundary[0]) / m_n;
 		else {
 			wxLogError("Number of ticks is zero! Perhaps the axis limits are not right?");
 			return;
@@ -52,22 +52,22 @@ void Axis::calculateVLocs() {
 
 		// Finally, calculate the other tick value-locations with respect to the origin for consistent spacing on each side of the origin
 		for (int i = 1; i <= m_p; i++) {
-			valueLocs[vOrigin[0] + i * step] = origin.x + i * np;
+			valueLocs[vOrigin[0] + i * step] = origin.x + i * pStep;
 		}
 		for (int i = -1; i >= -m_n; i--) {
-			valueLocs[vOrigin[0] + i * step] = origin.x + i * np;
+			valueLocs[vOrigin[0] + i * step] = origin.x + i * pStep;
 		}
 	}
 	// If this is a vertical axis...
 	else {
 		int m_p = (limits[1] - vOrigin[1]) / step;	// Number of ticks for values greater than 0
 		int m_n = (vOrigin[1] - limits[0]) / step;	// Number of ticks for values less than 0
-		int np = 0;									// Pixel step size
+		pStep = 0;									// Pixel step size
 		// Use either m_p or m_n depending on which is not 0. If both are 0, display an error and return.
 		if(m_p)
-			np = (boundary[0] - origin.y) / m_p;
+			pStep = (boundary[0] - origin.y) / m_p;
 		else if (m_n)
-			np = (origin.y - boundary[1]) / m_n;
+			pStep = (origin.y - boundary[1]) / m_n;
 		else {
 			wxLogError("Number of ticks is zero! Perhaps the axis limits are not right?");
 			return;
@@ -80,10 +80,10 @@ void Axis::calculateVLocs() {
 
 		// Finally, calculate the other tick value-locations with respect to the origin for consistent spacing on each side of the origin
 		for (int i = 1; i <= m_p; i++) {
-			valueLocs[vOrigin[1] + i * step] = origin.y + i * np;
+			valueLocs[vOrigin[1] + i * step] = origin.y + i * pStep;
 		}
 		for (int i = -1; i >= -m_n; i--) {
-			valueLocs[vOrigin[1] + i * step] = origin.y + i * np;
+			valueLocs[vOrigin[1] + i * step] = origin.y + i * pStep;
 		}
 	}
 }
