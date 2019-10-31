@@ -98,15 +98,18 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 		}
 		// Check the uniqueness of the name
 		AirfoilStruct* afs = checkNameUniqueness(name);
+		// If it is not a unique name, bring up the overwrite dialog
 		if (afs) {
 			// Open overrite dialog
 			OverwriteNameDialog owNameDialog(this, "Overwrite", name);
 			bool shouldOW = owNameDialog.getOverwite();
+			// If the user does not want to overwrite, return to the definer dialog
 			if (!shouldOW) {
 				return;
 			}
 			newListItem = afs; // If the user chose to overwrite, set the airfoil to be overwritten
 		}
+		// Else, set the airfoil to a nullptr which tells the ViewerPanel that there is no overwrite
 		else
 			newListItem = nullptr;
 

@@ -51,6 +51,7 @@ public:
 	~ViewerPanel();
 	void onPaintEvent(wxPaintEvent& event);
 private:
+	// Returns the AirfoilListStruct which contains the AirfoilStruct afs. If such a list struct does not exist, one is returned with an AirfoilStruct as a nullptr.
 	AirfoilListStruct getListMemberFromAirfoil(AirfoilStruct* afs);
 
 	void onViewerBackButton(wxCommandEvent& event); // Defined in Main.cpp

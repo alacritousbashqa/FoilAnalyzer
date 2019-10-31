@@ -134,6 +134,7 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	// If the dialog says to not create a new item, AKA overwrite a current list item and redraw plot
 	if (newItem) {
 		AirfoilListStruct als = getListMemberFromAirfoil(newItem);
+		// No valid AirfoilListStruct in afListMembers was found
 		if (!als.airfoil) {
 			wxLogError("AirfoilStruct was a nullptr! Could not find airfoil list member from given airfoil struct!");
 			return;
@@ -147,9 +148,9 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 			als.airfoil->points = foilGen->generate5Digit(temp, nPanels);
 		}
 
-		als.codeText->SetLabelText(("NACA " + temp).c_str());
+		als.codeText->SetLabelText(("NACA " + temp).c_str()); // Set new code in list
 		
-		this->Refresh();
+		this->Refresh(); // Redraw
 
 		return;
 	}
