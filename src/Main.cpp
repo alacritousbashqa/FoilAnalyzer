@@ -38,6 +38,7 @@ public:
 	wxMenu *menuAfPlot = new wxMenu;
 
 	void initializeTopFrame();
+	void onMenuExit(wxCommandEvent& event);
 	void switchPanels(int panelID);
 };
 
@@ -71,7 +72,8 @@ TopFrame::TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size
 	menuBar->Append(menuHelp, "&Help");
 	SetMenuBar(menuBar);
 
-	Connect(wxID_EXIT, wxEVT_MENU, wxCommandEventHandler(StartPanel::onExitButton));
+	Connect(wxID_EXIT, wxEVT_MENU, wxCommandEventHandler(TopFrame::onMenuExit));
+	Connect(EXIT_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onExitButton));
 	Connect(wxID_ABOUT, wxEVT_MENU, wxCommandEventHandler(StartPanel::onAboutButton));
 }
 
@@ -115,6 +117,10 @@ void TopFrame::switchPanels(int panelID) {
 		menuBar->Append(menuAfPlot, "&Plot");
 		break;
 	}
+}
+
+void TopFrame::onMenuExit(wxCommandEvent& event) {
+	Close(true);
 }
 
 //===========================================================================================

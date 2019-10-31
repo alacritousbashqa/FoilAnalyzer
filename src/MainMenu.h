@@ -27,7 +27,7 @@ private:
 
 // Button IDs for event connection
 enum {
-	EXIT_ID = wxID_EXIT,
+	EXIT_ID = 5,
 	VIEWER_BUTTON_ID = 4,
 	ABOUT_ID = wxID_ABOUT
 };
