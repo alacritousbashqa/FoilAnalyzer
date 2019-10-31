@@ -110,9 +110,6 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 		if (code.length() == 4) {
 			type = 4;
 			if (afs) {
-				/*afs->code = code;
-				afs->nPanels = nPanels;
-				afs->points = AirfoilGenerator::generate4Digit(code, nPanels);*/
 				newListItem = afs;
 			}
 			else
@@ -124,9 +121,6 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 		else if (code.length() == 5) {
 			type = 5;
 			if (afs) {
-				/*afs->code = code;
-				afs->nPanels = nPanels;
-				afs->points = AirfoilGenerator::generate5Digit(code, nPanels);*/
 				newListItem = afs;
 			}
 			else

@@ -7,7 +7,6 @@
 
 #include <wx/wxprec.h>
 
-#include "AirfoilGenerator.h"
 #include "FoilParameters.h"
 
 enum {
