@@ -105,32 +105,25 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 			if (!shouldOW) {
 				return;
 			}
+			newListItem = afs; // If the user chose to overwrite, set the airfoil to be overwritten
 		}
+		else
+			newListItem = nullptr;
+
 		// If the code is a 4 digit, close dialog
 		if (code.length() == 4) {
 			type = 4;
-			if (afs) {
-				newListItem = afs;
-			}
-			else
-				newListItem = nullptr;
-
 			EndModal(modalCode);
 		}
 		// If the code is a 5 digit, close dialog
 		else if (code.length() == 5) {
 			type = 5;
-			if (afs) {
-				newListItem = afs;
-			}
-			else
-				newListItem = nullptr;
-
 			EndModal(modalCode);
 		}
 		// Else, return an invalid type with error
 		else {
 			type = -1;
+			newListItem = nullptr;
 			wxLogError("An invalid length was entered! Please use 4 or 5 digit series only!");
 		}
 	}
