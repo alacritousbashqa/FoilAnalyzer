@@ -1,4 +1,5 @@
 #include "AirfoilDefiner.h"
+#include "OverwriteNameDialog.h"
 
 AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	: wxDialog(NULL, -1, title, wxDefaultPosition, wxSize(200, 230)) {
@@ -95,14 +96,42 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 			wxLogError("An invalid number of panels was entered! Number of panels must be between 10 and 5000!");
 			return;
 		}
+		// Check the uniqueness of the name
+		AirfoilStruct* afs = checkNameUniqueness(name);
+		if (afs) {
+			// Open overrite dialog
+			OverwriteNameDialog owNameDialog(this, "Overwrite", name);
+			bool shouldOW = owNameDialog.getOverwite();
+			if (!shouldOW) {
+				return;
+			}
+		}
 		// If the code is a 4 digit, close dialog
 		if (code.length() == 4) {
 			type = 4;
+			if (afs) {
+				afs->code = code;
+				afs->nPanels = nPanels;
+				afs->points = AirfoilGenerator::generate4Digit(code, nPanels);
+				newListItem = false;
+			}
+			else
+				newListItem = true;
+
 			EndModal(modalCode);
 		}
 		// If the code is a 5 digit, close dialog
 		else if (code.length() == 5) {
 			type = 5;
+			if (afs) {
+				afs->code = code;
+				afs->nPanels = nPanels;
+				afs->points = AirfoilGenerator::generate5Digit(code, nPanels);
+				newListItem = false;
+			}
+			else
+				newListItem = true;
+
 			EndModal(modalCode);
 		}
 		// Else, return an invalid type with error

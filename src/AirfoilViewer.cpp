@@ -118,7 +118,13 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	// Get the unique name of the airfoil on dialog close
 	std::string name = defineDialog.getName();
 
+	bool newItem = defineDialog.getNewItem();
+
 	this->SetFocus();
+
+	if (!newItem) {
+		return;
+	}
 
 	// If the dialog returns type = -1, it was closed without a valid code, so break
 	if (type == -1) {
