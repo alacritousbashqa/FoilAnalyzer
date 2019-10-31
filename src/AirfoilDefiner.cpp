@@ -86,14 +86,6 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 		return;
 	}
 
-	// Check the uniqueness of the name
-	bool unique = checkNameUniqueness(name);
-	if (!unique) {
-		// Open overrite dialog
-		wxLogDebug("DAT BOI NOT UNIQUE!");
-
-	}
-
 	// If the code text is not empty and is numeric...
 	if (code != "" && std::all_of(code.begin(), code.end(), ::isdigit)) {
 		// If the number of panels is not in the valid range, return with an error 
