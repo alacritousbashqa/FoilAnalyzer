@@ -274,6 +274,21 @@ arma::umat Plot::pointsToPixels(arma::mat points) {
 			}
 		}
 
+		if (points(i, 1) > vertAxis->getUpperLimit()) {
+			int pStep = vertAxis->getPixelStep();
+			double diff = points(i, 1) - vertAxis->getUpperLimit();
+			int pDiff = pStep * (diff / vertAxis->getStep());
+			pixels(i, 1) = drawArea.GetTop() + pDiff;
+			continue;
+		}
+		else if (points(i, 1) < vertAxis->getLowerLimit()) {
+			int pStep = vertAxis->getPixelStep();
+			double diff = vertAxis->getLowerLimit() - points(i, 1);
+			int pDiff = pStep * (diff / vertAxis->getStep());
+			pixels(i, 1) = drawArea.GetBottom() - pDiff;
+			continue;
+		}
+
 		it = vMap.begin();
 		for (; it != vMap.end(); ++it) {
 			if (it->first <= points(i, 1)) {
