@@ -178,3 +178,11 @@ std::string Axis::getLabel() {
 void Axis::setLabel(std::string l) {
 	label = l;
 }
+
+int Axis::getPixelStep() {
+	return pStep;
+}
+
+double Axis::getStep() {
+	return step;
+}

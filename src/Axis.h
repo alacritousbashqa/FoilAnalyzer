@@ -50,6 +50,8 @@ public:
 	// Get a map of the axis value-locations: value->pixel
 	std::map<double, int> getVLocs();
 	std::string getLabel();
+	int getPixelStep();
+	double getStep();
 	//-------------------------------------------------------------------------------------------------------------
 	// SETTERS
 
