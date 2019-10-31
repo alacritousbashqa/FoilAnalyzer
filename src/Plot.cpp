@@ -230,6 +230,8 @@ void Plot::drawPoints(wxDC& dc, arma::mat points) {
 		return;
 	}
 
+	dc.SetClippingRegion(drawArea);
+
 	// Convert points to pixels, then draw
 	arma::umat pixels = pointsToPixels(points);
 	for (int i = 0; i < pixels.n_rows-1; i++) {
@@ -270,6 +272,21 @@ arma::umat Plot::pointsToPixels(arma::mat points) {
 				pixels(i, 0) = ((points(i, 0) - xx1) / (xx2 - xx1))*(x2 - x1) + x1;
 				break;
 			}
+		}
+
+		if (points(i, 1) > vertAxis->getUpperLimit()) {
+			int pStep = vertAxis->getPixelStep();
+			double diff = points(i, 1) - vertAxis->getUpperLimit();
+			int pDiff = pStep * (diff / vertAxis->getStep());
+			pixels(i, 1) = drawArea.GetTop() + pDiff;
+			continue;
+		}
+		else if (points(i, 1) < vertAxis->getLowerLimit()) {
+			int pStep = vertAxis->getPixelStep();
+			double diff = vertAxis->getLowerLimit() - points(i, 1);
+			int pDiff = pStep * (diff / vertAxis->getStep());
+			pixels(i, 1) = drawArea.GetBottom() - pDiff;
+			continue;
 		}
 
 		it = vMap.begin();

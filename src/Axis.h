@@ -20,6 +20,7 @@ enum axisDirection {
 class Axis {
 	double limits[2];					// Lower and upper bounds (values)
 	double step;						// Tick step size (value)
+	int pStep;
 	int boundary[2];					// Lower and upper bounds (pixels)
 	axisDirection dir;					// Axis direction: horizontal or vertical
 	std::string label;					// Axis label, e.g. t
@@ -50,6 +51,8 @@ public:
 	// Get a map of the axis value-locations: value->pixel
 	std::map<double, int> getVLocs();
 	std::string getLabel();
+	int getPixelStep();
+	double getStep();
 	//-------------------------------------------------------------------------------------------------------------
 	// SETTERS
 

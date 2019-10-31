@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <wx/wx.h>
 #include <wx/wxprec.h>
+
 #include "FoilParameters.h"
 
 enum {
@@ -20,18 +21,19 @@ enum {
 class AirfoilDefiner : public wxDialog {
 	int textH = GetTextExtent("A").GetHeight();	// Text height for positioning widgets instead of hard coded positions
 
-	std::string code;		// NACA code (and later other airfoils)
-	std::string name;		// Unique identifier for this airfoil
-	int nPanels;			// Number of panels to generate
-	int type;				// 4 or 5 digit NACA series
+	std::string code;				// NACA code (and later other airfoils)
+	std::string name;				// Unique identifier for this airfoil
+	int nPanels;					// Number of panels to generate
+	int type;						// 4 or 5 digit NACA series
+	AirfoilStruct* newListItem;		// The airfoil that is to be overwritten (if the user chose to do so), otherwise a nullptr
 	int modalCode;
 
-	wxTextCtrl* tc;			// Code text control
-	wxTextCtrl* tc1;		// Number of panels text control
-	wxTextCtrl* nameTC;		// Name text control
+	wxTextCtrl* tc;					// Code text control
+	wxTextCtrl* tc1;				// Number of panels text control
+	wxTextCtrl* nameTC;				// Name text control
 
 	// Checks if the entered name already exists in the loaded airfoils list. Returns false if it already exists, true otherwise.
-	bool checkNameUniqueness(std::string name);
+	AirfoilStruct* checkNameUniqueness(std::string name);
 
 	/* Called when the code text is changed by either the user or by code. 
 	Sets the name based on the entered code in the form: NACA {code}.
@@ -63,5 +65,7 @@ public:
 	-1 is returned when the type is not valid (neither 4 or 5)
 	*/
 	int getType();
+	// Returns the AirfoilStruct to be overwritten (when the user choses to do so).
+	AirfoilStruct* getNewItem();
 	//-------------------------------------------------------------------------------------------------------------
 };

@@ -1,4 +1,5 @@
 #include "AirfoilDefiner.h"
+#include "OverwriteNameDialog.h"
 
 AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	: wxDialog(NULL, -1, title, wxDefaultPosition, wxSize(200, 230)) {
@@ -6,6 +7,7 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	// Default values
 	type = -1;
 	nPanels = 50;
+	newListItem = nullptr;
 
 	//Panel that holds the static boxes and text controls
 	wxPanel *panel = new wxPanel(this, -1);
@@ -69,7 +71,7 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 
 void AirfoilDefiner::onOK(wxCommandEvent& event) {
 	code = tc->GetLineText(0);
-	std::string tmp = tc1->GetLineText(0);
+	std::string tmp = (std::string)tc1->GetLineText(0);
 	name = nameTC->GetLineText(0);
 
 	// If number of panels text is not empty and is numeric, set nPanels
@@ -86,14 +88,6 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 		return;
 	}
 
-	// Check the uniqueness of the name
-	bool unique = checkNameUniqueness(name);
-	if (!unique) {
-		// Open overrite dialog
-		wxLogDebug("DAT BOI NOT UNIQUE!");
-
-	}
-
 	// If the code text is not empty and is numeric...
 	if (code != "" && std::all_of(code.begin(), code.end(), ::isdigit)) {
 		// If the number of panels is not in the valid range, return with an error 
@@ -102,6 +96,23 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 			wxLogError("An invalid number of panels was entered! Number of panels must be between 10 and 5000!");
 			return;
 		}
+		// Check the uniqueness of the name
+		AirfoilStruct* afs = checkNameUniqueness(name);
+		// If it is not a unique name, bring up the overwrite dialog
+		if (afs) {
+			// Open overrite dialog
+			OverwriteNameDialog owNameDialog(this, "Overwrite", name);
+			bool shouldOW = owNameDialog.getOverwite();
+			// If the user does not want to overwrite, return to the definer dialog
+			if (!shouldOW) {
+				return;
+			}
+			newListItem = afs; // If the user chose to overwrite, set the airfoil to be overwritten
+		}
+		// Else, set the airfoil to a nullptr which tells the ViewerPanel that there is no overwrite
+		else
+			newListItem = nullptr;
+
 		// If the code is a 4 digit, close dialog
 		if (code.length() == 4) {
 			type = 4;
@@ -109,12 +120,17 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 		}
 		// If the code is a 5 digit, close dialog
 		else if (code.length() == 5) {
+			if (code.at(2) != '0' && code.at(2) != '1') {
+				wxLogError("Invalid code! A 5 digit series should only have a 0 or 1 in the third digit! (i.e. 23012)");
+				return;
+			}
 			type = 5;
 			EndModal(modalCode);
 		}
 		// Else, return an invalid type with error
 		else {
 			type = -1;
+			newListItem = nullptr;
 			wxLogError("An invalid length was entered! Please use 4 or 5 digit series only!");
 		}
 	}
@@ -125,13 +141,13 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 	}
 }
 
-bool AirfoilDefiner::checkNameUniqueness(std::string name) {
+AirfoilStruct* AirfoilDefiner::checkNameUniqueness(std::string name) {
 	for (AirfoilStruct* afs : loadedAirfoils) {
 		if (afs->name == name) {
-			return false; // Not unique
+			return afs; // Not unique
 		}
 	}
-	return true; // Unique
+	return nullptr; // Unique
 }
 
 void AirfoilDefiner::onCancel(wxCommandEvent& event) {
@@ -140,7 +156,7 @@ void AirfoilDefiner::onCancel(wxCommandEvent& event) {
 
 void AirfoilDefiner::onCodeChange(wxCommandEvent& event) {
 	// Clamp text length to max allowed characters
-	std::string c = tc->GetLineText(0);
+	std::string c = (std::string)tc->GetLineText(0);
 	if (c.length() > 10)
 		c = c.substr(0, 10);
 	// Set name text from code
@@ -161,4 +177,8 @@ int AirfoilDefiner::getNPanels() {
 
 int AirfoilDefiner::getType() {
 	return type;
+}
+
+AirfoilStruct* AirfoilDefiner::getNewItem() {
+	return newListItem;
 }

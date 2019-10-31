@@ -1,5 +1,6 @@
 #include "AirfoilViewer.h"
-#include "AirfoilDefiner.h"
+
+std::vector<AirfoilStruct*> loadedAirfoils;
 
 ViewerPanel::ViewerPanel(wxWindow* parent)
 	: wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE){
@@ -116,6 +117,8 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	// Get the unique name of the airfoil on dialog close
 	std::string name = defineDialog.getName();
 
+	AirfoilStruct* newItem = defineDialog.getNewItem();
+
 	this->SetFocus();
 
 	// If the dialog returns type = -1, it was closed without a valid code, so break
@@ -125,6 +128,30 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 
 	// If the dialog returns nPanels = -1, it was closed without a valid code, so break
 	if (nPanels == -1) {
+		return;
+	}
+
+	// If the dialog says to not create a new item, AKA overwrite a current list item and redraw plot
+	if (newItem) {
+		AirfoilListStruct als = getListMemberFromAirfoil(newItem);
+		// No valid AirfoilListStruct in afListMembers was found
+		if (!als.airfoil) {
+			wxLogError("AirfoilStruct was a nullptr! Could not find airfoil list member from given airfoil struct!");
+			return;
+		}
+		als.airfoil->code = temp;
+		als.airfoil->nPanels = nPanels;
+		if (type == 4) {
+			als.airfoil->points = foilGen->generate4Digit(temp, nPanels);
+		}
+		else {
+			als.airfoil->points = foilGen->generate5Digit(temp, nPanels);
+		}
+
+		als.codeText->SetLabelText(("NACA " + temp).c_str()); // Set new code in list
+		
+		this->Refresh(); // Redraw
+
 		return;
 	}
 
@@ -147,13 +174,16 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	als.airfoil = afs;
 	als.checkBox = new wxCheckBox(scrolledWindow, CHECKBOXES_ID, "Show?");
 	als.checkBox->SetValue(true);
+	als.nameText = new wxStaticText(scrolledWindow, -1, afs->name, wxDefaultPosition, wxDefaultSize);
+	als.codeText = new wxStaticText(scrolledWindow, -1, ("NACA " + afs->code).c_str());
 	als.colorPicker = new wxColourPickerCtrl(scrolledWindow, COLORPICKER_ID);
 	als.colorPicker->SetColour(wxColour(*wxWHITE));
 	afListMembers.push_back(als); // Add to class master list
 		
 	// Add the new airfoil widgets to a box sizer (adds a new row)
 	hBox->Add(als.checkBox, 1, wxEXPAND | wxLEFT, 10);
-	hBox->Add(new wxStaticText(scrolledWindow, -1, afs->name), 1, wxALIGN_CENTER_VERTICAL);
+	hBox->Add(als.nameText, 3, wxALIGN_CENTER_VERTICAL);
+	hBox->Add(als.codeText, 2, wxALIGN_CENTER_VERTICAL);
 	hBox->Add(als.colorPicker, 1, wxALIGN_CENTER_VERTICAL, 10);
 	hBox->Add(new wxPanel(scrolledWindow, -1));
 	hBox->Layout();
@@ -174,6 +204,17 @@ void ViewerPanel::onShowChecked(wxCommandEvent& event) {
 // When the color picker changes state, tell the viewer panel to redraw
 void ViewerPanel::onColorPicked(wxColourPickerEvent& event) {
 	this->Refresh();
+}
+
+AirfoilListStruct ViewerPanel::getListMemberFromAirfoil(AirfoilStruct* afs) {
+	for (AirfoilListStruct als : afListMembers) {
+		if (als.airfoil = afs) {
+			return als;
+		}
+	}
+	AirfoilListStruct als;
+	als.airfoil = nullptr;
+	return als;
 }
 
 //void ViewerPanel::drawAxes(wxPaintDC& dc) {
