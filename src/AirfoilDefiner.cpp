@@ -7,7 +7,7 @@ AirfoilDefiner::AirfoilDefiner(const wxString& title)
 	// Default values
 	type = -1;
 	nPanels = 50;
-	newListItem = true;
+	newListItem = nullptr;
 
 	//Panel that holds the static boxes and text controls
 	wxPanel *panel = new wxPanel(this, -1);
@@ -112,11 +112,11 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 			if (afs) {
 				/*afs->code = code;
 				afs->nPanels = nPanels;
-				newListItem = false;
 				afs->points = AirfoilGenerator::generate4Digit(code, nPanels);*/
+				newListItem = afs;
 			}
 			else
-				newListItem = true;
+				newListItem = nullptr;
 
 			EndModal(modalCode);
 		}
@@ -126,11 +126,11 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 			if (afs) {
 				/*afs->code = code;
 				afs->nPanels = nPanels;
-				newListItem = false;
 				afs->points = AirfoilGenerator::generate5Digit(code, nPanels);*/
+				newListItem = afs;
 			}
 			else
-				newListItem = true;
+				newListItem = nullptr;
 
 			EndModal(modalCode);
 		}
@@ -185,6 +185,6 @@ int AirfoilDefiner::getType() {
 	return type;
 }
 
-bool AirfoilDefiner::getNewItem() {
+AirfoilStruct* AirfoilDefiner::getNewItem() {
 	return newListItem;
 }
