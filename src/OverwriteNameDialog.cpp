@@ -40,7 +40,7 @@ OverwriteNameDialog::OverwriteNameDialog(wxWindow* parent, const wxString& title
 
 }
 
-bool OverwriteNameDialog::getOverwite() {
+bool OverwriteNameDialog::getOverwrite() {
 	return overwrite;
 }
 

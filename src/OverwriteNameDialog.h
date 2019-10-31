@@ -23,5 +23,5 @@ class OverwriteNameDialog : public wxDialog {
 public:
 	OverwriteNameDialog(wxWindow* parent, const wxString& title, std::string name);
 
-	bool getOverwite();
+	bool getOverwrite();
 };

@@ -102,7 +102,7 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 		if (afs) {
 			// Open overrite dialog
 			OverwriteNameDialog owNameDialog(this, "Overwrite", name);
-			bool shouldOW = owNameDialog.getOverwite();
+			bool shouldOW = owNameDialog.getOverwrite();
 			// If the user does not want to overwrite, return to the definer dialog
 			if (!shouldOW) {
 				return;
