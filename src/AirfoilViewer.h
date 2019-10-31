@@ -25,6 +25,8 @@
 struct AirfoilListStruct {
 	AirfoilStruct* airfoil;
 	wxCheckBox* checkBox;
+	wxStaticText* nameText;
+	wxStaticText* codeText;
 	wxColourPickerCtrl* colorPicker;
 };
 
