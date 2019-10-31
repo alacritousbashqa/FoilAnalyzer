@@ -121,10 +121,6 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 
 	this->SetFocus();
 
-	if (!newItem) {
-		return;
-	}
-
 	// If the dialog returns type = -1, it was closed without a valid code, so break
 	if (type == -1) {
 		return;
@@ -132,6 +128,29 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 
 	// If the dialog returns nPanels = -1, it was closed without a valid code, so break
 	if (nPanels == -1) {
+		return;
+	}
+
+	// If the dialog says to not create a new item, AKA overwrite a current list item and redraw plot
+	if (newItem) {
+		AirfoilListStruct als = getListMemberFromAirfoil(newItem);
+		if (!als.airfoil) {
+			wxLogError("AirfoilStruct was a nullptr! Could not find airfoil list member from given airfoil struct!");
+			return;
+		}
+		als.airfoil->code = temp;
+		als.airfoil->nPanels = nPanels;
+		if (type == 4) {
+			als.airfoil->points = foilGen->generate4Digit(temp, nPanels);
+		}
+		else {
+			als.airfoil->points = foilGen->generate5Digit(temp, nPanels);
+		}
+
+		als.codeText->SetLabelText(("NACA " + temp).c_str());
+		
+		this->Refresh();
+
 		return;
 	}
 
