@@ -120,6 +120,10 @@ void AirfoilDefiner::onOK(wxCommandEvent& event) {
 		}
 		// If the code is a 5 digit, close dialog
 		else if (code.length() == 5) {
+			if (code.at(2) != '0' && code.at(2) != '1') {
+				wxLogError("Invalid code! A 5 digit series should only have a 0 or 1 in the third digit! (i.e. 23012)");
+				return;
+			}
 			type = 5;
 			EndModal(modalCode);
 		}
