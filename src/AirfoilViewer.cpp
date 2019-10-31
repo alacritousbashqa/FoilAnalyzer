@@ -186,6 +186,17 @@ void ViewerPanel::onColorPicked(wxColourPickerEvent& event) {
 	this->Refresh();
 }
 
+AirfoilListStruct ViewerPanel::getListMemberFromAirfoil(AirfoilStruct* afs) {
+	for (AirfoilListStruct als : afListMembers) {
+		if (als.airfoil = afs) {
+			return als;
+		}
+	}
+	AirfoilListStruct als;
+	als.airfoil = nullptr;
+	return als;
+}
+
 //void ViewerPanel::drawAxes(wxPaintDC& dc) {
 //	int w = avTopSizer->GetSize().GetWidth();
 //	int h = avDrawArea->GetRect().GetHeight();

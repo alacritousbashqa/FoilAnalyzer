@@ -51,6 +51,8 @@ public:
 	~ViewerPanel();
 	void onPaintEvent(wxPaintEvent& event);
 private:
+	AirfoilListStruct getListMemberFromAirfoil(AirfoilStruct* afs);
+
 	void onViewerBackButton(wxCommandEvent& event); // Defined in Main.cpp
 	void onDefineAirfoil(wxCommandEvent& event);
 	void onShowChecked(wxCommandEvent& event);
