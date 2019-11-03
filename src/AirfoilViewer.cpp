@@ -70,11 +70,11 @@ ViewerPanel::~ViewerPanel(){
 	delete foilGen;
 	for (AirfoilListStruct afs : afListMembers) {
 		delete afs.airfoil;
-		delete afs.checkBox;
-		delete afs.colorPicker;
-		delete afs.codeText;
-		delete afs.delButton;
-		delete afs.nameText;
+		afs.checkBox->Destroy();
+		afs.colorPicker->Destroy();
+		afs.codeText->Destroy();
+		afs.delButton->Destroy();
+		afs.nameText->Destroy();
 	}
 	afListMembers.clear();
 	for (AirfoilStruct *as : loadedAirfoils) {
