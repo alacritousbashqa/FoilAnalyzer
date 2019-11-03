@@ -59,6 +59,8 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	Connect(CHECKBOXES_ID, wxEVT_CHECKBOX, wxCommandEventHandler(ViewerPanel::onShowChecked));
 	// Airfoil list color picker
 	Connect(COLORPICKER_ID, wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler(ViewerPanel::onColorPicked));
+	// Delete airfoil button
+	Connect(DELETE_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onDelButton));
 	// Event Paint
 	Connect(GetId(), wxEVT_PAINT, wxPaintEventHandler(ViewerPanel::onPaintEvent));
 }
@@ -70,6 +72,7 @@ ViewerPanel::~ViewerPanel(){
 		delete afs.airfoil;
 		delete afs.checkBox;
 		delete afs.colorPicker;
+		delete afs.delButton;
 	}
 	afListMembers.clear();
 	for (AirfoilStruct *as : loadedAirfoils) {
@@ -179,13 +182,16 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	als.codeText = new wxStaticText(scrolledWindow, -1, ("NACA " + afs->code).c_str());
 	als.colorPicker = new wxColourPickerCtrl(scrolledWindow, COLORPICKER_ID);
 	als.colorPicker->SetColour(wxColour(*wxWHITE));
+	als.delButton = new wxButton(scrolledWindow, DELETE_ID, "Delete");
+	als.delButton->SetName(afs->name);
 	afListMembers.push_back(als); // Add to class master list
 		
 	// Add the new airfoil widgets to a box sizer (adds a new row)
 	hBox->Add(als.checkBox, 1, wxEXPAND | wxLEFT, 10);
 	hBox->Add(als.nameText, 3, wxALIGN_CENTER_VERTICAL);
 	hBox->Add(als.codeText, 2, wxALIGN_CENTER_VERTICAL);
-	hBox->Add(als.colorPicker, 1, wxALIGN_CENTER_VERTICAL, 10);
+	hBox->Add(als.colorPicker, 1, wxALIGN_CENTER_VERTICAL);
+	hBox->Add(als.delButton, 1, wxALIGN_CENTER_VERTICAL);
 	hBox->Add(new wxPanel(scrolledWindow, -1));
 	hBox->Layout();
 
@@ -205,6 +211,9 @@ void ViewerPanel::onShowChecked(wxCommandEvent& event) {
 // When the color picker changes state, tell the viewer panel to redraw
 void ViewerPanel::onColorPicked(wxColourPickerEvent& event) {
 	this->Refresh();
+}
+
+void ViewerPanel::onDelButton(wxCommandEvent& event) {
 }
 
 AirfoilListStruct ViewerPanel::getListMemberFromAirfoil(AirfoilStruct* afs) {

@@ -28,6 +28,7 @@ struct AirfoilListStruct {
 	wxStaticText* nameText;
 	wxStaticText* codeText;
 	wxColourPickerCtrl* colorPicker;
+	wxButton* delButton;
 };
 
 class ViewerPanel : public wxPanel {
@@ -58,6 +59,7 @@ private:
 	void onDefineAirfoil(wxCommandEvent& event);
 	void onShowChecked(wxCommandEvent& event);
 	void onColorPicked(wxColourPickerEvent& event);
+	void onDelButton(wxCommandEvent& event);
 };
 
 // Button IDs for event connection
@@ -65,7 +67,8 @@ enum {
 	BACK_ID = 2,
 	DEFINE_AF_ID = 3,
 	CHECKBOXES_ID = 4,
-	COLORPICKER_ID = 5
+	COLORPICKER_ID = 5,
+	DELETE_ID = 6
 };
 
 class AirfoilViewer : public faProgram {
