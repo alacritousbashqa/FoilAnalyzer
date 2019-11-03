@@ -58,9 +58,6 @@ private:
 	void onDefineAirfoil(wxCommandEvent& event);
 	void onShowChecked(wxCommandEvent& event);
 	void onColorPicked(wxColourPickerEvent& event);
-	//void drawTicks(wxDC& dc, wxPoint& origin, wxPoint& beg, wxPoint& end, int dir, int n);
-	//void drawTick(wxDC& dc, wxPoint pos, int dir);
-	//void drawAxes(wxPaintDC& dc);
 };
 
 // Button IDs for event connection

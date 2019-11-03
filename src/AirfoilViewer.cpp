@@ -218,64 +218,6 @@ AirfoilListStruct ViewerPanel::getListMemberFromAirfoil(AirfoilStruct* afs) {
 	return als;
 }
 
-//void ViewerPanel::drawAxes(wxPaintDC& dc) {
-//	int w = avTopSizer->GetSize().GetWidth();
-//	int h = avDrawArea->GetRect().GetHeight();
-//	wxPoint top(60, 50);
-//	wxPoint bottom(60, h - 50);
-//	wxPoint left(20, h / 2);
-//	wxPoint right(w - 20, h / 2);
-//	wxPoint origin(60, h / 2);
-//	dc.SetPen(wxPen(*wxWHITE, 2));
-//	dc.DrawLine(top,bottom);
-//	dc.DrawLine(left,right);
-//	drawTicks(dc, origin, top, bottom, axesVERT, 15);
-//	drawTicks(dc, origin, left, right, axesHORIZ, 23);
-//}
-//
-//void ViewerPanel::drawTicks(wxDC& dc, wxPoint& origin, wxPoint& beg, wxPoint& end, int dir, int n){
-//	dc.SetPen(wxPen(*wxWHITE, 1));
-//	if (n < 1)
-//		return;
-//	int l = 0;
-//	int h = 0;
-//	if (dir == axesHORIZ) {
-//		l = end.x - beg.x;
-//		h = origin.x - beg.x;
-//	}
-//	else {
-//		l = end.y - beg.y;
-//		h = origin.y - beg.y;
-//	}
-//	if (l < 1)
-//		return;
-//	int a = l / n;
-//	for (int i = 0; i < n; i++) {
-//		if (dir == axesHORIZ) {
-//			int pos = beg.x + i * a + h;
-//			if (pos > beg.x + l) {
-//				pos -= l;
-//			}
-//			drawTick(dc, wxPoint(pos, beg.y), dir);
-//		}
-//		else {
-//			int pos = beg.y + i * a + h;
-//			if (pos > beg.y + l) {
-//				pos -= l;
-//			}
-//			drawTick(dc, wxPoint(beg.x, pos), dir);
-//		}
-//	}
-//}
-//
-//void ViewerPanel::drawTick(wxDC& dc, wxPoint pos, int dir) {
-//	if (dir == axesHORIZ) {
-//		dc.DrawLine(pos.x, pos.y - 7, pos.x, pos.y + 7);
-//	}
-//	else
-//		dc.DrawLine(pos.x - 7, pos.y, pos.x + 7, pos.y);
-//}
-
 AirfoilViewer::AirfoilViewer(wxWindow* parent) {
 	initializeProgram(parent);
 }
