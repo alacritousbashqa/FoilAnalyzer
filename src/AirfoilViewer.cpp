@@ -216,6 +216,62 @@ void ViewerPanel::onColorPicked(wxColourPickerEvent& event) {
 }
 
 void ViewerPanel::onDelButton(wxCommandEvent& event) {
+	wxMessageDialog confirmDelDial(NULL, "Are you sure you want to unload this airfoil (i.e. delete it)?", "Caption", wxYES_NO | wxCENTRE | wxICON_EXCLAMATION);
+	int id = confirmDelDial.ShowModal();
+	if (id == wxID_YES) {
+		deleteAirfoil((std::string)dynamic_cast<wxButton*>(event.GetEventObject())->GetName());
+	}
+}
+
+bool ViewerPanel::deleteAirfoil(std::string name) {
+	// Find the airfoil list struct associated with the inputted unique identifier
+	AirfoilListStruct tmpALS;
+	int tmpI = -1;
+	for (int i = 0; i < afListMembers.size(); i++) {
+		if (afListMembers[i].airfoil->name == name) {
+			tmpALS = afListMembers[i];
+			tmpI = i;
+			break;
+		}
+	}
+	// If the airfoil was found...
+	if (tmpALS.airfoil) {
+		// Destroy associated widget pointers
+		tmpALS.checkBox->Destroy();
+		tmpALS.colorPicker->Destroy();
+		tmpALS.codeText->Destroy();
+		tmpALS.delButton->Destroy();
+		tmpALS.nameText->Destroy();
+
+		// Find the airfoil struct in loaded airfoils and remove it from vector
+		int tmp = -1;
+		for (int i = 0; i < loadedAirfoils.size(); i++) {
+			if (loadedAirfoils[i] == tmpALS.airfoil) {
+				tmp = i;
+				break;
+			}
+		}
+		if (tmp == -1) {
+			wxLogError("Invalid airfoil in airfoil list struct! Could not be found in loaded airfoils!");
+			return false;
+		}
+		loadedAirfoils.erase(loadedAirfoils.begin() + tmp);
+
+		// Deallocate the airfoil
+		delete tmpALS.airfoil;
+
+		// Remove that associated airfoil list member from the afListMembers vector
+		afListMembers.erase(afListMembers.begin() + tmpI);
+
+		// Update list UI and plot
+		scrolledWindow->FitInside();
+		scrolledBoxSizer->Layout();
+		this->Refresh();
+
+		return true;
+	}
+	wxLogError("No loaded airfoil was found with the inputted name!");
+	return false;
 }
 
 AirfoilListStruct ViewerPanel::getListMemberFromAirfoil(AirfoilStruct* afs) {

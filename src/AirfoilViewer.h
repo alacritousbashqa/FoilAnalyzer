@@ -54,6 +54,8 @@ public:
 private:
 	// Returns the AirfoilListStruct which contains the AirfoilStruct afs. If such a list struct does not exist, one is returned with an AirfoilStruct as a nullptr.
 	AirfoilListStruct getListMemberFromAirfoil(AirfoilStruct* afs);
+	// Removes an airfoil from the list struct and airfoil struct
+	bool deleteAirfoil(std::string name);
 
 	void onViewerBackButton(wxCommandEvent& event); // Defined in Main.cpp
 	void onDefineAirfoil(wxCommandEvent& event);
