@@ -73,7 +73,8 @@ ViewerPanel::~ViewerPanel(){
 	}
 	afListMembers.clear();
 	for (AirfoilStruct *as : loadedAirfoils) {
-		delete as;
+		if(!as)
+			delete as;
 	}
 	loadedAirfoils.clear();
 }
