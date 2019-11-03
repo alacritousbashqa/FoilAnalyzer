@@ -72,7 +72,9 @@ ViewerPanel::~ViewerPanel(){
 		delete afs.airfoil;
 		delete afs.checkBox;
 		delete afs.colorPicker;
+		delete afs.codeText;
 		delete afs.delButton;
+		delete afs.nameText;
 	}
 	afListMembers.clear();
 	for (AirfoilStruct *as : loadedAirfoils) {
