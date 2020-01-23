@@ -186,3 +186,8 @@ int Axis::getPixelStep() {
 double Axis::getStep() {
 	return step;
 }
+
+void Axis::setStep(double st) {
+	step = st;
+	calculateVLocs();
+}

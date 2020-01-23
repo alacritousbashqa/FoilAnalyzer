@@ -33,6 +33,8 @@ class Axis {
 
 	// Calculates and stores the axis values to their pixel locations
 	void calculateVLocs();
+
+	void setStep(double st);
 public:
 	// CONSTRUCTORS
 
@@ -66,6 +68,8 @@ public:
 	void setVOrigin(double vOrigin[2]);
 	void setLabel(std::string l);
 	//-------------------------------------------------------------------------------------------------------------
+
+	friend class Plot;
 
 	// Updates the boundary, origin pixel location, and origin value, then recalculates the value-locations
 	void updateAxis(int boundary[2], wxPoint origin, double vOrigin[2]);

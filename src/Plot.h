@@ -31,6 +31,9 @@ class Plot {
 	arma::umat pointsToPixels(arma::mat points);
 	// Calculates the origin location (origin) and origin value (vOrigin) from the axes limits
 	void calculateOrigin(double xLim[2], double yLim[2]);
+
+	void setHStep(double st);
+	void setVStep(double st);
 public:
 	// CONSTRUCTORS
 
@@ -51,6 +54,8 @@ public:
 	std::string getTitle();
 	std::string getHLabel();
 	std::string getVLabel();
+	double getHStep();
+	double getVStep();
 	// Returns a pointer to the apect ratio array
 	int* getAspectRatio();
 	//-------------------------------------------------------------------------------------------------------------
@@ -59,6 +64,9 @@ public:
 	void setTitle(std::string t);
 	void setHLabel(std::string hl);
 	void setVLabel(std::string vl);
+	/* Sets the axes steps to st: [horizontal, vertical]
+	*/
+	void setAxesSteps(double st[2]);
 	/* Sets the aspect ratio to ar
 	For no aspect ratio, at least one of the values can be set to an integer <= 0,
 	otherwise all positive integers are valid inputs for an aspect ratio

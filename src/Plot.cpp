@@ -95,6 +95,14 @@ Axis* Plot::getVAxis() {
 	return vertAxis;
 }
 
+double Plot::getHStep() {
+	return horizAxis->getStep();
+}
+
+double Plot::getVStep() {
+	return vertAxis->getStep();
+}
+
 void Plot::updateBoundaries(wxRect& rect) {
 	boundary = rect;
 
@@ -329,6 +337,19 @@ void Plot::setHLabel(std::string hl) {
 }
 void Plot::setVLabel(std::string vl) {
 	vertAxis->setLabel(vl);
+}
+
+void Plot::setHStep(double st) {
+	horizAxis->setStep(st);
+}
+void Plot::setVStep(double st) {
+	vertAxis->setStep(st);
+}
+
+void Plot::setAxesSteps(double st[2]) {
+	// Set the step for each axis
+	setHStep(st[0]);
+	setVStep(st[1]);
 }
 
 void Plot::setAspectRatio(int ar[2]) {
