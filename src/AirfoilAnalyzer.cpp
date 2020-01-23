@@ -29,11 +29,13 @@ AnalyzerPanel::AnalyzerPanel(wxWindow* parent)
 	SetBackgroundColour(wxColour(*wxBLACK));
 
 	// Graphs Plot which holds the axes data and draws the Cp graph onto them
-	wxRect plotRect(aaGraphArea->GetRect().GetLeft(), aaGraphArea->GetRect().GetTop(), parent->GetSize().GetWidth() - 70, 200);
+	wxRect plotRect(aaGraphArea->GetRect().GetLeft(), aaGraphArea->GetRect().GetTop(), drawAreaBoxSizer->GetSize().GetWidth() - 300, 100);
 	double xLim[2] = { -0.1,1.1 };
 	double yLim[2] = { -5.0,5.0 };
-	int bords[4] = { 10,10,10,10 };
+	int bords[4] = { 10,10,40,10 };
 	cpPlot = new Plot(plotRect, xLim, yLim, bords, true, true, true);
+	double steps[2] = { 0.10,1.0 };
+	cpPlot->setAxesSteps(steps);
 	cpPlot->setTitle("Cp vs x/c");
 	cpPlot->setHLabel("x/c");
 	cpPlot->setVLabel("Cp");
@@ -41,10 +43,11 @@ AnalyzerPanel::AnalyzerPanel(wxWindow* parent)
 	cpPlot->setAspectRatio(ar);
 
 	// Graphs Plot which holds the axes data and draws airfoils onto them
-	wxRect airfoilRect(aaAirfoilArea->GetRect().GetLeft(), aaAirfoilArea->GetRect().GetTop(), parent->GetSize().GetWidth() - 70, 200);
+	wxRect airfoilRect(aaAirfoilArea->GetRect().GetLeft(), aaAirfoilArea->GetRect().GetTop(), drawAreaBoxSizer->GetSize().GetWidth() - 300, 100);
 	yLim[0] = -0.20;
 	yLim[1] = 0.20;
-	aaAirfoilPlot = new Plot(airfoilRect, xLim, yLim, bords, true, true);
+	aaAirfoilPlot = new Plot(airfoilRect, xLim, yLim, bords, true, true, true);
+	aaAirfoilPlot->setTitle("");
 	aaAirfoilPlot->setHLabel("x/c");
 	aaAirfoilPlot->setVLabel("y/c");
 	aaAirfoilPlot->setAspectRatio(ar);
@@ -65,11 +68,11 @@ void AnalyzerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxPaintDC pdc(this);
 
 	// Update the plot on resize and redraw axes and plots
-	wxRect plotRect(aaGraphArea->GetRect().GetLeft(), aaGraphArea->GetRect().GetTop(), this->GetParent()->GetSize().GetWidth() - 20, aaTopSizer->GetChildren().front()->GetRect().GetHeight());
+	wxRect plotRect(aaGraphArea->GetRect().GetLeft(), aaGraphArea->GetRect().GetTop(), drawAreaBoxSizer->GetSize().GetWidth() - 300, aaTopSizer->GetSize().GetHeight() / 2);
 	cpPlot->updateBoundaries(plotRect);
 	cpPlot->draw(pdc);
 
-	wxRect airfoilRect(aaAirfoilArea->GetRect().GetLeft(), aaAirfoilArea->GetRect().GetTop(), this->GetParent()->GetSize().GetWidth() - 20, aaTopSizer->GetChildren().front()->GetRect().GetHeight());
+	wxRect airfoilRect(aaAirfoilArea->GetRect().GetLeft(), aaAirfoilArea->GetRect().GetTop(), drawAreaBoxSizer->GetSize().GetWidth() - 300, aaTopSizer->GetSize().GetHeight() / 2);
 	aaAirfoilPlot->updateBoundaries(airfoilRect);
 	aaAirfoilPlot->draw(pdc);
 }
