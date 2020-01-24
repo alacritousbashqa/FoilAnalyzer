@@ -14,11 +14,11 @@ AnalyzerPanel::AnalyzerPanel(wxWindow* parent)
 	// Sizer for the options menu
 	optionsBoxSizer = new wxBoxSizer(wxVERTICAL);
 	wxPanel* optionsPanel = new wxPanel(this, -1, wxDefaultPosition, wxSize(300,500));
-	optionsBoxSizer->Add(optionsPanel, 1, wxEXPAND);
 	optionsPanel->SetBackgroundColour(wxColour(*wxWHITE));
+	optionsPanel->SetSizer(optionsBoxSizer);
 
 	aaTopSizer->Add(drawAreaBoxSizer, 1, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
-	aaTopSizer->Add(optionsBoxSizer, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
+	aaTopSizer->Add(optionsPanel, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
 
 	// Box that holds "back to main menu" button at bottom of screen
 	wxBoxSizer* buttonBox = new wxBoxSizer(wxHORIZONTAL);
