@@ -13,9 +13,12 @@ AnalyzerPanel::AnalyzerPanel(wxWindow* parent)
 
 	// Sizer for the options menu
 	optionsBoxSizer = new wxBoxSizer(wxVERTICAL);
+	wxPanel* optionsPanel = new wxPanel(this, -1, wxDefaultPosition, wxSize(300,500));
+	optionsBoxSizer->Add(optionsPanel, 1, wxEXPAND);
+	optionsPanel->SetBackgroundColour(wxColour(*wxWHITE));
 
 	aaTopSizer->Add(drawAreaBoxSizer, 1, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
-	aaTopSizer->Add(optionsBoxSizer, 1, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
+	aaTopSizer->Add(optionsBoxSizer, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
 
 	// Box that holds "back to main menu" button at bottom of screen
 	wxBoxSizer* buttonBox = new wxBoxSizer(wxHORIZONTAL);
@@ -68,11 +71,11 @@ void AnalyzerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxPaintDC pdc(this);
 
 	// Update the plot on resize and redraw axes and plots
-	wxRect plotRect(aaGraphArea->GetRect().GetLeft(), aaGraphArea->GetRect().GetTop(), drawAreaBoxSizer->GetSize().GetWidth() - 300, aaTopSizer->GetSize().GetHeight() / 2);
+	wxRect plotRect(aaGraphArea->GetRect().GetLeft(), aaGraphArea->GetRect().GetTop(), drawAreaBoxSizer->GetSize().GetWidth() - 50, aaTopSizer->GetSize().GetHeight() / 2);
 	cpPlot->updateBoundaries(plotRect);
 	cpPlot->draw(pdc);
 
-	wxRect airfoilRect(aaAirfoilArea->GetRect().GetLeft(), aaAirfoilArea->GetRect().GetTop(), drawAreaBoxSizer->GetSize().GetWidth() - 300, aaTopSizer->GetSize().GetHeight() / 2);
+	wxRect airfoilRect(aaAirfoilArea->GetRect().GetLeft(), aaAirfoilArea->GetRect().GetTop(), drawAreaBoxSizer->GetSize().GetWidth() - 50, aaTopSizer->GetSize().GetHeight() / 2);
 	aaAirfoilPlot->updateBoundaries(airfoilRect);
 	aaAirfoilPlot->draw(pdc);
 }
