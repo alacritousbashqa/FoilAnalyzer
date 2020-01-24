@@ -14,8 +14,8 @@ AnalyzerPanel::AnalyzerPanel(wxWindow* parent)
 	// Sizer for the options menu
 	optionsBoxSizer = new wxBoxSizer(wxVERTICAL);
 	wxPanel* optionsPanel = new wxPanel(this, -1, wxDefaultPosition, wxSize(300,500));
-	optionsPanel->SetBackgroundColour(wxColour(*wxWHITE));
 	optionsPanel->SetSizer(optionsBoxSizer);
+	optionsPanel->SetBackgroundColour(wxColour(*wxLIGHT_GREY));
 
 	aaTopSizer->Add(drawAreaBoxSizer, 1, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
 	aaTopSizer->Add(optionsPanel, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, 10);
