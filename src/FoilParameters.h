@@ -18,3 +18,11 @@ struct AirfoilStruct {
 };
 
 extern std::vector<AirfoilStruct*> loadedAirfoils;
+
+inline AirfoilStruct* getAirfoilFromName(std::string name) {
+	for (AirfoilStruct* afs : loadedAirfoils) {
+		if (afs->name == name)
+			return afs;
+	}
+	return NULL;
+}
