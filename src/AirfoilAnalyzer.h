@@ -17,6 +17,10 @@
 #include "faProgram.h"
 #include "Plot.h"
 
+enum {
+	CHOICE_ID = 10
+};
+
 class AnalyzerPanel : public wxPanel{
 	wxBoxSizer* aaTopSizer;
 	wxBoxSizer* drawAreaBoxSizer; // Sizer for the graphs and airfoil plot areas
@@ -26,19 +30,25 @@ class AnalyzerPanel : public wxPanel{
 	// Scrolled list panel and sizer
 	wxBoxSizer* optionsBoxSizer;
 
+	wxChoice* airfoilChoice;
+
 	// Pressure Coefficient and airfoil plots
 	Plot* cpPlot;
 	Plot* aaAirfoilPlot;
+
+	AirfoilStruct* chosenAirfoil;
 
 public:
 	wxBoxSizer* getTopSizer();
 	AnalyzerPanel(wxWindow* parent);
 	~AnalyzerPanel();
 	void onPaintEvent(wxPaintEvent& event);
+	void updateChoiceList();
 
 private:
 	// Button and other control events
 	void onAnalyzerBackButton(wxCommandEvent& event); // Defined in Main.cpp
+	void onChoiceChanged(wxCommandEvent& event);
 };
 
 class AirfoilAnalyzer : public faProgram {

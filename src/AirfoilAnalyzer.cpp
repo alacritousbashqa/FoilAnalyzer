@@ -2,6 +2,8 @@
 
 #include "AirfoilAnalyzer.h"
 
+//std::vector<AirfoilStruct*> loadedAirfoils;
+
 AnalyzerPanel::AnalyzerPanel(wxWindow* parent) 
 	: wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE) {
 
@@ -25,7 +27,8 @@ AnalyzerPanel::AnalyzerPanel(wxWindow* parent)
 	wxStaticBoxSizer *airfoilBox = new wxStaticBoxSizer(wxVERTICAL, optionsPanel, "Airfoil");
 	optionsBoxSizer->Add(airfoilBox, 0, wxALIGN_CENTER | wxTOP, 15);
 	airfoilBox->Add(new wxStaticText(airfoilBox->GetStaticBox(), -1, "Choose thine foil:"));
-	airfoilBox->Add(new wxChoice(airfoilBox->GetStaticBox(), -1));
+	airfoilChoice = new wxChoice(airfoilBox->GetStaticBox(), CHOICE_ID);
+	airfoilBox->Add(airfoilChoice);
 		// ANALYSIS DEFINITION
 	wxStaticBoxSizer *analysisBox = new wxStaticBoxSizer(wxVERTICAL, optionsPanel, "Analysis Definition");
 	optionsBoxSizer->Add(analysisBox, 0, wxALIGN_CENTER | wxTOP, 15);
@@ -78,6 +81,8 @@ AnalyzerPanel::AnalyzerPanel(wxWindow* parent)
 	Connect(BACK_ID, wxEVT_BUTTON, wxCommandEventHandler(AnalyzerPanel::onAnalyzerBackButton));
 	// Event Paint
 	Connect(GetId(), wxEVT_PAINT, wxPaintEventHandler(AnalyzerPanel::onPaintEvent));
+	// Airfoil Choice Box
+	Connect(CHOICE_ID, wxEVT_CHOICE, wxCommandEventHandler(AnalyzerPanel::onChoiceChanged));
 }
 
 AnalyzerPanel::~AnalyzerPanel() {
@@ -92,10 +97,21 @@ void AnalyzerPanel::onPaintEvent(wxPaintEvent& event) {
 	wxRect plotRect(aaGraphArea->GetRect().GetLeft(), aaGraphArea->GetRect().GetTop(), drawAreaBoxSizer->GetSize().GetWidth() - 50, aaTopSizer->GetSize().GetHeight() / 2);
 	cpPlot->updateBoundaries(plotRect);
 	cpPlot->draw(pdc);
-
+	
 	wxRect airfoilRect(aaAirfoilArea->GetRect().GetLeft(), aaAirfoilArea->GetRect().GetTop(), drawAreaBoxSizer->GetSize().GetWidth() - 50, aaTopSizer->GetSize().GetHeight() / 2);
 	aaAirfoilPlot->updateBoundaries(airfoilRect);
 	aaAirfoilPlot->draw(pdc);
+
+	if (chosenAirfoil) {
+		pdc.SetPen(wxPen(wxColour(*wxWHITE), 1));
+		aaAirfoilPlot->drawPoints(pdc, chosenAirfoil->points);
+	}
+}
+
+void AnalyzerPanel::onChoiceChanged(wxCommandEvent& event) {
+	std::string name = airfoilChoice->GetString(airfoilChoice->GetSelection()).ToStdString();
+	chosenAirfoil = getAirfoilFromName(name);
+	this->Refresh();
 }
 
 wxBoxSizer* AnalyzerPanel::getTopSizer() {
@@ -126,10 +142,20 @@ bool AirfoilAnalyzer::initializeProgram(wxWindow* parent) {
 	return false;
 }
 
+void AnalyzerPanel::updateChoiceList() {
+	airfoilChoice->Clear();
+	for (int i = 0; i < loadedAirfoils.size(); i++) {
+		airfoilChoice->Append(loadedAirfoils[i]->name);
+	}
+	if(chosenAirfoil)
+		airfoilChoice->SetStringSelection(chosenAirfoil->name);
+}
+
 void AirfoilAnalyzer::show(bool show) {
 	if (analyzerPanel) {
 		analyzerPanel->Show(show);
 		analyzerPanel->Enable(show);
+		analyzerPanel->updateChoiceList();
 	}
 	else {
 		wxLogError("Cannot show airfoil analyzer! Associated top-level panel does not exist!");
