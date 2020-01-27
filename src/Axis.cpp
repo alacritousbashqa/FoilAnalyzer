@@ -3,10 +3,10 @@
 double DEFAULT_LIMITS[2] = { -1.0,-1.0 };
 
 Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2])
-	: Axis(dir, boundary, origin, vOrigin, DEFAULT_LIMITS, 0.1){
+	: Axis(dir, boundary, origin, vOrigin, DEFAULT_LIMITS, 0.1, false){
 }
 
-Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2], double limits[2], double step) {
+Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2], double limits[2], double step, bool flip) {
 	this->dir = dir;
 	this->boundary[0] = boundary[0];
 	this->boundary[1] = boundary[1];
@@ -20,6 +20,7 @@ Axis::Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2
 		this->label = "x";
 	else
 		this->label = "y";
+	this->flip = flip;
 
 	calculateVLocs();
 }
@@ -37,25 +38,43 @@ void Axis::calculateVLocs() {
 		pStep = 0;									// Pixel step size
 		// Use either m_p or m_n depending on which is not 0. If both are 0, display an error and return.
 		if (m_p)
-			pStep = (boundary[1] - origin.x) / m_p;
+			if(flip)
+				pStep = (origin.x - boundary[0]) / m_p;
+			else
+				pStep = (boundary[1] - origin.x) / m_p;
 		else if (m_n)
-			pStep = (origin.x - boundary[0]) / m_n;
+			if(flip)
+				pStep = (boundary[1] - origin.x) / m_n;
+			else
+				pStep = (origin.x - boundary[0]) / m_n;
 		else {
 			wxLogError("Number of ticks is zero! Perhaps the axis limits are not right?");
 			return;
 		}
 
 		// Set the values at the limits to the pixel locations at the boundaries. Set the origin location.
-		valueLocs[limits[0]] = boundary[0];
-		valueLocs[limits[1]] = boundary[1];
+		if (flip) {
+			valueLocs[limits[0]] = boundary[1];
+			valueLocs[limits[1]] = boundary[0];
+		}
+		else {
+			valueLocs[limits[0]] = boundary[0];
+			valueLocs[limits[1]] = boundary[1];
+		}
 		valueLocs[vOrigin[0]] = origin.x;
 
 		// Finally, calculate the other tick value-locations with respect to the origin for consistent spacing on each side of the origin
 		for (int i = 1; i <= m_p; i++) {
-			valueLocs[vOrigin[0] + i * step] = origin.x + i * pStep;
+			if(flip)
+				valueLocs[vOrigin[0] + i * step] = origin.x - i * pStep;
+			else
+				valueLocs[vOrigin[0] + i * step] = origin.x + i * pStep;
 		}
 		for (int i = -1; i >= -m_n; i--) {
-			valueLocs[vOrigin[0] + i * step] = origin.x + i * pStep;
+			if(flip)
+				valueLocs[vOrigin[0] + i * step] = origin.x - i * pStep;
+			else
+				valueLocs[vOrigin[0] + i * step] = origin.x + i * pStep;
 		}
 	}
 	// If this is a vertical axis...
@@ -65,25 +84,43 @@ void Axis::calculateVLocs() {
 		pStep = 0;									// Pixel step size
 		// Use either m_p or m_n depending on which is not 0. If both are 0, display an error and return.
 		if(m_p)
-			pStep = (boundary[0] - origin.y) / m_p;
+			if(flip)
+				pStep = (origin.y - boundary[1]) / m_p;
+			else
+				pStep = (boundary[0] - origin.y) / m_p;
 		else if (m_n)
-			pStep = (origin.y - boundary[1]) / m_n;
+			if(flip)
+				pStep = (boundary[0] - origin.y) / m_n;
+			else
+				pStep = (origin.y - boundary[1]) / m_n;
 		else {
 			wxLogError("Number of ticks is zero! Perhaps the axis limits are not right?");
 			return;
 		}
 
 		// Set the values at the limits to the pixel locations at the boundaries. Set the origin location.
-		valueLocs[limits[0]] = boundary[1];
-		valueLocs[limits[1]] = boundary[0];
+		if (flip) {
+			valueLocs[limits[0]] = boundary[0];
+			valueLocs[limits[1]] = boundary[1];
+		}
+		else {
+			valueLocs[limits[0]] = boundary[1];
+			valueLocs[limits[1]] = boundary[0];
+		}
 		valueLocs[vOrigin[1]] = origin.y;
 
 		// Finally, calculate the other tick value-locations with respect to the origin for consistent spacing on each side of the origin
 		for (int i = 1; i <= m_p; i++) {
-			valueLocs[vOrigin[1] + i * step] = origin.y + i * pStep;
+			if(flip)
+				valueLocs[vOrigin[1] + i * step] = origin.y - i * pStep;
+			else
+				valueLocs[vOrigin[1] + i * step] = origin.y + i * pStep;
 		}
 		for (int i = -1; i >= -m_n; i--) {
-			valueLocs[vOrigin[1] + i * step] = origin.y + i * pStep;
+			if(flip)
+				valueLocs[vOrigin[1] + i * step] = origin.y - i * pStep;
+			else
+				valueLocs[vOrigin[1] + i * step] = origin.y + i * pStep;
 		}
 	}
 }

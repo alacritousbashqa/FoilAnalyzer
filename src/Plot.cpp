@@ -6,7 +6,10 @@ Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], bool showX, bool sh
 	: Plot(boundary, xLim, yLim, DEFAULT_BORDER){
 }
 
-Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool showX, bool showY, bool showTitle) {
+Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool showX, bool showY, bool showTitle, bool hFlipped, bool vFlipped) {
+	hFlip = hFlipped;
+	vFlip = vFlipped;
+
 	this->boundary = boundary;
 	int extra = 0;
 	if (showTitle) {
@@ -41,8 +44,8 @@ Plot::Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool
 	int yBound[2] = { boundary.GetTop(), boundary.GetBottom() };
 
 	// Create axes
-	horizAxis = new Axis(axisDirection::HORIZONTAL, xBound, origin, vOrigin, xLim, 0.1);
-	vertAxis = new Axis(axisDirection::VERTICAL, yBound, origin, vOrigin, yLim, 0.025);
+	horizAxis = new Axis(axisDirection::HORIZONTAL, xBound, origin, vOrigin, xLim, 0.1, hFlip);
+	vertAxis = new Axis(axisDirection::VERTICAL, yBound, origin, vOrigin, yLim, 0.025, vFlip);
 
 	this->showLabelX = showX;
 	this->showLabelY = showY;
@@ -58,30 +61,34 @@ Plot::~Plot() {
 
 void Plot::calculateOrigin(double xLim[2], double yLim[2]) {
 	// X component
-	if (xLim[0] >= 0) {							// If (0,0) is off-screen left, put origin on left limit
+	if ((!hFlip && xLim[0] >= 0) || (hFlip && xLim[1] <= 0)) {							// If (0,0) is off-screen left, put origin on left limit
 		origin.x = drawArea.GetLeft() + 1;
 		vOrigin[0] = xLim[0];
 	}
-	else if (xLim[1] <= 0) {					// If (0,0) is off-screen right, put origin on right limit
+	else if ((!hFlip && xLim[1] <= 0) || (hFlip && xLim[0] >= 0)) {						// If (0,0) is off-screen right, put origin on right limit
 		origin.x = drawArea.GetRight() - 1;
 		vOrigin[0] = xLim[1];
 	}
 	else {										// Else, find (0,0) with interpolation
 		double ratio = abs(xLim[0] / (xLim[1] - xLim[0]));
+		if (hFlip)
+			ratio = 1.0 - ratio;
 		origin.x = (int)(ratio * drawArea.GetWidth() + drawArea.GetX());
 		vOrigin[0] = 0.0;
 	}
 	// Y component
-	if (yLim[0] >= 0) {							// If (0,0) is off-screen below, put origin on bottom limit
+	if ((!vFlip && yLim[0] >= 0) || (vFlip && yLim[1] <= 0)) {							// If (0,0) is off-screen below, put origin on bottom limit
 		origin.y = drawArea.GetBottom() - 1;
 		vOrigin[1] = yLim[0];
 	}
-	else if (yLim[1] <= 0) {					// If (0,0) is off-screen above, put origin on top limit
+	else if ((!vFlip && yLim[1] <= 0) || (vFlip && yLim[0] >= 0)) {						// If (0,0) is off-screen above, put origin on top limit
 		origin.y = drawArea.GetTop() + 1;
 		vOrigin[1] = yLim[1];
 	}
 	else {										// Else, find (0,0) with interpolation
 		double ratio = abs(yLim[1] / (yLim[1] - yLim[0]));
+		if (vFlip)
+			ratio = 1.0 - ratio;
 		origin.y = (int)(ratio * drawArea.GetHeight() + drawArea.GetY());
 		vOrigin[1] = 0;
 	}
@@ -359,4 +366,9 @@ void Plot::setAspectRatio(int ar[2]) {
 void Plot::setAspectRatio(int arx, int ary) {
 	aspectRatio[0] = arx;
 	aspectRatio[1] = ary;
+}
+
+void Plot::setAxesFlipped(bool horiz, bool vert) {
+	hFlip = horiz;
+	vFlip = vert;
 }

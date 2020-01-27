@@ -26,6 +26,8 @@ class Plot {
 	bool showLabelY;
 	bool showTitle;
 	int aspectRatio[2];
+	bool hFlip;
+	bool vFlip;
 
 	// Converts the given points to their pixel location equivalents based on the axes steps and limits
 	arma::umat pointsToPixels(arma::mat points);
@@ -38,7 +40,7 @@ public:
 	// CONSTRUCTORS
 
 	Plot(wxRect& boundary, double xLim[2], double yLim[2], bool showX = false, bool showY = false, bool showTitle = false);
-	Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool showX = false, bool showY = false, bool showTitle = false);
+	Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool showX = false, bool showY = false, bool showTitle = false, bool hFlipped = false, bool vFlipped = false);
 
 	// DESTRUCTOR
 
@@ -77,6 +79,7 @@ public:
 	otherwise all positive integers are valid inputs for an aspect ratio
 	 */
 	void setAspectRatio(int arx, int ary);
+	void setAxesFlipped(bool horiz, bool vert);
 	//-------------------------------------------------------------------------------------------------------------
 
 	// Updates the boundaries with the new one defined by a wxRect

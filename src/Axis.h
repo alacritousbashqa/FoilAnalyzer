@@ -29,6 +29,8 @@ class Axis {
 	wxPoint origin;						// Location of origin (pixels)
 	double vOrigin[2]{};				// Origin value (value), e.g. (0.0,0.0)
 
+	bool flip;
+
 	std::map<double, int> valueLocs;	// Maps values to their pixel locations, e.g. tick locations
 
 	// Calculates and stores the axis values to their pixel locations
@@ -39,7 +41,7 @@ public:
 	// CONSTRUCTORS
 
 	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2]);
-	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2], double limits[2], double step);
+	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2], double limits[2], double step, bool flip);
 
 	// DESTRUCTORS
 
