@@ -57,7 +57,7 @@ AnalyzerPanel::AnalyzerPanel(wxWindow* parent)
 	double xLim[2] = { -0.1,1.1 };
 	double yLim[2] = { -5.0,5.0 };
 	int bords[4] = { 10,10,40,10 };
-	cpPlot = new Plot(plotRect, xLim, yLim, bords, true, true, true);
+	cpPlot = new Plot(plotRect, xLim, yLim, bords, true, true, true, false, true);
 	double steps[2] = { 0.10,1.0 };
 	cpPlot->setAxesSteps(steps);
 	cpPlot->setTitle("Cp vs x/c");
