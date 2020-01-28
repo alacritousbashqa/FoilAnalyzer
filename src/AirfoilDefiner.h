@@ -5,6 +5,9 @@
 
 #pragma once
 
+#include <iostream>
+#include <algorithm>
+#include <wx/wx.h>
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
 #include <wx/wx.h>

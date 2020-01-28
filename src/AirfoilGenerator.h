@@ -6,6 +6,7 @@
 #pragma once
 
 #include <armadillo>
+#include <wx/log.h>
 
 class AirfoilGenerator {
 public:

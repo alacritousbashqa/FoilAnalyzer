@@ -19,6 +19,7 @@
 #include "AirfoilGenerator.h"
 #include "AirfoilDefiner.h"
 #include "faProgram.h"
+#include "FoilParameters.h"
 #include "Plot.h"
 
 // Airfoil List Struct: holds reference to an airfoil struct and its associated checkbox and color picker for use in the list
