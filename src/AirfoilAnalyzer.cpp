@@ -143,6 +143,10 @@ bool AirfoilAnalyzer::initializeProgram(wxWindow* parent) {
 }
 
 void AnalyzerPanel::updateChoiceList() {
+	if (!airfoilChoice) {
+		wxLogError("Airfoil choice box widget does not exist!");
+		return;
+	}
 	airfoilChoice->Clear();
 	for (int i = 0; i < loadedAirfoils.size(); i++) {
 		airfoilChoice->Append(loadedAirfoils[i]->name);
