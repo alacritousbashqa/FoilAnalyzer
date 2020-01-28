@@ -29,6 +29,7 @@ struct AirfoilListStruct {
 	wxStaticText* nameText;
 	wxStaticText* codeText;
 	wxColourPickerCtrl* colorPicker;
+	wxButton* delButton;
 };
 
 class ViewerPanel : public wxPanel {
@@ -54,14 +55,15 @@ public:
 private:
 	// Returns the AirfoilListStruct which contains the AirfoilStruct afs. If such a list struct does not exist, one is returned with an AirfoilStruct as a nullptr.
 	AirfoilListStruct getListMemberFromAirfoil(AirfoilStruct* afs);
+	// Removes an airfoil from the list struct and airfoil struct based on an airfoil name (unique identifier)
+	bool deleteAirfoil(std::string name);
 
+	// Button and other control events
 	void onViewerBackButton(wxCommandEvent& event); // Defined in Main.cpp
 	void onDefineAirfoil(wxCommandEvent& event);
 	void onShowChecked(wxCommandEvent& event);
 	void onColorPicked(wxColourPickerEvent& event);
-	//void drawTicks(wxDC& dc, wxPoint& origin, wxPoint& beg, wxPoint& end, int dir, int n);
-	//void drawTick(wxDC& dc, wxPoint pos, int dir);
-	//void drawAxes(wxPaintDC& dc);
+	void onDelButton(wxCommandEvent& event);
 };
 
 // Button IDs for event connection
@@ -69,7 +71,8 @@ enum {
 	BACK_ID = 2,
 	DEFINE_AF_ID = 3,
 	CHECKBOXES_ID = 4,
-	COLORPICKER_ID = 5
+	COLORPICKER_ID = 5,
+	DELETE_ID = 6
 };
 
 class AirfoilViewer : public faProgram {

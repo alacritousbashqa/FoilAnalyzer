@@ -10,6 +10,7 @@
 
 #include "MainMenu.h"
 #include "AirfoilViewer.h"
+#include "AirfoilAnalyzer.h"
 
 // Holds IDs for each program panel to help in panel switching
 enum ProgPanelIDs {
@@ -32,12 +33,14 @@ public:
 	// Program class variables
 	MainMenu* mMenu;
 	AirfoilViewer* aViewer;
+	AirfoilAnalyzer* aAnalyzer;
 	wxBoxSizer* topSizer;
 	faProgram* currentProgram;
 	wxMenuBar *menuBar;
 	wxMenu *menuAfPlot = new wxMenu;
 
 	void initializeTopFrame();
+	void onMenuExit(wxCommandEvent& event);
 	void switchPanels(int panelID);
 };
 
@@ -71,13 +74,15 @@ TopFrame::TopFrame(const wxString &title, const wxPoint &pos, const wxSize &size
 	menuBar->Append(menuHelp, "&Help");
 	SetMenuBar(menuBar);
 
-	Connect(wxID_EXIT, wxEVT_MENU, wxCommandEventHandler(StartPanel::onExitButton));
+	Connect(wxID_EXIT, wxEVT_MENU, wxCommandEventHandler(TopFrame::onMenuExit));
+	Connect(EXIT_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onExitButton));
 	Connect(wxID_ABOUT, wxEVT_MENU, wxCommandEventHandler(StartPanel::onAboutButton));
 }
 
 TopFrame::~TopFrame() {
 	delete mMenu;
 	delete aViewer;
+	delete aAnalyzer;
 }
 
 // Creates the top sizer, main menu, and initializes the program classes
@@ -89,10 +94,12 @@ void TopFrame::initializeTopFrame() {
 	// Program Classes
 	mMenu = new MainMenu(this);
 	aViewer = new AirfoilViewer(this);
+	aAnalyzer = new AirfoilAnalyzer(this);
 
 	// Add the program panels; only the Main Menu is visible by default
 	topSizer->Add(mMenu->getTopPanel(), 1, wxGROW);
 	topSizer->Add(aViewer->getTopPanel(), 1, wxGROW);
+	topSizer->Add(aAnalyzer->getTopPanel(), 1, wxGROW);
 
 	currentProgram = mMenu;
 }
@@ -102,6 +109,7 @@ void TopFrame::switchPanels(int panelID) {
 	switch (panelID) {
 	case MAIN_MENU_ID:
 		aViewer->show(false);
+		aAnalyzer->show(false);
 		mMenu->show();
 		topSizer->Layout();
 		currentProgram = mMenu;
@@ -114,7 +122,18 @@ void TopFrame::switchPanels(int panelID) {
 		currentProgram = aViewer;
 		menuBar->Append(menuAfPlot, "&Plot");
 		break;
+	case ANALYZER_ID:
+		mMenu->show(false);
+		aAnalyzer->show();
+		topSizer->Layout();
+		currentProgram = aAnalyzer;
+		menuBar->Append(menuAfPlot, "&Plot");
+		break;
 	}
+}
+
+void TopFrame::onMenuExit(wxCommandEvent& event) {
+	Close(true);
 }
 
 //===========================================================================================
@@ -145,5 +164,15 @@ void StartPanel::onViewerButton(wxCommandEvent& event) {
 
 // When the 'Main Menu' button is pressed in the airfoil viewer, show the main menu
 void ViewerPanel::onViewerBackButton(wxCommandEvent& event) {
+	dynamic_cast<TopFrame*>(GetParent())->switchPanels(MAIN_MENU_ID);
+}
+
+// When the 'Airfoil Analyzer' button is pressed in the main menu, show the analyzer program
+void StartPanel::onAnalyzerButton(wxCommandEvent& event) {
+	dynamic_cast<TopFrame*>(GetParent())->switchPanels(ANALYZER_ID);
+}
+
+// When the 'Main Menu' button is pressed in the airfoil analyzer, show the main menu
+void AnalyzerPanel::onAnalyzerBackButton(wxCommandEvent& event) {
 	dynamic_cast<TopFrame*>(GetParent())->switchPanels(MAIN_MENU_ID);
 }

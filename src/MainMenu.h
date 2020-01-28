@@ -23,12 +23,14 @@ public:
 	void onExitButton(wxCommandEvent& event);
 private:
 	void onViewerButton(wxCommandEvent& event); // Defined in Main.cpp
+	void onAnalyzerButton(wxCommandEvent& event); // Defined in Main.cpp
 };
 
 // Button IDs for event connection
 enum {
-	EXIT_ID = wxID_EXIT,
+	EXIT_ID = 5,
 	VIEWER_BUTTON_ID = 4,
+	ANALYZER_BUTTON_ID = 6,
 	ABOUT_ID = wxID_ABOUT
 };
 

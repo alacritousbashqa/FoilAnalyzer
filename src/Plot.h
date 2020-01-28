@@ -9,6 +9,9 @@
 #include <armadillo>
 
 #include "Axis.h"
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
+#endif
 
 class Plot {
 	int border[4];									// Padding on left, top, right, bottom of plot
@@ -23,16 +26,21 @@ class Plot {
 	bool showLabelY;
 	bool showTitle;
 	int aspectRatio[2];
+	bool hFlip;
+	bool vFlip;
 
 	// Converts the given points to their pixel location equivalents based on the axes steps and limits
 	arma::umat pointsToPixels(arma::mat points);
 	// Calculates the origin location (origin) and origin value (vOrigin) from the axes limits
 	void calculateOrigin(double xLim[2], double yLim[2]);
+
+	void setHStep(double st);
+	void setVStep(double st);
 public:
 	// CONSTRUCTORS
 
 	Plot(wxRect& boundary, double xLim[2], double yLim[2], bool showX = false, bool showY = false, bool showTitle = false);
-	Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool showX = false, bool showY = false, bool showTitle = false);
+	Plot(wxRect& boundary, double xLim[2], double yLim[2], int border[4], bool showX = false, bool showY = false, bool showTitle = false, bool hFlipped = false, bool vFlipped = false);
 
 	// DESTRUCTOR
 
@@ -48,6 +56,8 @@ public:
 	std::string getTitle();
 	std::string getHLabel();
 	std::string getVLabel();
+	double getHStep();
+	double getVStep();
 	// Returns a pointer to the apect ratio array
 	int* getAspectRatio();
 	//-------------------------------------------------------------------------------------------------------------
@@ -56,6 +66,9 @@ public:
 	void setTitle(std::string t);
 	void setHLabel(std::string hl);
 	void setVLabel(std::string vl);
+	/* Sets the axes steps to st: [horizontal, vertical]
+	*/
+	void setAxesSteps(double st[2]);
 	/* Sets the aspect ratio to ar
 	For no aspect ratio, at least one of the values can be set to an integer <= 0,
 	otherwise all positive integers are valid inputs for an aspect ratio
@@ -66,6 +79,7 @@ public:
 	otherwise all positive integers are valid inputs for an aspect ratio
 	 */
 	void setAspectRatio(int arx, int ary);
+	void setAxesFlipped(bool horiz, bool vert);
 	//-------------------------------------------------------------------------------------------------------------
 
 	// Updates the boundaries with the new one defined by a wxRect

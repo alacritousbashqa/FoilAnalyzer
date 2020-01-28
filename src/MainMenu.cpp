@@ -23,8 +23,8 @@ StartPanel::StartPanel(wxWindow* parent)
 	mmButtonBox->Add(
 		new wxButton(this, VIEWER_BUTTON_ID, "Airfoil Viewer"),
 		wxSizerFlags().Border(wxALL, 7));
-	wxButton* afAnalyzerB = new wxButton(this, wxID_ANY, "Airfoil Analyzer");
-	afAnalyzerB->Disable();
+	wxButton* afAnalyzerB = new wxButton(this, ANALYZER_BUTTON_ID, "Airfoil Analyzer");
+	//afAnalyzerB->Disable();
 	mmButtonBox->Add(
 		afAnalyzerB,
 		wxSizerFlags().Border(wxALL, 7));
@@ -51,6 +51,7 @@ StartPanel::StartPanel(wxWindow* parent)
 	// Exit Button
 	Connect(EXIT_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onExitButton));
 	Connect(VIEWER_BUTTON_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onViewerButton));
+	Connect(ANALYZER_BUTTON_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onAnalyzerButton));
 	Connect(ABOUT_ID, wxEVT_BUTTON, wxCommandEventHandler(StartPanel::onAboutButton));
 
 

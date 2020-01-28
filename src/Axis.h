@@ -10,7 +10,9 @@
 #include <vector>
 
 #include <wx/wxprec.h>
+#ifndef WX_PRECOMP
 #include <wx/wx.h>
+#endif
 
 enum axisDirection {
 	HORIZONTAL,
@@ -27,15 +29,19 @@ class Axis {
 	wxPoint origin;						// Location of origin (pixels)
 	double vOrigin[2]{};				// Origin value (value), e.g. (0.0,0.0)
 
+	bool flip;
+
 	std::map<double, int> valueLocs;	// Maps values to their pixel locations, e.g. tick locations
 
 	// Calculates and stores the axis values to their pixel locations
 	void calculateVLocs();
+
+	void setStep(double st);
 public:
 	// CONSTRUCTORS
 
 	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2]);
-	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2], double limits[2], double step);
+	Axis(axisDirection dir, int boundary[2], wxPoint& origin, double vOrigin[2], double limits[2], double step, bool flip);
 
 	// DESTRUCTORS
 
@@ -64,6 +70,8 @@ public:
 	void setVOrigin(double vOrigin[2]);
 	void setLabel(std::string l);
 	//-------------------------------------------------------------------------------------------------------------
+
+	friend class Plot;
 
 	// Updates the boundary, origin pixel location, and origin value, then recalculates the value-locations
 	void updateAxis(int boundary[2], wxPoint origin, double vOrigin[2]);

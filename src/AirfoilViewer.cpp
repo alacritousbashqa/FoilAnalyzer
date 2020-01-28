@@ -59,6 +59,8 @@ ViewerPanel::ViewerPanel(wxWindow* parent)
 	Connect(CHECKBOXES_ID, wxEVT_CHECKBOX, wxCommandEventHandler(ViewerPanel::onShowChecked));
 	// Airfoil list color picker
 	Connect(COLORPICKER_ID, wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler(ViewerPanel::onColorPicked));
+	// Delete airfoil button
+	Connect(DELETE_ID, wxEVT_BUTTON, wxCommandEventHandler(ViewerPanel::onDelButton));
 	// Event Paint
 	Connect(GetId(), wxEVT_PAINT, wxPaintEventHandler(ViewerPanel::onPaintEvent));
 }
@@ -68,12 +70,16 @@ ViewerPanel::~ViewerPanel(){
 	delete foilGen;
 	for (AirfoilListStruct afs : afListMembers) {
 		delete afs.airfoil;
-		delete afs.checkBox;
-		delete afs.colorPicker;
+		afs.checkBox->Destroy();
+		afs.colorPicker->Destroy();
+		afs.codeText->Destroy();
+		afs.delButton->Destroy();
+		afs.nameText->Destroy();
 	}
 	afListMembers.clear();
 	for (AirfoilStruct *as : loadedAirfoils) {
-		delete as;
+		if(!as)
+			delete as;
 	}
 	loadedAirfoils.clear();
 }
@@ -178,13 +184,16 @@ void ViewerPanel::onDefineAirfoil(wxCommandEvent& event) {
 	als.codeText = new wxStaticText(scrolledWindow, -1, ("NACA " + afs->code).c_str());
 	als.colorPicker = new wxColourPickerCtrl(scrolledWindow, COLORPICKER_ID);
 	als.colorPicker->SetColour(wxColour(*wxWHITE));
+	als.delButton = new wxButton(scrolledWindow, DELETE_ID, "Delete");
+	als.delButton->SetName(afs->name);
 	afListMembers.push_back(als); // Add to class master list
 		
 	// Add the new airfoil widgets to a box sizer (adds a new row)
 	hBox->Add(als.checkBox, 1, wxEXPAND | wxLEFT, 10);
 	hBox->Add(als.nameText, 3, wxALIGN_CENTER_VERTICAL);
 	hBox->Add(als.codeText, 2, wxALIGN_CENTER_VERTICAL);
-	hBox->Add(als.colorPicker, 1, wxALIGN_CENTER_VERTICAL, 10);
+	hBox->Add(als.colorPicker, 1, wxALIGN_CENTER_VERTICAL);
+	hBox->Add(als.delButton, 1, wxALIGN_CENTER_VERTICAL);
 	hBox->Add(new wxPanel(scrolledWindow, -1));
 	hBox->Layout();
 
@@ -206,6 +215,65 @@ void ViewerPanel::onColorPicked(wxColourPickerEvent& event) {
 	this->Refresh();
 }
 
+void ViewerPanel::onDelButton(wxCommandEvent& event) {
+	wxMessageDialog confirmDelDial(NULL, "Are you sure you want to unload this airfoil (i.e. delete it)?", "Caption", wxYES_NO | wxCENTRE | wxICON_EXCLAMATION);
+	int id = confirmDelDial.ShowModal();
+	if (id == wxID_YES) {
+		deleteAirfoil((std::string)dynamic_cast<wxButton*>(event.GetEventObject())->GetName());
+	}
+}
+
+bool ViewerPanel::deleteAirfoil(std::string name) {
+	// Find the airfoil list struct associated with the inputted unique identifier
+	AirfoilListStruct tmpALS;
+	int tmpI = -1;
+	for (int i = 0; i < afListMembers.size(); i++) {
+		if (afListMembers[i].airfoil->name == name) {
+			tmpALS = afListMembers[i];
+			tmpI = i;
+			break;
+		}
+	}
+	// If the airfoil was found...
+	if (tmpALS.airfoil) {
+		// Destroy associated widget pointers
+		tmpALS.checkBox->Destroy();
+		tmpALS.colorPicker->Destroy();
+		tmpALS.codeText->Destroy();
+		tmpALS.delButton->Destroy();
+		tmpALS.nameText->Destroy();
+
+		// Find the airfoil struct in loaded airfoils and remove it from vector
+		int tmp = -1;
+		for (int i = 0; i < loadedAirfoils.size(); i++) {
+			if (loadedAirfoils[i] == tmpALS.airfoil) {
+				tmp = i;
+				break;
+			}
+		}
+		if (tmp == -1) {
+			wxLogError("Invalid airfoil in airfoil list struct! Could not be found in loaded airfoils!");
+			return false;
+		}
+		loadedAirfoils.erase(loadedAirfoils.begin() + tmp);
+
+		// Deallocate the airfoil
+		delete tmpALS.airfoil;
+
+		// Remove that associated airfoil list member from the afListMembers vector
+		afListMembers.erase(afListMembers.begin() + tmpI);
+
+		// Update list UI and plot
+		scrolledWindow->FitInside();
+		scrolledBoxSizer->Layout();
+		this->Refresh();
+
+		return true;
+	}
+	wxLogError("No loaded airfoil was found with the inputted name!");
+	return false;
+}
+
 AirfoilListStruct ViewerPanel::getListMemberFromAirfoil(AirfoilStruct* afs) {
 	for (AirfoilListStruct als : afListMembers) {
 		if (als.airfoil = afs) {
@@ -216,64 +284,6 @@ AirfoilListStruct ViewerPanel::getListMemberFromAirfoil(AirfoilStruct* afs) {
 	als.airfoil = nullptr;
 	return als;
 }
-
-//void ViewerPanel::drawAxes(wxPaintDC& dc) {
-//	int w = avTopSizer->GetSize().GetWidth();
-//	int h = avDrawArea->GetRect().GetHeight();
-//	wxPoint top(60, 50);
-//	wxPoint bottom(60, h - 50);
-//	wxPoint left(20, h / 2);
-//	wxPoint right(w - 20, h / 2);
-//	wxPoint origin(60, h / 2);
-//	dc.SetPen(wxPen(*wxWHITE, 2));
-//	dc.DrawLine(top,bottom);
-//	dc.DrawLine(left,right);
-//	drawTicks(dc, origin, top, bottom, axesVERT, 15);
-//	drawTicks(dc, origin, left, right, axesHORIZ, 23);
-//}
-//
-//void ViewerPanel::drawTicks(wxDC& dc, wxPoint& origin, wxPoint& beg, wxPoint& end, int dir, int n){
-//	dc.SetPen(wxPen(*wxWHITE, 1));
-//	if (n < 1)
-//		return;
-//	int l = 0;
-//	int h = 0;
-//	if (dir == axesHORIZ) {
-//		l = end.x - beg.x;
-//		h = origin.x - beg.x;
-//	}
-//	else {
-//		l = end.y - beg.y;
-//		h = origin.y - beg.y;
-//	}
-//	if (l < 1)
-//		return;
-//	int a = l / n;
-//	for (int i = 0; i < n; i++) {
-//		if (dir == axesHORIZ) {
-//			int pos = beg.x + i * a + h;
-//			if (pos > beg.x + l) {
-//				pos -= l;
-//			}
-//			drawTick(dc, wxPoint(pos, beg.y), dir);
-//		}
-//		else {
-//			int pos = beg.y + i * a + h;
-//			if (pos > beg.y + l) {
-//				pos -= l;
-//			}
-//			drawTick(dc, wxPoint(beg.x, pos), dir);
-//		}
-//	}
-//}
-//
-//void ViewerPanel::drawTick(wxDC& dc, wxPoint pos, int dir) {
-//	if (dir == axesHORIZ) {
-//		dc.DrawLine(pos.x, pos.y - 7, pos.x, pos.y + 7);
-//	}
-//	else
-//		dc.DrawLine(pos.x - 7, pos.y, pos.x + 7, pos.y);
-//}
 
 AirfoilViewer::AirfoilViewer(wxWindow* parent) {
 	initializeProgram(parent);
