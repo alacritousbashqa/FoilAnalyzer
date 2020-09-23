@@ -48,3 +48,8 @@ x64/Debug/*
 test.cpp
 
 build/*
+
+# MATLAB test files
+MATLAB/Force Data/*
+MATLAB/Images/*
+MATLAB/OLD/*
