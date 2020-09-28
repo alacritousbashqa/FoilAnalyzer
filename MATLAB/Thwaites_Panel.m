@@ -32,13 +32,7 @@ Y_base = Y;
 
 % Perform an inviscid analysis to get the stagnation point
 [Cp,strengths,X_mid,Y_mid,norms] = inviscidPanel(X,Y,Vinf,alpha);
-[~,I] = max(Cp(4:end-4));    % Index of the X_mid that corresponds to the stagnation point
-
-% =========================================================================================================
-% =========================================================================================================
-I = (length(X)-1)/2 + 1;                        % NEED TO FIND A BETTER WAY TO GET THE STAGNATION POINT
-% =========================================================================================================
-% =========================================================================================================
+[~,I] = max(Cp.*(X_mid<0.5));
 
 % Get the node normals and split them into top and bottom surfaces
 norms_node = getNorms(X_base,Y_base);
